@@ -1,9 +1,12 @@
 package africa.semoicolon.repo;
 
+import africa.semoicolon.model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
@@ -15,5 +18,9 @@ class TaskRepositoryTest{
     repo.deleteAll();
     }
     @Test
-    public void createTask_testTaskIsCreated(){}
+    public void createTask_testTaskIsCreated(){
+        Task task = new Task();
+        repo.save(task);
+        assertEquals(1,repo.count());
+    }
 }
