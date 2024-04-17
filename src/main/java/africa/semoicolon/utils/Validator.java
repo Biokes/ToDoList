@@ -16,7 +16,6 @@ public class Validator{
         return data.replaceAll("\\s+", " ");
     }
     public static void validateCreateTaskRequest(CreateTaskRequest request){
-        request.setDescription(validate(request.getDescription()));
         request.setTaskTitle(validate(request.getTaskTitle()));
         request.setUsername(validate(request.getUsername()));
     }

@@ -4,6 +4,7 @@ import africa.semoicolon.model.Task;
 import africa.semoicolon.repo.TaskRepository;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.response.CreateTaskResponse;
+import africa.semoicolon.utils.Mapper;
 import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class ToDoTaskService implements TaskService{
     public CreateTaskResponse createTask(CreateTaskRequest request){
         validateCreateTaskRequest(request);
         Task task = Mapper.mapCreateTaskRequest(request);
-        return null;
+        task = repository.save(task);
+        return Mapper.mapTaskToRequest(task);
     }
 }
