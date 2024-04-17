@@ -1,2 +1,7 @@
-package africa.semoicolon.model;public class TAsk {
+package africa.semoicolon.model;
+
+import lombok.Data;
+
+@Data
+public class Task{
 }
