@@ -1,6 +1,6 @@
 package africa.semoicolon.service;
-
 import africa.semoicolon.exceptions.InvalidDetails;
+import africa.semoicolon.exceptions.TaskCreatedException;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.response.CreateTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static africa.semoicolon.model.TaskStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class TaskServiceTest{
     @Autowired
@@ -32,5 +31,14 @@ class TaskServiceTest{
         assertEquals("taskTitle", response.getTitle());
         assertEquals("description", response.getDescription());
         assertEquals(PENDING, response.getStatus());
+    }
+    @Test
+    public void createTaskTwice_testExceptionIsThrown(){
+        CreateTaskRequest createRequest = new CreateTaskRequest();
+        createRequest.setUsername("username");
+        createRequest.setTaskTitle("task title   ");
+        createRequest.setDescription("description");
+        taskService.createTask(createRequest);
+        assertThrows(TaskCreatedException.class,()->taskService.createTask(createRequest));
     }
 }
