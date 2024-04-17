@@ -3,14 +3,17 @@ import africa.semoicolon.exceptions.InvalidDetails;
 
 import africa.semoicolon.exceptions.TaskExistsException;
 import africa.semoicolon.exceptions.TaskNotFoundException;
+import africa.semoicolon.exceptions.TaskStartedException;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
 import africa.semoicolon.response.CreateTaskResponse;
+import africa.semoicolon.response.StartTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.model.TaskStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -44,6 +47,7 @@ class TaskServiceTest{
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertThrows(TaskExistsException.class,()->taskService.createTask(createRequest));
         assertEquals("task title",response.getTitle());
+        System.out.println(response);
     }
     @Test
     public void startTask_testStartIsStarted(){
@@ -51,5 +55,17 @@ class TaskServiceTest{
         startRequest.setUsername("username");
         startRequest.setTaskName("nylon");
         assertThrows(TaskNotFoundException.class,()-> taskService.startTaskWith(startRequest));
+        CreateTaskRequest createRequest = new CreateTaskRequest();
+        createRequest.setUsername("username");
+        createRequest.setTaskTitle("task title   ");
+        createRequest.setDescription("description");
+        taskService.createTask(createRequest);
+        StartTaskResponse response = taskService.startTaskWith(startRequest);
+        assertThrows(TaskStartedException.class,()-> taskService.startTaskWith(startRequest));
+        assertEquals("username", response.getUsername());
+        assertEquals("task title", response.getTaskTitle());
+        assertEquals("description",response.getDescription());
+        assertEquals(IN_PROGRESS, response.getStatus());
+
     }
 }
