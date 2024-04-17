@@ -3,6 +3,7 @@ package africa.semoicolon.utils;
 import africa.semoicolon.model.Task;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.response.CreateTaskResponse;
+import africa.semoicolon.response.StartTaskResponse;
 
 import java.time.format.DateTimeFormatter;
 
@@ -28,6 +29,17 @@ public class Mapper{
         response.setTitle(task.getTaskTitle());
         response.setDateCreated(task.getDateCreated());
         response.setStatus(task.getStatus());
+        return response;
+    }
+
+    public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
+        StartTaskResponse response = new StartTaskResponse();
+        response.setTaskTitle(task.getTaskTitle());
+        response.setStatus(task.getStatus());
+        if(task.getDescription().isBlank())
+            response.setDescription("\"nothing saved as description\"");
+        else response.setDescription(response.getDescription());
+        response.setUsername(task.getUsername());
         return response;
     }
 }
