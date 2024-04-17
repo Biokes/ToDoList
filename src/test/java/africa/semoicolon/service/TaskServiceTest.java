@@ -1,7 +1,10 @@
 package africa.semoicolon.service;
 import africa.semoicolon.exceptions.InvalidDetails;
-import africa.semoicolon.exceptions.TaskCreatedException;
+
+import africa.semoicolon.exceptions.TaskExistsException;
+import africa.semoicolon.exceptions.TaskNotFoundException;
 import africa.semoicolon.request.CreateTaskRequest;
+import africa.semoicolon.request.StartTaskRequest;
 import africa.semoicolon.response.CreateTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +41,15 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("task title   ");
         createRequest.setDescription("description");
-        taskService.createTask(createRequest);
-        assertThrows(TaskCreatedException.class,()->taskService.createTask(createRequest));
+        CreateTaskResponse response = taskService.createTask(createRequest);
+        assertThrows(TaskExistsException.class,()->taskService.createTask(createRequest));
+        assertEquals("task title",response.getTitle());
+    }
+    @Test
+    public void startTask_testStartIsStarted(){
+        StartTaskRequest startRequest = new StartTaskRequest();
+        startRequest.setUsername("username");
+        startRequest.setTaskName("nylon");
+        assertThrows(TaskNotFoundException.class,()-> taskService.startTaskWith(startRequest));
     }
 }
