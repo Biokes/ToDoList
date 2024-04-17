@@ -2,11 +2,14 @@ package africa.semoicolon.service;
 
 import africa.semoicolon.exceptions.TaskExistsException;
 import africa.semoicolon.exceptions.TaskNotFoundException;
+import africa.semoicolon.exceptions.TaskStartedException;
 import africa.semoicolon.model.Task;
 import africa.semoicolon.model.TaskStatus;
 import africa.semoicolon.repo.TaskRepository;
+import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
+import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
 import africa.semoicolon.utils.Mapper;
@@ -17,8 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static africa.semoicolon.exceptions.ExceptionMessages.TASK_EXISTS;
-import static africa.semoicolon.exceptions.ExceptionMessages.TASK_NOT_FOUND;
+import static africa.semoicolon.exceptions.ExceptionMessages.*;
 import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.utils.Validator.validateCreateTaskRequest;
 
@@ -37,18 +39,19 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapTaskToRequest(task);
     }
     public StartTaskResponse startTaskWith(StartTaskRequest startRequest){
-        checkExistingTask(startRequest.getTaskName(), startRequest.getUsername());
         Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(
                 startRequest.getTaskName(),startRequest.getUsername());
-        if( taskFound.isPresent( )){
-            if (taskFound.get().getStatus() == IN_PROGRESS){
-                throw new TaskExistsException(TASK_EXISTS.getMessage());
-            }
+        if(taskFound.isEmpty())
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
-        }
+        if (taskFound.get().getStatus() == IN_PROGRESS)
+            throw new TaskStartedException(TASK_STARTED.getMessage());
         taskFound.get().setStatus(IN_PROGRESS);
         return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
     }
+    public CompleteTaskResponse completeTask(CompleteTaskRequest complete){
+        return null;
+    }
+
     private void checkExistingTask(String title,String username){
         List<Task> tasks = repository.findAll();
         for(Task task : tasks){

@@ -38,7 +38,7 @@ public class Mapper{
         response.setStatus(task.getStatus());
         if(task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");
-        else response.setDescription(response.getDescription());
+        else response.setDescription(task.getDescription());
         response.setUsername(task.getUsername());
         return response;
     }

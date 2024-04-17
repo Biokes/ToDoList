@@ -4,6 +4,7 @@ import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.TaskExistsException;
 import africa.semoicolon.exceptions.TaskNotFoundException;
 import africa.semoicolon.exceptions.TaskStartedException;
+import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
 import africa.semoicolon.response.CreateTaskResponse;
@@ -57,15 +58,21 @@ class TaskServiceTest{
         assertThrows(TaskNotFoundException.class,()-> taskService.startTaskWith(startRequest));
         CreateTaskRequest createRequest = new CreateTaskRequest();
         createRequest.setUsername("username");
-        createRequest.setTaskTitle("task title   ");
+        createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
         taskService.createTask(createRequest);
         StartTaskResponse response = taskService.startTaskWith(startRequest);
         assertThrows(TaskStartedException.class,()-> taskService.startTaskWith(startRequest));
         assertEquals("username", response.getUsername());
-        assertEquals("task title", response.getTaskTitle());
+        assertEquals("nylon", response.getTaskTitle());
         assertEquals("description",response.getDescription());
         assertEquals(IN_PROGRESS, response.getStatus());
-
+    }
+    @Test
+    public void completeTask_testTaskIsCopmpleted(){
+        CompleteTaskRequest complete = new CompleteTaskRequest();
+        complete.setTaskName("task");
+        complete.setUsername("username");
+        assertThrows(TaskNotFoundException.class,()-> taskService.completeTask(complete));
     }
 }
