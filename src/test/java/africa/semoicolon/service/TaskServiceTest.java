@@ -1,9 +1,6 @@
 package africa.semoicolon.service;
-import africa.semoicolon.exceptions.InvalidDetails;
+import africa.semoicolon.exceptions.*;
 
-import africa.semoicolon.exceptions.TaskExistsException;
-import africa.semoicolon.exceptions.TaskNotFoundException;
-import africa.semoicolon.exceptions.TaskStartedException;
 import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
