@@ -74,5 +74,11 @@ class TaskServiceTest{
         complete.setTaskName("task");
         complete.setUsername("username");
         assertThrows(TaskNotFoundException.class,()-> taskService.completeTask(complete));
+        CreateTaskRequest createRequest = new CreateTaskRequest();
+        createRequest.setUsername("username");
+        createRequest.setTaskTitle("nylon   ");
+        createRequest.setDescription("description");
+        taskService.createTask(createRequest);
+        assertThrows(TaskNotStartedException.class,()-> taskService.completeTask(complete));
     }
 }

@@ -4,7 +4,6 @@ import africa.semoicolon.exceptions.TaskExistsException;
 import africa.semoicolon.exceptions.TaskNotFoundException;
 import africa.semoicolon.exceptions.TaskStartedException;
 import africa.semoicolon.model.Task;
-import africa.semoicolon.model.TaskStatus;
 import africa.semoicolon.repo.TaskRepository;
 import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
@@ -22,6 +21,7 @@ import java.util.Optional;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
 import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
+import static africa.semoicolon.utils.Validator.validateCompleteTaskRequest;
 import static africa.semoicolon.utils.Validator.validateCreateTaskRequest;
 
 @Service
@@ -39,6 +39,7 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapTaskToRequest(task);
     }
     public StartTaskResponse startTaskWith(StartTaskRequest startRequest){
+        Validator.validateStartTAskRequest(startRequest);
         Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(
                 startRequest.getTaskName(),startRequest.getUsername());
         if(taskFound.isEmpty())
@@ -49,6 +50,7 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
     }
     public CompleteTaskResponse completeTask(CompleteTaskRequest complete){
+        validateCompleteTaskRequest(complete);
         return null;
     }
 
