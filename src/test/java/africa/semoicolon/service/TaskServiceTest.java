@@ -4,6 +4,7 @@ import africa.semoicolon.exceptions.*;
 import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
+import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
-import static africa.semoicolon.model.TaskStatus.PENDING;
+import static africa.semoicolon.model.TaskStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class TaskServiceTest{
@@ -77,5 +77,18 @@ class TaskServiceTest{
         createRequest.setDescription("description");
         taskService.createTask(createRequest);
         assertThrows(TaskNotStartedException.class,()-> taskService.completeTask(complete));
+        StartTaskRequest startTask = new StartTaskRequest();
+        assertThrows(InvalidDetails.class,()->taskService.startTaskWith(startTask));
+        startTask.setUsername(" username  ");
+        assertThrows(InvalidDetails.class,()->taskService.startTaskWith(startTask));
+        startTask.setTaskName("hjewb");
+        assertThrows(TaskNotFoundException.class,()->taskService.startTaskWith(startTask));
+        startTask.setTaskName("  nylon  ");
+        CompleteTaskResponse completeResponse = taskService.completeTask(complete);
+        assertEquals("username", completeResponse.getUsername());
+        assertEquals("nylon",completeResponse.getTaskName());
+        assertEquals(COMPLETED, completeResponse.getStatus());
+
+
     }
 }

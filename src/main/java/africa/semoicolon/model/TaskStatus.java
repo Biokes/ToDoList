@@ -3,6 +3,7 @@ package africa.semoicolon.model;
 import java.time.LocalDateTime;
 
 public enum TaskStatus{
+    COMPLETED(LocalDateTime.now()),
     IN_PROGRESS(LocalDateTime.now()),
     PENDING(LocalDateTime.now());
     TaskStatus(LocalDateTime date){
