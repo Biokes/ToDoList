@@ -9,12 +9,13 @@ import africa.semoicolon.response.StartTaskResponse;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.model.TaskStatus.PENDING;
 
 public class Mapper{
-    public static Task mapCreateTaskRequest(CreateTaskRequest request){
+    public static Task mapCreateTaskRequestToTask(CreateTaskRequest request){
     Task task = new Task();
     task.setUsername(request.getUsername());
     task.setTaskTitle(request.getTaskTitle());
@@ -27,13 +28,19 @@ public class Mapper{
     public static CreateTaskResponse mapTaskToResponse(Task task){
         CreateTaskResponse response = new CreateTaskResponse();
         response.setStatus(task.getStatus());
-        response.setDescription(task.getDescription());
+        response.setDescription(setDescription(task.getDescription()));
         response.setUsername(task.getUsername());
         response.setTitle(task.getTaskTitle());
         LocalDateTime created = LocalDateTime.parse(task.getDateCreated());
-        response.setDateCreated(created.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
+        response.setDateCreated(created.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
         response.setStatus(task.getStatus());
         return response;
+    }
+    private static String setDescription(String given){
+        Optional<String> string = Optional.ofNullable(given);
+        if(string.isEmpty())
+            given= "no description provided";
+        return given;
     }
 
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){

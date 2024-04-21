@@ -11,11 +11,9 @@ import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
 import africa.semoicolon.utils.Mapper;
-import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +33,7 @@ public class ToDoTaskService implements TaskService{
         validateCreateTaskRequest(request);
         if(isExistingTask(request.getTaskTitle(),request.getUsername()))
             throw new TaskExistsException(TASK_EXISTS.getMessage());
-        Task task = Mapper.mapCreateTaskRequest(request);
+        Task task = Mapper.mapCreateTaskRequestToTask(request);
         task = repository.save(task);
         return Mapper.mapTaskToResponse(task);
     }
