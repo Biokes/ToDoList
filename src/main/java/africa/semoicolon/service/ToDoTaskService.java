@@ -1,9 +1,6 @@
 package africa.semoicolon.service;
 
-import africa.semoicolon.exceptions.TaskExistsException;
-import africa.semoicolon.exceptions.TaskNotFoundException;
-import africa.semoicolon.exceptions.TaskNotStartedException;
-import africa.semoicolon.exceptions.TaskStartedException;
+import africa.semoicolon.exceptions.*;
 import africa.semoicolon.model.Task;
 import africa.semoicolon.repo.TaskRepository;
 import africa.semoicolon.request.CompleteTaskRequest;
@@ -62,10 +59,15 @@ public class ToDoTaskService implements TaskService{
     }
     public void deleteTaskWith(DeleteTaskRequest delete){
         validateDeleteTaskRequest(delete);
+        if(!isExistingTask(delete.getTaskName(), delete.getUsername()))
+            throw new ToDoListException(TASK_NOT_FOUND.getMessage());
     }
-    private void validateTask(Optional<Task> taskFound){
+    private void checkTaskExistence(Optional<Task> taskFound){
         if(taskFound.isEmpty())
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
+    }
+    private void validateTask(Optional<Task> taskFound){
+        checkTaskExistence(taskFound);
         if (taskFound.get().getStatus() == IN_PROGRESS)
             throw new TaskStartedException(TASK_STARTED.getMessage());
     }
