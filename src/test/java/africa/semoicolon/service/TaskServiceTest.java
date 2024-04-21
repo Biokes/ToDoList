@@ -3,6 +3,7 @@ import africa.semoicolon.exceptions.*;
 
 import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
+import africa.semoicolon.request.DeleteTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
 import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
@@ -92,6 +93,6 @@ class TaskServiceTest{
     }
     @Test
     public void deleteTask_testTaskIsDeleted(){
-        DeleteTaskRequest delete = new DeleteTaskRequsest();
+        DeleteTaskRequest delete = new DeleteTaskRequest();
     }
 }
