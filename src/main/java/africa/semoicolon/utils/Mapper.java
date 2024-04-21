@@ -7,6 +7,7 @@ import africa.semoicolon.response.StartTaskResponse;
 
 import java.time.format.DateTimeFormatter;
 
+import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.model.TaskStatus.PENDING;
 
 public class Mapper{
@@ -35,6 +36,7 @@ public class Mapper{
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
         StartTaskResponse response = new StartTaskResponse();
         response.setTaskTitle(task.getTaskTitle());
+        task.setStatus(IN_PROGRESS);
         response.setStatus(task.getStatus());
         if(task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");

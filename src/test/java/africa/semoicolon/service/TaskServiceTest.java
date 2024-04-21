@@ -84,6 +84,7 @@ class TaskServiceTest{
         startTask.setTaskName("hjewb");
         assertThrows(TaskNotFoundException.class,()->taskService.startTaskWith(startTask));
         startTask.setTaskName("  nylon  ");
+        startTask.setUsername("username");
         CompleteTaskResponse completeResponse = taskService.completeTask(complete);
         assertEquals("username", completeResponse.getUsername());
         assertEquals("nylon",completeResponse.getTaskName());

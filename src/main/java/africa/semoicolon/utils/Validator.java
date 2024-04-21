@@ -12,7 +12,7 @@ import static africa.semoicolon.exceptions.ExceptionMessages.INVALID_DETAILS;
 public class Validator{
     public static String validate(String data){
         Optional<String> newData = Optional.ofNullable(data);
-        if(newData.isEmpty() || newData.get().isEmpty())
+        if(Optional.ofNullable(data).isEmpty() || Optional.of(data).get().isBlank())
             throw new InvalidDetails(INVALID_DETAILS.getMessage());
         data = data.strip();
         return data.replaceAll("\\s+", " ");

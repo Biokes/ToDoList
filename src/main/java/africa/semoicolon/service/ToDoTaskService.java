@@ -22,8 +22,7 @@ import java.util.Optional;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
 import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
-import static africa.semoicolon.utils.Validator.validateCompleteTaskRequest;
-import static africa.semoicolon.utils.Validator.validateCreateTaskRequest;
+import static africa.semoicolon.utils.Validator.*;
 
 @Service
 public class ToDoTaskService implements TaskService{
@@ -41,7 +40,7 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapTaskToRequest(task);
     }
     public StartTaskResponse startTaskWith(StartTaskRequest startRequest){
-        Validator.validateStartTAskRequest(startRequest);
+        validateStartTAskRequest(startRequest);
         Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(
                 startRequest.getTaskName(),startRequest.getUsername());
         if(taskFound.isEmpty())
