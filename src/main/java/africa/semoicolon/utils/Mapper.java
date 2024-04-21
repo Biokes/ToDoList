@@ -25,7 +25,7 @@ public class Mapper{
     return task;
     }
 
-    public static CreateTaskResponse mapTaskToRequest(Task task){
+    public static CreateTaskResponse mapTaskToResponse(Task task){
         CreateTaskResponse response = new CreateTaskResponse();
         response.setStatus(task.getStatus());
         response.setDescription(task.getDescription());
@@ -57,8 +57,7 @@ public class Mapper{
         response.setStatus(complete.getStatus( ));
         response.setDateCreated(complete.getDateCreated());
         response.setDuration(getDuration(complete.getDateStarted()));
-        response.setStartDate(LocalDateTime.parse(complete.getDateStarted(),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")).toString());
+        response.setStartDate(complete.getDateStarted( ));
         return response;
     }
 
