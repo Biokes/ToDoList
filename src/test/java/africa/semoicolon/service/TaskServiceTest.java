@@ -114,6 +114,21 @@ class TaskServiceTest{
         update.setNewTitle("");
         update.setDescription("");
         assertThrows(ToDoListException.class,()->taskService.updateTask(update));
+        update.setUsername("name");
+        update.setNewTitle("1234");
+        update.setDescription("my house");
+        update.setOldTitle("title");
+        assertThrows(ToDoListException.class,()->taskService.updateTask(update));
+        CreateTaskRequest request = new CreateTaskRequest();
+        request.setUsername("name");
+        request.setTaskTitle("title");
+        CreateTaskResponse response = taskService.createTask(request);
+        assertEquals("title", response.getUsername());
+        assertEquals("no decription saved", response.getDescription());
+        assertEquals("name",response.getUsername());
+        assertEquals(PENDING,response.getStatus());
+
+
     }
 
 }

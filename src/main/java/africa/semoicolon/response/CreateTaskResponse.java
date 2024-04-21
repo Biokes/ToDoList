@@ -10,4 +10,5 @@ public class CreateTaskResponse{
     private String description;
     private TaskStatus status;
     private String dateCreated;
+    private String dueDate;
 }

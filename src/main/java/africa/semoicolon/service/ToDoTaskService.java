@@ -3,13 +3,11 @@ package africa.semoicolon.service;
 import africa.semoicolon.exceptions.*;
 import africa.semoicolon.model.Task;
 import africa.semoicolon.repo.TaskRepository;
-import africa.semoicolon.request.CompleteTaskRequest;
-import africa.semoicolon.request.CreateTaskRequest;
-import africa.semoicolon.request.DeleteTaskRequest;
-import africa.semoicolon.request.StartTaskRequest;
+import africa.semoicolon.request.*;
 import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
+import africa.semoicolon.response.UpdateTaskResponse;
 import africa.semoicolon.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +59,12 @@ public class ToDoTaskService implements TaskService{
             throw new ToDoListException(TASK_NOT_FOUND.getMessage());
         repository.deleteTaskByUsernameAndTaskTitle(delete.getUsername(),delete.getTaskName());
     }
+
+    @Override
+    public UpdateTaskResponse updateTask(UpdateTaskRequest update) {
+        return null;
+    }
+
     private void checkTaskExistence(Optional<Task> taskFound){
         if(taskFound.isEmpty())
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());

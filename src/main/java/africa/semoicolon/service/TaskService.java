@@ -4,6 +4,7 @@ import africa.semoicolon.request.*;
 import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
+import africa.semoicolon.response.UpdateTaskResponse;
 import org.springframework.stereotype.Service;
 
 @Service
