@@ -1,9 +1,6 @@
 package africa.semoicolon.service;
 
-import africa.semoicolon.request.CompleteTaskRequest;
-import africa.semoicolon.request.CreateTaskRequest;
-import africa.semoicolon.request.DeleteTaskRequest;
-import africa.semoicolon.request.StartTaskRequest;
+import africa.semoicolon.request.*;
 import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
@@ -16,5 +13,6 @@ public interface TaskService{
     StartTaskResponse startTaskWith(StartTaskRequest startRequest);
     CompleteTaskResponse completeTask(CompleteTaskRequest complete);
     void deleteTaskWith(DeleteTaskRequest delete);
+    UpdateTaskResponse updateTask(UpdateTaskRequest update);
 
 }

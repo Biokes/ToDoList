@@ -59,6 +59,7 @@ public class ToDoTaskService implements TaskService{
         validateDeleteTaskRequest(delete);
         if(!isExistingTask(delete.getTaskName(), delete.getUsername()))
             throw new ToDoListException(TASK_NOT_FOUND.getMessage());
+        repository.deleteTaskByUsernameAndTaskTitle(delete.getUsername(),delete.getTaskName());
     }
     private void checkTaskExistence(Optional<Task> taskFound){
         if(taskFound.isEmpty())

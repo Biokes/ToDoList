@@ -1,10 +1,7 @@
 package africa.semoicolon.service;
 import africa.semoicolon.exceptions.*;
 
-import africa.semoicolon.request.CompleteTaskRequest;
-import africa.semoicolon.request.CreateTaskRequest;
-import africa.semoicolon.request.DeleteTaskRequest;
-import africa.semoicolon.request.StartTaskRequest;
+import africa.semoicolon.request.*;
 import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
@@ -66,7 +63,7 @@ class TaskServiceTest{
         assertEquals(IN_PROGRESS, response.getStatus());
     }
     @Test
-    public void completeTask_testTaskIsCopmpleted() throws InterruptedException{
+    public void completeTask_testTaskIsCompleted() throws InterruptedException{
         CompleteTaskRequest complete = new CompleteTaskRequest();
         complete.setTaskName("nylon");
         complete.setUsername("username");
@@ -104,10 +101,19 @@ class TaskServiceTest{
         CreateTaskRequest create = new CreateTaskRequest();
         create.setUsername("username");
         create.setTaskTitle("task");
-        System.out.println(taskService.createTask(create));
+        taskService.createTask(create);
         assertThrows(TaskExistsException.class,()->taskService.createTask(create));
         taskService.deleteTaskWith(delete);
         assertThrows(ToDoListException.class,()->taskService.deleteTaskWith(delete));
+    }
+    @Test
+    public void updateTaskTitle_testTaskTitleIsUpdated(){
+        UpdateTaskRequest update = new UpdateTaskRequest();
+        update.setUsername("");
+        update.setOldTitle("");
+        update.setNewTitle("");
+        update.setDescription("");
+        assertThrows(ToDoListException.class,()->taskService.updateTask(update));
     }
 
 }
