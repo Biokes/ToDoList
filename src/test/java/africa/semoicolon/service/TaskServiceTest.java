@@ -68,7 +68,7 @@ class TaskServiceTest{
     @Test
     public void completeTask_testTaskIsCopmpleted(){
         CompleteTaskRequest complete = new CompleteTaskRequest();
-        complete.setTaskName("task");
+        complete.setTaskName("nylon");
         complete.setUsername("username");
         assertThrows(TaskNotFoundException.class,()-> taskService.completeTask(complete));
         CreateTaskRequest createRequest = new CreateTaskRequest();

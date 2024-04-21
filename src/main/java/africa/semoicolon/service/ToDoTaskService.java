@@ -2,6 +2,7 @@ package africa.semoicolon.service;
 
 import africa.semoicolon.exceptions.TaskExistsException;
 import africa.semoicolon.exceptions.TaskNotFoundException;
+import africa.semoicolon.exceptions.TaskNotStartedException;
 import africa.semoicolon.exceptions.TaskStartedException;
 import africa.semoicolon.model.Task;
 import africa.semoicolon.repo.TaskRepository;
@@ -52,7 +53,16 @@ public class ToDoTaskService implements TaskService{
     }
     public CompleteTaskResponse completeTask(CompleteTaskRequest complete){
         validateCompleteTaskRequest(complete);
+        if(!isExistingTask(complete.getTaskName( ),complete.getUsername()))
+            throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage( ));
+        if(!isStartedTask(complete.getTaskName(),complete.getUsername()))
+            throw new TaskNotStartedException(TASK_NOT_STARTED.getMessage());
         return null;
+    }
+
+    private boolean isStartedTask(String taskName, String username){
+        Optional<Task> task=repository.findTaskByTaskTitleAndUsername(taskName, username);
+        return task.get().getStatus()==IN_PROGRESS;
     }
 
     private boolean isExistingTask(String title,String username){

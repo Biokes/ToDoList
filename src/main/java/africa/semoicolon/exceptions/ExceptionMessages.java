@@ -1,9 +1,10 @@
 package africa.semoicolon.exceptions;
 
 public enum ExceptionMessages{
-    TASK_NOT_FOUND("Task not found"),
+    TASK_NOT_FOUND("Task not found`"),
     TASK_STARTED("Task is already started"),
     TASK_EXISTS("Task with title already exists"),
+    TASK_NOT_STARTED("Task not started"),
     INVALID_DETAILS("Invalid details provided");
     ExceptionMessages(String message){
         this.message = message;
