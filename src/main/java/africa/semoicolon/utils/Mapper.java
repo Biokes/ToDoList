@@ -42,7 +42,7 @@ public class Mapper{
         task.setStatus(IN_PROGRESS);
         response.setStatus(task.getStatus());
         LocalDateTime date = task.getStatus( ).getDate( );
-        task.setDateStarted(task.getStatus().getDate().toString());
+        task.setDateStarted(task.getStatus().getDate());
         if(task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");
         else response.setDescription(task.getDescription());
@@ -52,12 +52,13 @@ public class Mapper{
 
     public static CompleteTaskResponse mapToCompleteTaskResponse(Task complete){
         CompleteTaskResponse response = new CompleteTaskResponse();
-        response.setTaskName(complete.getTaskTitle( ));
-        response.setUsername(complete.getUsername( ));
-        response.setStatus(complete.getStatus( ));
+        response.setTaskName(complete.getTaskTitle());
+        response.setUsername(complete.getUsername());
+        response.setStatus(complete.getStatus());
         response.setDateCreated(complete.getDateCreated());
-        response.setDuration(getDuration(complete.getDateStarted()));
-        response.setStartDate(complete.getDateStarted( ));
+        response.setDuration(getDuration(complete.getDateStarted().toString()));
+        LocalDateTime date = complete.getDateStarted();
+        response.setStartDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
         return response;
     }
 

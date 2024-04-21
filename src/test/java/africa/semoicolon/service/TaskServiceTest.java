@@ -85,11 +85,13 @@ class TaskServiceTest{
         startTask.setTaskName("  nylon  ");
         startTask.setUsername("username");
         taskService.startTaskWith(startTask);
-        Thread.sleep(12000);
         CompleteTaskResponse completeResponse = taskService.completeTask(complete);
         assertEquals("username", completeResponse.getUsername());
         assertEquals("nylon",completeResponse.getTaskName());
         assertEquals(COMPLETED, completeResponse.getStatus());
-        System.out.println(completeResponse);
+    }
+    @Test
+    public void deleteTask_testTaskIsDeleted(){
+        DeleteTaskRequest delete = new DeleteTaskRequsest();
     }
 }

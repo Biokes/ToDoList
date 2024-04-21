@@ -47,8 +47,7 @@ public class ToDoTaskService implements TaskService{
         taskFound.get().setStatus(IN_PROGRESS);
         taskFound.get().setDateStarted(taskFound.get()
                                                .getStatus()
-                                               .getDate()
-                                               .format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
+                                               .getDate());
         return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
     }
 
