@@ -1,21 +1,18 @@
+import africa.semoicolon.exceptions.TaskNotFoundException;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FireDrill{
 
     public static int getHighest(int[] ints){
-        int max =Integer.MIN_VALUE;
-        ArrayList<Integer> output = new ArrayList<>();
-        for(int number : ints){
-            for(int count: ints){
-                if(number == count)
-                    continue;
-                output.add(number*count);
+        if(ints.length<=1)
+            throw new TaskNotFoundException("Length should be greater than 1");
+        int max = Integer.MIN_VALUE;
+        for(int count =0; count< ints.length;count++){
+            for(int counter =0; counter< ints.length;counter++){
+                if(count == counter){continue;}
+                if(max < ints[count]* ints[counter]) max = ints[count]* ints[counter];
             }
-        }
-        for(int num : output){
-            if(num > max)
-                max = num;
         }
         return max;
     }

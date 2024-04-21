@@ -33,7 +33,8 @@ public class ToDoTaskService implements TaskService{
     }
     public CreateTaskResponse createTask(CreateTaskRequest request){
         validateCreateTaskRequest(request);
-        checkExistingTask(request.getTaskTitle(),request.getUsername());
+        if(isExistingTask(request.getTaskTitle(),request.getUsername()))
+            throw new TaskExistsException(TASK_EXISTS.getMessage());
         Task task = Mapper.mapCreateTaskRequest(request);
         task = repository.save(task);
         return Mapper.mapTaskToRequest(task);
@@ -54,12 +55,12 @@ public class ToDoTaskService implements TaskService{
         return null;
     }
 
-    private void checkExistingTask(String title,String username){
+    private boolean isExistingTask(String title,String username){
         List<Task> tasks = repository.findAll();
         for(Task task : tasks){
             if(task.getTaskTitle().equalsIgnoreCase(title)&&task.getUsername().equalsIgnoreCase(username))
-                throw new TaskExistsException(TASK_EXISTS.getMessage());
+               return true;
         }
-
+        return false;
     }
 }
