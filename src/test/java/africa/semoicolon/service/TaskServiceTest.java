@@ -94,5 +94,7 @@ class TaskServiceTest{
     @Test
     public void deleteTask_testTaskIsDeleted(){
         DeleteTaskRequest delete = new DeleteTaskRequest();
+        delete.setTaskName("");
+        delete.setUsername("");
     }
 }
