@@ -32,6 +32,7 @@ public class Validator{
     }
 
     public static void validateDeleteTaskRequest(DeleteTaskRequest delete){
-
+        delete.setTaskName(validate(delete.getTaskName()));
+        delete.setUsername(validate(delete.getUsername()));
     }
 }
