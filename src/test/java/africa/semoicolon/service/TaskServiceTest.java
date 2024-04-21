@@ -97,6 +97,17 @@ class TaskServiceTest{
         delete.setTaskName("");
         delete.setUsername("");
         assertThrows(ToDoListException.class,()-> taskService.deleteTaskWith(delete));
+        delete.setTaskName(" nylon  ");
+        assertThrows(ToDoListException.class,()-> taskService.deleteTaskWith(delete));
+        delete.setUsername("username");
+        assertThrows(ToDoListException.class,()-> taskService.deleteTaskWith(delete));
+        CreateTaskRequest create = new CreateTaskRequest();
+        create.setUsername("username");
+        create.setTaskTitle("task");
+        System.out.println(taskService.createTask(create));
+        assertThrows(TaskExistsException.class,()->taskService.createTask(create));
+        taskService.deleteTaskWith(delete);
+        assertThrows(TaskNotFoundException.class,()->taskService.deleteTaskWith(delete));
     }
 
 }

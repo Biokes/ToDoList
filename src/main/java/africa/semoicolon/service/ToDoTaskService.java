@@ -61,7 +61,7 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapToCompleteTaskResponse(complete(complete));
     }
     public void deleteTaskWith(DeleteTaskRequest delete){
-        Validator.validateDeleteTaskRequest(delete);
+        validateDeleteTaskRequest(delete);
     }
     private void validateTask(Optional<Task> taskFound){
         if(taskFound.isEmpty())
