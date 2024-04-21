@@ -45,7 +45,6 @@ class TaskServiceTest{
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertThrows(TaskExistsException.class,()->taskService.createTask(createRequest));
         assertEquals("task title",response.getTitle());
-        System.out.println(response);
     }
     @Test
     public void startTask_testStartIsStarted(){
@@ -92,6 +91,5 @@ class TaskServiceTest{
         assertEquals("nylon",completeResponse.getTaskName());
         assertEquals(COMPLETED, completeResponse.getStatus());
         System.out.println(completeResponse);
-
     }
 }

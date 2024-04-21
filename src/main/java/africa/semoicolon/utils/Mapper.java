@@ -1,7 +1,6 @@
 package africa.semoicolon.utils;
 
 import africa.semoicolon.model.Task;
-import africa.semoicolon.model.TaskStatus;
 import africa.semoicolon.request.CreateTaskRequest;
 import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
@@ -56,7 +55,8 @@ public class Mapper{
         response.setStatus(complete.getStatus( ));
         response.setDateCreated(complete.getDateCreated());
         response.setDuration(getDuration(complete.getDateStarted()));
-        response.setStartDate(complete.getDateStarted());
+        response.setStartDate(LocalDateTime.parse(complete.getDateStarted(),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")).toString());
         return response;
     }
 
