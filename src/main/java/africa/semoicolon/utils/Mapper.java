@@ -41,6 +41,8 @@ public class Mapper{
         response.setTaskTitle(task.getTaskTitle());
         task.setStatus(IN_PROGRESS);
         response.setStatus(task.getStatus());
+        LocalDateTime date = task.getStatus( ).getDate( );
+        task.setDateStarted(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
         if(task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");
         else response.setDescription(task.getDescription());
