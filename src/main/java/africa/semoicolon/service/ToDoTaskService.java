@@ -14,6 +14,7 @@ import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
 import africa.semoicolon.utils.Mapper;
+import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +61,7 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapToCompleteTaskResponse(complete(complete));
     }
     public void deleteTaskWith(DeleteTaskRequest delete){
-
+        Validator.validateDeleteTaskRequest(delete);
     }
     private void validateTask(Optional<Task> taskFound){
         if(taskFound.isEmpty())

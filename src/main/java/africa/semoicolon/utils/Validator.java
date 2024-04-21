@@ -3,6 +3,7 @@ package africa.semoicolon.utils;
 import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.request.CompleteTaskRequest;
 import africa.semoicolon.request.CreateTaskRequest;
+import africa.semoicolon.request.DeleteTaskRequest;
 import africa.semoicolon.request.StartTaskRequest;
 
 import java.util.Optional;
@@ -28,5 +29,9 @@ public class Validator{
     public static void validateStartTAskRequest(StartTaskRequest startRequest){
         startRequest.setTaskName(validate(startRequest.getTaskName()));
         startRequest.setUsername(validate(startRequest.getUsername()));
+    }
+
+    public static void validateDeleteTaskRequest(DeleteTaskRequest delete){
+
     }
 }

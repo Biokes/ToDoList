@@ -15,6 +15,6 @@ public interface TaskService{
     CreateTaskResponse createTask(CreateTaskRequest request);
     StartTaskResponse startTaskWith(StartTaskRequest startRequest);
     CompleteTaskResponse completeTask(CompleteTaskRequest complete);
-
     void deleteTaskWith(DeleteTaskRequest delete);
+
 }
