@@ -1,10 +1,14 @@
 package africa.semoicolon.utils;
 
 import africa.semoicolon.model.Task;
+import africa.semoicolon.model.TaskStatus;
 import africa.semoicolon.request.CreateTaskRequest;
+import africa.semoicolon.response.CompleteTaskResponse;
 import africa.semoicolon.response.CreateTaskResponse;
 import africa.semoicolon.response.StartTaskResponse;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
@@ -43,5 +47,24 @@ public class Mapper{
         else response.setDescription(task.getDescription());
         response.setUsername(task.getUsername());
         return response;
+    }
+
+    public static CompleteTaskResponse mapToCompleteTaskResponse(Task complete){
+        CompleteTaskResponse response = new CompleteTaskResponse();
+        response.setTaskName(complete.getTaskTitle( ));
+        response.setUsername(complete.getUsername( ));
+        response.setStatus(complete.getStatus( ));
+        response.setDateCreated(complete.getDateCreated());
+        response.setDuration(getDuration(complete.getDateStarted()));
+        response.setStartDate(complete.getDateStarted());
+        return response;
+    }
+
+    private static String getDuration(String status){
+        Duration time = Duration.between(LocalDateTime.parse(status),LocalDateTime.now());
+        return String.format("%s days, %s hours, %s minutes, %s seconds", time.toDays()%24,
+                time.toHours()%(60),
+                time.toMinutes()%(60),
+                time.toSeconds()%60);
     }
 }

@@ -8,5 +8,7 @@ public class CompleteTaskResponse{
     private String username;
     private String taskName;
     private String startDate;
+    private String dateCreated;
     private TaskStatus status;
+    private String duration;
 }

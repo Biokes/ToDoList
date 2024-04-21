@@ -14,5 +14,6 @@ public class Task{
     private String taskTitle;
     private TaskStatus status;
     private String dateCreated;
+    private String dateStarted;
 
 }

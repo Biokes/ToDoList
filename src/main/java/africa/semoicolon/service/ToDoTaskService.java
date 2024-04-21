@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
+import static africa.semoicolon.model.TaskStatus.COMPLETED;
 import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.utils.Validator.*;
 
@@ -48,6 +49,7 @@ public class ToDoTaskService implements TaskService{
         if (taskFound.get().getStatus() == IN_PROGRESS)
             throw new TaskStartedException(TASK_STARTED.getMessage());
         taskFound.get().setStatus(IN_PROGRESS);
+        taskFound.get().setDateStarted(taskFound.get().getStatus().getDate().toString());
         return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
     }
     public CompleteTaskResponse completeTask(CompleteTaskRequest complete){
@@ -56,7 +58,12 @@ public class ToDoTaskService implements TaskService{
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage( ));
         if(!isStartedTask(complete.getTaskName(),complete.getUsername()))
             throw new TaskNotStartedException(TASK_NOT_STARTED.getMessage());
-        return null;
+        return Mapper.mapToCompleteTaskResponse(complete(complete));
+    }
+    private Task complete(CompleteTaskRequest complete){
+        Optional<Task> task = repository.findTaskByTaskTitleAndUsername(complete.getTaskName( ), complete.getUsername( ));
+        task.get().setStatus(COMPLETED);
+        return repository.save(task.get());
     }
 
     private boolean isStartedTask(String taskName, String username){

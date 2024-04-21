@@ -66,7 +66,7 @@ class TaskServiceTest{
         assertEquals(IN_PROGRESS, response.getStatus());
     }
     @Test
-    public void completeTask_testTaskIsCopmpleted(){
+    public void completeTask_testTaskIsCopmpleted() throws InterruptedException{
         CompleteTaskRequest complete = new CompleteTaskRequest();
         complete.setTaskName("nylon");
         complete.setUsername("username");
@@ -86,11 +86,12 @@ class TaskServiceTest{
         startTask.setTaskName("  nylon  ");
         startTask.setUsername("username");
         taskService.startTaskWith(startTask);
+        Thread.sleep(12000);
         CompleteTaskResponse completeResponse = taskService.completeTask(complete);
         assertEquals("username", completeResponse.getUsername());
         assertEquals("nylon",completeResponse.getTaskName());
         assertEquals(COMPLETED, completeResponse.getStatus());
-
+        System.out.println(completeResponse);
 
     }
 }
