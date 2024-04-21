@@ -20,8 +20,7 @@ public class Mapper{
     task.setTaskTitle(request.getTaskTitle());
     task.setDescription(request.getDescription());
     task.setStatus(PENDING);
-    task.setDateCreated(task.getStatus().getDate().
-         format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
+    task.setDateCreated(task.getStatus().getDate().toString());
     return task;
     }
 
@@ -31,7 +30,8 @@ public class Mapper{
         response.setDescription(task.getDescription());
         response.setUsername(task.getUsername());
         response.setTitle(task.getTaskTitle());
-        response.setDateCreated(task.getDateCreated());
+        LocalDateTime created = LocalDateTime.parse(task.getDateCreated());
+        response.setDateCreated(created.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
         response.setStatus(task.getStatus());
         return response;
     }

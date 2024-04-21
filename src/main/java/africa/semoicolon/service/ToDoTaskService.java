@@ -16,6 +16,7 @@ import africa.semoicolon.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,16 +42,23 @@ public class ToDoTaskService implements TaskService{
     }
     public StartTaskResponse startTaskWith(StartTaskRequest startRequest){
         validateStartTAskRequest(startRequest);
-        Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(
-                startRequest.getTaskName(),startRequest.getUsername());
+        Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(startRequest.getTaskName(),startRequest.getUsername());
+        validateTask(taskFound);
+        taskFound.get().setStatus(IN_PROGRESS);
+        taskFound.get().setDateStarted(taskFound.get()
+                                               .getStatus()
+                                               .getDate()
+                                               .format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
+        return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
+    }
+
+    private void validateTask(Optional<Task> taskFound){
         if(taskFound.isEmpty())
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
         if (taskFound.get().getStatus() == IN_PROGRESS)
             throw new TaskStartedException(TASK_STARTED.getMessage());
-        taskFound.get().setStatus(IN_PROGRESS);
-        taskFound.get().setDateStarted(taskFound.get().getStatus().getDate().toString());
-        return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
     }
+
     public CompleteTaskResponse completeTask(CompleteTaskRequest complete){
         validateCompleteTaskRequest(complete);
         if(!isExistingTask(complete.getTaskName( ),complete.getUsername()))

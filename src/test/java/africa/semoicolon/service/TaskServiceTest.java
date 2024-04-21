@@ -90,6 +90,5 @@ class TaskServiceTest{
         assertEquals("username", completeResponse.getUsername());
         assertEquals("nylon",completeResponse.getTaskName());
         assertEquals(COMPLETED, completeResponse.getStatus());
-        System.out.println(completeResponse);
     }
 }
