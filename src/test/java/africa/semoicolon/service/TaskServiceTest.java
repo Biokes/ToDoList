@@ -96,5 +96,7 @@ class TaskServiceTest{
         DeleteTaskRequest delete = new DeleteTaskRequest();
         delete.setTaskName("");
         delete.setUsername("");
+        assertThrows(ToDoListException.class,()-> taskService.deleteTaskWith(delete));
     }
+
 }

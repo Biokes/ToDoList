@@ -6,5 +6,4 @@ import lombok.Data;
 public class DeleteTaskRequest{
     private String taskName;
     private String username;
-
 }
