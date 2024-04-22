@@ -1,13 +1,13 @@
 package africa.semoicolon.service;
 
+import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.exceptions.*;
-import africa.semoicolon.model.Task;
-import africa.semoicolon.repo.TaskRepository;
-import africa.semoicolon.request.*;
-import africa.semoicolon.response.CompleteTaskResponse;
-import africa.semoicolon.response.CreateTaskResponse;
-import africa.semoicolon.response.StartTaskResponse;
-import africa.semoicolon.response.UpdateTaskResponse;
+import africa.semoicolon.data.model.Task;
+import africa.semoicolon.data.repo.TaskRepository;
+import africa.semoicolon.dtos.response.CompleteTaskResponse;
+import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.StartTaskResponse;
+import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
-import static africa.semoicolon.model.TaskStatus.COMPLETED;
-import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
+import static africa.semoicolon.data.model.TaskStatus.COMPLETED;
+import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.utils.Validator.*;
 
 @Service

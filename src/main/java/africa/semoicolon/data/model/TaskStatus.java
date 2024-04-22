@@ -1,4 +1,4 @@
-package africa.semoicolon.model;
+package africa.semoicolon.data.model;
 
 import java.time.LocalDateTime;
 

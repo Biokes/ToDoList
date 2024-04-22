@@ -1,4 +1,4 @@
-package africa.semoicolon.response;
+package africa.semoicolon.dtos.response;
 
 import lombok.Data;
 @Data

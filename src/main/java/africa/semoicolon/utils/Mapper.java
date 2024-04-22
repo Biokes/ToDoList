@@ -1,18 +1,21 @@
 package africa.semoicolon.utils;
 
-import africa.semoicolon.model.Task;
-import africa.semoicolon.request.CreateTaskRequest;
-import africa.semoicolon.response.CompleteTaskResponse;
-import africa.semoicolon.response.CreateTaskResponse;
-import africa.semoicolon.response.StartTaskResponse;
+import africa.semoicolon.data.model.Task;
+import africa.semoicolon.dtos.request.CreateTaskRequest;
+import africa.semoicolon.dtos.response.CompleteTaskResponse;
+import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.StartTaskResponse;
+import africa.semoicolon.exceptions.InvalidDetails;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import static africa.semoicolon.model.TaskStatus.IN_PROGRESS;
-import static africa.semoicolon.model.TaskStatus.PENDING;
+import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
+import static africa.semoicolon.data.model.TaskStatus.PENDING;
+import static africa.semoicolon.exceptions.ExceptionMessages.INVALID_DATE;
 
 public class Mapper{
     public static Task mapCreateTaskRequestToTask(CreateTaskRequest request){
@@ -21,10 +24,20 @@ public class Mapper{
     task.setTaskTitle(request.getTaskTitle());
     task.setDescription(request.getDescription());
     task.setStatus(PENDING);
+    task.setDueDate(Validator.validateDate(convertToDate(request.getDueDate())));
     task.setDateCreated(task.getStatus().getDate().toString());
     return task;
     }
-
+    private static LocalDate convertToDate(String dateGiven){
+        try{
+            dateGiven = dateGiven.replaceAll("\\s+", " ");
+            dateGiven = dateGiven.replaceAll("\\D+", "/");
+            return LocalDate.parse(dateGiven, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        }
+        catch (Exception exception){
+            throw new InvalidDetails(INVALID_DATE.getMessage());
+        }
+    }
     public static CreateTaskResponse mapTaskToResponse(Task task){
         CreateTaskResponse response = new CreateTaskResponse();
         response.setStatus(task.getStatus());
@@ -42,7 +55,6 @@ public class Mapper{
             given= "no description provided";
         return given;
     }
-
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
         StartTaskResponse response = new StartTaskResponse();
         response.setTaskTitle(task.getTaskTitle());
@@ -56,7 +68,6 @@ public class Mapper{
         response.setUsername(task.getUsername());
         return response;
     }
-
     public static CompleteTaskResponse mapToCompleteTaskResponse(Task complete){
         CompleteTaskResponse response = new CompleteTaskResponse();
         response.setTaskName(complete.getTaskTitle());
@@ -68,7 +79,6 @@ public class Mapper{
         response.setStartDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
         return response;
     }
-
     private static String getDuration(String status){
         Duration time = Duration.between(LocalDateTime.parse(status),LocalDateTime.now());
         return String.format("%s days, %s hours, %s minutes, %s seconds", time.toDays()%24,

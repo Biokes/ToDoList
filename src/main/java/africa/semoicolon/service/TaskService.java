@@ -1,10 +1,10 @@
 package africa.semoicolon.service;
 
-import africa.semoicolon.request.*;
-import africa.semoicolon.response.CompleteTaskResponse;
-import africa.semoicolon.response.CreateTaskResponse;
-import africa.semoicolon.response.StartTaskResponse;
-import africa.semoicolon.response.UpdateTaskResponse;
+import africa.semoicolon.dtos.request.*;
+import africa.semoicolon.dtos.response.CompleteTaskResponse;
+import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.StartTaskResponse;
+import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import org.springframework.stereotype.Service;
 
 @Service

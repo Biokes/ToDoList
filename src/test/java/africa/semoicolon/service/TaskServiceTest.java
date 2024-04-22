@@ -1,16 +1,16 @@
 package africa.semoicolon.service;
+import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.exceptions.*;
 
-import africa.semoicolon.request.*;
-import africa.semoicolon.response.CompleteTaskResponse;
-import africa.semoicolon.response.CreateTaskResponse;
-import africa.semoicolon.response.StartTaskResponse;
+import africa.semoicolon.dtos.response.CompleteTaskResponse;
+import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.StartTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static africa.semoicolon.model.TaskStatus.*;
+import static africa.semoicolon.data.model.TaskStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class TaskServiceTest{
@@ -28,6 +28,7 @@ class TaskServiceTest{
         createRequest.setDescription("description");
         assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
         createRequest.setTaskTitle("taskTitle");
+        assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertEquals("username", response.getUsername());
         assertEquals("taskTitle", response.getTitle());
@@ -122,6 +123,7 @@ class TaskServiceTest{
         CreateTaskRequest request = new CreateTaskRequest();
         request.setUsername("name");
         request.setTaskTitle("title");
+        request.setDueDate("12/12.2024");
         CreateTaskResponse response = taskService.createTask(request);
         assertEquals("title", response.getUsername());
         assertEquals("no decription saved", response.getDescription());

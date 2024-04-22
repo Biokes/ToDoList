@@ -1,6 +1,6 @@
-package africa.semoicolon.repo;
+package africa.semoicolon.data.repo;
 
-import africa.semoicolon.model.Task;
+import africa.semoicolon.data.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

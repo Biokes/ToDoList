@@ -1,6 +1,7 @@
 package africa.semoicolon.repo;
 
-import africa.semoicolon.model.Task;
+import africa.semoicolon.data.model.Task;
+import africa.semoicolon.data.repo.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

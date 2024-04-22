@@ -1,9 +1,10 @@
-package africa.semoicolon.model;
+package africa.semoicolon.data.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,5 +18,6 @@ public class Task{
     private TaskStatus status;
     private String dateCreated;
     private LocalDateTime dateStarted;
+    private LocalDate dueDate;
 
 }

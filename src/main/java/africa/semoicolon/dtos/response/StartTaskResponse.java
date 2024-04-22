@@ -1,6 +1,6 @@
-package africa.semoicolon.response;
+package africa.semoicolon.dtos.response;
 
-import africa.semoicolon.model.TaskStatus;
+import africa.semoicolon.data.model.TaskStatus;
 import lombok.Data;
 
 @Data

@@ -1,13 +1,16 @@
 package africa.semoicolon.utils;
 
 import africa.semoicolon.exceptions.InvalidDetails;
-import africa.semoicolon.request.CompleteTaskRequest;
-import africa.semoicolon.request.CreateTaskRequest;
-import africa.semoicolon.request.DeleteTaskRequest;
-import africa.semoicolon.request.StartTaskRequest;
+import africa.semoicolon.dtos.request.CompleteTaskRequest;
+import africa.semoicolon.dtos.request.CreateTaskRequest;
+import africa.semoicolon.dtos.request.DeleteTaskRequest;
+import africa.semoicolon.dtos.request.StartTaskRequest;
+import africa.semoicolon.exceptions.ToDoListException;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
+import static africa.semoicolon.exceptions.ExceptionMessages.ELAPSED_DATE;
 import static africa.semoicolon.exceptions.ExceptionMessages.INVALID_DETAILS;
 
 public class Validator{
@@ -34,5 +37,11 @@ public class Validator{
     public static void validateDeleteTaskRequest(DeleteTaskRequest delete){
         delete.setTaskName(validate(delete.getTaskName()));
         delete.setUsername(validate(delete.getUsername()));
+    }
+
+    public static LocalDate validateDate(LocalDate localDate) {
+        if(localDate.isBefore(LocalDate.now()))
+            throw new ToDoListException(ELAPSED_DATE.getMessage());
+        return localDate;
     }
 }

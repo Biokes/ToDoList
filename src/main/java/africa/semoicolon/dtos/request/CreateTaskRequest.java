@@ -1,4 +1,4 @@
-package africa.semoicolon.request;
+package africa.semoicolon.dtos.request;
 
 import lombok.Data;
 
@@ -7,4 +7,5 @@ public class CreateTaskRequest{
     private String username;
     private String taskTitle;
     private String description;
+    private String dueDate;
 }
