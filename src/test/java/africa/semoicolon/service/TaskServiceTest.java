@@ -46,6 +46,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("task title   ");
         createRequest.setDescription("description");
+        createRequest.setDueDate("27'04[2024");
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertThrows(TaskExistsException.class,()->taskService.createTask(createRequest));
         assertEquals("task title",response.getTitle());
@@ -60,6 +61,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
+        createRequest.setDueDate("27'04[2024");
         taskService.createTask(createRequest);
         StartTaskResponse response = taskService.startTaskWith(startRequest);
         assertThrows(TaskStartedException.class,()-> taskService.startTaskWith(startRequest));
@@ -78,6 +80,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
+        createRequest.setDueDate("27'04[2024");
         taskService.createTask(createRequest);
         assertThrows(TaskNotStartedException.class,()-> taskService.completeTask(complete));
         StartTaskRequest startTask = new StartTaskRequest();

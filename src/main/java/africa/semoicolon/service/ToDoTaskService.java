@@ -9,6 +9,7 @@ import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.dtos.response.StartTaskResponse;
 import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.utils.Mapper;
+import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +63,14 @@ public class ToDoTaskService implements TaskService{
 
     @Override
     public UpdateTaskResponse updateTask(UpdateTaskRequest update) {
-        return null;
+        validateUpdate(update);
+        if(isExistingTask(update.getOldTitle(),update.getUsername())) {
+            Task task = findTask(update.getUsername(), update.getOldTitle());
+            task.setTaskTitle(update.getNewTitle());
+            return Mapper.mapTaskToUpdateResponse(repository.save(task));
+);
+        }
+        throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
 
     private void checkTaskExistence(Optional<Task> taskFound){
@@ -90,5 +98,8 @@ public class ToDoTaskService implements TaskService{
                return true;
         }
         return false;
+    }
+    private Task findTask(String username, String taskTitle){
+        return repository.findTaskByTaskTitleAndUsername(taskTitle,username).get();
     }
 }

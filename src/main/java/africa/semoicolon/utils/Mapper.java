@@ -5,6 +5,7 @@ import africa.semoicolon.dtos.request.CreateTaskRequest;
 import africa.semoicolon.dtos.response.CompleteTaskResponse;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.dtos.response.StartTaskResponse;
+import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.exceptions.InvalidDetails;
 
 import java.time.Duration;
@@ -86,5 +87,11 @@ public class Mapper{
                 time.toHours()%(60),
                 time.toMinutes()%(60),
                 time.toSeconds()%60);
+    }
+
+    public static UpdateTaskResponse mapTaskToUpdateResponse(Task task) {
+        UpdateTaskResponse response = new UpdateTaskResponse();
+        response.setUsername(task.getUsername());
+        return null;
     }
 }
