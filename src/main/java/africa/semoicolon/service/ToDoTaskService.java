@@ -68,7 +68,6 @@ public class ToDoTaskService implements TaskService{
             Task task = findTask(update.getUsername(), update.getOldTitle());
             task.setTaskTitle(update.getNewTitle());
             return Mapper.mapTaskToUpdateResponse(repository.save(task));
-);
         }
         throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
