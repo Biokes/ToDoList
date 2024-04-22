@@ -46,6 +46,7 @@ public class Mapper{
         response.setTitle(task.getTaskTitle());
         LocalDateTime created = LocalDateTime.parse(task.getDateCreated());
         response.setDateCreated(created.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
+        response.setDueDate(task.getDueDate().toString());
         response.setStatus(task.getStatus());
         return response;
     }

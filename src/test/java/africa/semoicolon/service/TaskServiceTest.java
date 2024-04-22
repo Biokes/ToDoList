@@ -29,11 +29,16 @@ class TaskServiceTest{
         assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
         createRequest.setTaskTitle("taskTitle");
         assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
+        createRequest.setDueDate("12/04.2007");
+        assertThrows(ToDoListException.class,()->taskService.createTask(createRequest));
+        createRequest.setDueDate("25/04/2024");
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertEquals("username", response.getUsername());
         assertEquals("taskTitle", response.getTitle());
         assertEquals("description", response.getDescription());
+        assertEquals("25/04/2024", response.getDueDate());
         assertEquals(PENDING, response.getStatus());
+        System.out.println(response);
     }
     @Test
     public void createTaskTwice_testExceptionIsThrown(){
