@@ -1,10 +1,7 @@
 package africa.semoicolon.utils;
 
+import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.exceptions.InvalidDetails;
-import africa.semoicolon.dtos.request.CompleteTaskRequest;
-import africa.semoicolon.dtos.request.CreateTaskRequest;
-import africa.semoicolon.dtos.request.DeleteTaskRequest;
-import africa.semoicolon.dtos.request.StartTaskRequest;
 import africa.semoicolon.exceptions.ToDoListException;
 
 import java.time.LocalDate;
@@ -43,5 +40,14 @@ public class Validator{
         if(localDate.isBefore(LocalDate.now()))
             throw new ToDoListException(ELAPSED_DATE.getMessage());
         return localDate;
+    }
+
+    public static void validateUpdate(UpdateTaskRequest update) {
+        update.setUsername(validate(update.getUsername()));
+        update.setNewTitle(validate(update.getNewTitle()));
+        update.setOldTitle(validate(update.getOldTitle()));
+        if(Optional.ofNullable(update.getDescription()).isPresent()) {
+            update.setDescription(validate(update.getDescription()));
+        }
     }
 }
