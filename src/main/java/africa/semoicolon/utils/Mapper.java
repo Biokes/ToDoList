@@ -92,6 +92,9 @@ public class Mapper{
     public static UpdateTaskResponse mapTaskToUpdateResponse(Task task) {
         UpdateTaskResponse response = new UpdateTaskResponse();
         response.setUsername(task.getUsername());
-        return null;
+        response.setStatus(task.getStatus());
+        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        response.setTaskTitle(task.getTaskTitle());
+        return response;
     }
 }

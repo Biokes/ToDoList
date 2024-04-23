@@ -1,5 +1,6 @@
 package africa.semoicolon.service;
 import africa.semoicolon.dtos.request.*;
+import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.exceptions.*;
 
 import africa.semoicolon.dtos.response.CompleteTaskResponse;
@@ -110,6 +111,7 @@ class TaskServiceTest{
         CreateTaskRequest create = new CreateTaskRequest();
         create.setUsername("username");
         create.setTaskTitle("task");
+        create.setDueDate("31.12;2024");
         taskService.createTask(create);
         assertThrows(TaskExistsException.class,()->taskService.createTask(create));
         taskService.deleteTaskWith(delete);
@@ -133,12 +135,21 @@ class TaskServiceTest{
         request.setTaskTitle("title");
         request.setDueDate("12/12.2024");
         CreateTaskResponse response = taskService.createTask(request);
-        assertEquals("title", response.getUsername());
-        assertEquals("no decription saved", response.getDescription());
-        assertEquals("name",response.getUsername());
+        assertEquals("name", response.getUsername());
+        assertEquals("no description provided", response.getDescription());
         assertEquals(PENDING,response.getStatus());
-
-
+        UpdateTaskResponse updateResponse = taskService.updateTask(update);
+        assertEquals("1234", updateResponse.getTaskTitle());
+    }
+    @Test
+    public void assignTask_testTaskIsAssigned(){
+        AssignTaskRequest assign= new AssignTaskRequest();
+        assign.setUsername("");
+        assign.setAssignee("");
+        assign.setDueDate("");
+        assign.setTaskTitle("");
+        assign.setDescription("");
+        assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
     }
 
 }

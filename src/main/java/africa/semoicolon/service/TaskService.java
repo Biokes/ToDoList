@@ -15,5 +15,5 @@ public interface TaskService{
     CompleteTaskResponse completeTask(CompleteTaskRequest complete);
     void deleteTaskWith(DeleteTaskRequest delete);
     UpdateTaskResponse updateTask(UpdateTaskRequest update);
-
+    AssignTaskResponse assignTask(AssignTaskRequest assign);
 }
