@@ -1,13 +1,10 @@
 package africa.semoicolon.service;
 
 import africa.semoicolon.dtos.request.*;
+import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.*;
 import africa.semoicolon.data.model.Task;
 import africa.semoicolon.data.repo.TaskRepository;
-import africa.semoicolon.dtos.response.CompleteTaskResponse;
-import africa.semoicolon.dtos.response.CreateTaskResponse;
-import africa.semoicolon.dtos.response.StartTaskResponse;
-import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.utils.Mapper;
 import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +67,11 @@ public class ToDoTaskService implements TaskService{
             return Mapper.mapTaskToUpdateResponse(repository.save(task));
         }
         throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
+    }
+
+    @Override
+    public AssignTaskResponse assignTask(AssignTaskRequest assign) {
+        return null;
     }
 
     private void checkTaskExistence(Optional<Task> taskFound){
