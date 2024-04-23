@@ -1,11 +1,9 @@
 package africa.semoicolon.utils;
 
 import africa.semoicolon.data.model.Task;
+import africa.semoicolon.dtos.request.AssignTaskRequest;
 import africa.semoicolon.dtos.request.CreateTaskRequest;
-import africa.semoicolon.dtos.response.CompleteTaskResponse;
-import africa.semoicolon.dtos.response.CreateTaskResponse;
-import africa.semoicolon.dtos.response.StartTaskResponse;
-import africa.semoicolon.dtos.response.UpdateTaskResponse;
+import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.InvalidDetails;
 
 import java.time.Duration;
@@ -96,5 +94,10 @@ public class Mapper{
         response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         response.setTaskTitle(task.getTaskTitle());
         return response;
+    }
+
+    public static AssignTaskResponse mapToAssignTask(AssignTaskRequest assign) {
+        AssignTask task = new AssignTask();
+        return null;
     }
 }

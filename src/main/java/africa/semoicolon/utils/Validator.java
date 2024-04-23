@@ -57,6 +57,11 @@ public class Validator{
         assign.setAssignerUsername(validate(assign.getAssignerUsername()));
         assign.setAssigneeUsername(validate(assign.getAssignerUsername()));
         assign.setDueDate(validateDate(Mapper.convertToDate(assign.getDueDate())).toString());
+        if(Optional.ofNullable(assign.getDescription()).isPresent()){
+            assign.setDescription(validate(assign.getDescription()));
+            return;
+        }
+        assign.setDescription("no content");
     }
 
 
