@@ -150,6 +150,12 @@ class TaskServiceTest{
         assign.setTaskTitle("");
         assign.setDescription("");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
+        assign.setAssignee("username");
+        assign.setDueDate("21/04/2024");
+        assign.setTaskTitle("title");
+        assign.setDescription("");
+        assign.setUsername("we");
+        assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
     }
 
 }
