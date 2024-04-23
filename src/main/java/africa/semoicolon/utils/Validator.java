@@ -5,6 +5,7 @@ import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.ELAPSED_DATE;
@@ -50,4 +51,13 @@ public class Validator{
             update.setDescription(validate(update.getDescription()));
         }
     }
+
+    public static void validateAssignTaskRequest(AssignTaskRequest assign) {
+        assign.setTaskTitle(validate(assign.getTaskTitle()));
+        assign.setAssignerUsername(validate(assign.getAssignerUsername()));
+        assign.setAssigneeUsername(validate(assign.getAssignerUsername()));
+        assign.setDueDate(validateDate(Mapper.convertToDate(assign.getDueDate())).toString());
+    }
+
+
 }

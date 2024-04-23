@@ -71,6 +71,7 @@ public class ToDoTaskService implements TaskService{
 
     @Override
     public AssignTaskResponse assignTask(AssignTaskRequest assign) {
+        Validator.validateAssignTaskRequest(assign);
         return null;
     }
 

@@ -29,7 +29,7 @@ public class Mapper{
     task.setDateCreated(task.getStatus().getDate().toString());
     return task;
     }
-    private static LocalDate convertToDate(String dateGiven){
+    public static LocalDate convertToDate(String dateGiven){
         try{
             dateGiven = dateGiven.replaceAll("\\s+", " ");
             dateGiven = dateGiven.replaceAll("\\D+", "/");

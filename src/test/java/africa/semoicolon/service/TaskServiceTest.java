@@ -1,11 +1,8 @@
 package africa.semoicolon.service;
 import africa.semoicolon.dtos.request.*;
-import africa.semoicolon.dtos.response.UpdateTaskResponse;
+import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.*;
 
-import africa.semoicolon.dtos.response.CompleteTaskResponse;
-import africa.semoicolon.dtos.response.CreateTaskResponse;
-import africa.semoicolon.dtos.response.StartTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,18 +141,22 @@ class TaskServiceTest{
     @Test
     public void assignTask_testTaskIsAssigned(){
         AssignTaskRequest assign= new AssignTaskRequest();
-        assign.setUsername("");
-        assign.setAssignee("");
+        assign.setAssignerUsername("");
+        assign.setAssigneeUsername("");
         assign.setDueDate("");
         assign.setTaskTitle("");
         assign.setDescription("");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
-        assign.setAssignee("username");
+        assign.setAssigneeUsername("username");
         assign.setDueDate("21/04/2024");
         assign.setTaskTitle("title");
         assign.setDescription("");
-        assign.setUsername("we");
+        assign.setAssignerUsername("we");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
+        assign.setDueDate("21/05}2024");
+        AssignTaskResponse response  = taskService.assignTask(assign);
+        assertEquals("we",response.getAssignerUsername());
+        assertEquals("username", response.getAssigneeUsername());
     }
 
 }
