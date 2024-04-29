@@ -15,6 +15,7 @@ import java.util.Optional;
 import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.data.model.TaskStatus.PENDING;
 import static africa.semoicolon.exceptions.ExceptionMessages.INVALID_DATE;
+import static africa.semoicolon.utils.Validator.validateAssignTaskRequest;
 
 public class Mapper{
     public static Task mapCreateTaskRequestToTask(CreateTaskRequest request){
@@ -86,7 +87,6 @@ public class Mapper{
                 time.toMinutes()%(60),
                 time.toSeconds()%60);
     }
-
     public static UpdateTaskResponse mapTaskToUpdateResponse(Task task) {
         UpdateTaskResponse response = new UpdateTaskResponse();
         response.setUsername(task.getUsername());
@@ -95,9 +95,25 @@ public class Mapper{
         response.setTaskTitle(task.getTaskTitle());
         return response;
     }
-
-    public static AssignTaskResponse mapToAssignTask(AssignTaskRequest assign) {
-        AssignTask task = new AssignTask();
-        return null;
+    public static Task mapToAssignTask(AssignTaskRequest assign) {
+        validateAssignTaskRequest(assign);
+        Task task = new Task();
+        task.setUsername(assign.getAssigneeUsername());
+        task.setDueDate(convertToDate(assign.getDueDate()));
+        task.setDescription(assign.getDescription());
+        task.setStatus(PENDING);
+        task.setTaskTitle(assign.getTaskTitle());
+        task.setAssignerUsername(assign.getAssignerUsername());
+        return task;
+    }
+    public static AssignTaskResponse mapToAssignTaskResponse(Task task) {
+        AssignTaskResponse response = new AssignTaskResponse();
+        response.setAssignerUsername(task.getAssignerUsername());
+        response.setStatus(task.getStatus());
+        response.setTaskTitle(task.getTaskTitle());
+        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        response.setAssigneeUsername(task.getUsername());
+        response.setDescription(task.getDescription());
+        return response;
     }
 }

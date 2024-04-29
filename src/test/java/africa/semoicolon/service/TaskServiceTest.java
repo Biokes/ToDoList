@@ -29,12 +29,12 @@ class TaskServiceTest{
         assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
         createRequest.setDueDate("12/04.2007");
         assertThrows(ToDoListException.class,()->taskService.createTask(createRequest));
-        createRequest.setDueDate("25/04/2024");
+        createRequest.setDueDate("25/07/2024");
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertEquals("username", response.getUsername());
         assertEquals("taskTitle", response.getTitle());
         assertEquals("description", response.getDescription());
-        assertEquals("25/04/2024", response.getDueDate());
+        assertEquals("25/07/2024", response.getDueDate());
         assertEquals(PENDING, response.getStatus());
         System.out.println(response);
     }
@@ -44,7 +44,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("task title   ");
         createRequest.setDescription("description");
-        createRequest.setDueDate("27'04[2024");
+        createRequest.setDueDate("27'09[2024");
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertThrows(TaskExistsException.class,()->taskService.createTask(createRequest));
         assertEquals("task title",response.getTitle());
@@ -59,7 +59,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
-        createRequest.setDueDate("27'04[2024");
+        createRequest.setDueDate("27'09[2024");
         taskService.createTask(createRequest);
         StartTaskResponse response = taskService.startTaskWith(startRequest);
         assertThrows(TaskStartedException.class,()-> taskService.startTaskWith(startRequest));
@@ -78,7 +78,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
-        createRequest.setDueDate("27'04[2024");
+        createRequest.setDueDate("27'09[2024");
         taskService.createTask(createRequest);
         assertThrows(TaskNotStartedException.class,()-> taskService.completeTask(complete));
         StartTaskRequest startTask = new StartTaskRequest();
@@ -145,18 +145,17 @@ class TaskServiceTest{
         assign.setAssigneeUsername("");
         assign.setDueDate("");
         assign.setTaskTitle("");
-        assign.setDescription("");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
         assign.setAssigneeUsername("username");
         assign.setDueDate("21/04/2024");
         assign.setTaskTitle("title");
-        assign.setDescription("");
         assign.setAssignerUsername("we");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
         assign.setDueDate("21/05}2024");
         AssignTaskResponse response  = taskService.assignTask(assign);
         assertEquals("we",response.getAssignerUsername());
         assertEquals("username", response.getAssigneeUsername());
+//        assertEquals(0,0);
     }
 
 }

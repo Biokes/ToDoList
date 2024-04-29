@@ -19,5 +19,6 @@ public class Task{
     private String dateCreated;
     private LocalDateTime dateStarted;
     private LocalDate dueDate;
+    private String assignerUsername;
 
 }

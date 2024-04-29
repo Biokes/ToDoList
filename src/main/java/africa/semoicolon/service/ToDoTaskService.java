@@ -72,8 +72,9 @@ public class ToDoTaskService implements TaskService{
     @Override
     public AssignTaskResponse assignTask(AssignTaskRequest assign) {
         Validator.validateAssignTaskRequest(assign);
-        AssignTaskResponse response = Mapper.mapToAssignTask(assign);
-        return null;
+        Task task  = Mapper.mapToAssignTask(assign);
+        task = repository.save(task);
+        return Mapper.mapToAssignTaskResponse(task);
     }
 
     private void checkTaskExistence(Optional<Task> taskFound){

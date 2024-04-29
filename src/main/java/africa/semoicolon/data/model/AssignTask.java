@@ -10,5 +10,5 @@ public class AssignTask {
     private String assigneeUsername;
     private String assignerUsername;
     private LocalDate dateCreated;
-
+    private TaskStatus status;
 }
