@@ -109,13 +109,17 @@ public class Mapper{
     }
     public static AssignTaskResponse mapToAssignTaskResponse(Task task) {
         AssignTaskResponse response = new AssignTaskResponse();
-        response.setAssignerUsername(task.getAssignerUsername());
         response.setStatus(task.getStatus());
         response.setTaskTitle(task.getTaskTitle());
         String date = task.getDueDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         response.setDueDate(date);
         response.setAssigneeUsername(task.getUsername());
         response.setDescription(task.getDescription());
+        if(Optional.ofNullable(task.getStatus()).isEmpty()){
+            response.setAssignerUsername("not an assigned task");
+            return response;
+        }
+        response.setAssignerUsername(task.getAssignerUsername());
         return response;
     }
 }

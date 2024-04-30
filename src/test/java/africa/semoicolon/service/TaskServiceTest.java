@@ -161,5 +161,31 @@ class TaskServiceTest{
         assertEquals("2024-09-21",response.getDueDate());
         assertEquals(1, taskService.countTaskByUsername("we"));
     }
-
+    @Test
+    public void startAssignedTask_testTaskIsStarted(){
+        AssignTaskRequest assign= new AssignTaskRequest();
+        assign.setAssigneeUsername("username");
+        assign.setTaskTitle("title");
+        assign.setAssignerUsername("we");
+        assign.setDueDate("2024}09{21");
+        AssignTaskResponse response  = taskService.assignTask(assign);
+        assertEquals("we",response.getAssignerUsername());
+        assertEquals("username", response.getAssigneeUsername());
+        assertEquals(PENDING, response.getStatus());
+        assertEquals("no description saved",response.getDescription());
+        assertEquals("title",response.getTaskTitle());
+        assertEquals("2024-09-21",response.getDueDate());
+        assertEquals(1, taskService.countTaskByUsername("we"));
+        StartTaskRequest startTask = new StartTaskRequest();
+        startTask.setUsername("username");
+        startTask.setTaskName("title");
+        StartTaskResponse startResponse = taskService.startTaskWith(startTask);
+        assertEquals(IN_PROGRESS, startResponse.getStatus());
+        assertEquals("no description saved",response.getDescription());
+        assertEquals("title",response.getTaskTitle());
+        assertEquals("2024-09-21",response.getDueDate());
+    }
+    //test assigned is completed
+    //test task cannot be started after completed
+    //test task cannot be restarted after completed
 }

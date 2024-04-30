@@ -13,6 +13,5 @@ public interface TaskService{
     void deleteTaskWith(DeleteTaskRequest delete);
     UpdateTaskResponse updateTask(UpdateTaskRequest update);
     AssignTaskResponse assignTask(AssignTaskRequest assign);
-
     long countTaskByUsername(String username);
 }
