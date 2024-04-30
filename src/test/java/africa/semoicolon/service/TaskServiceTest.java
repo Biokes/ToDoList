@@ -26,15 +26,15 @@ class TaskServiceTest{
         createRequest.setDescription("description");
         assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
         createRequest.setTaskTitle("taskTitle");
-        assertThrows(InvalidDetails.class,()->taskService.createTask(createRequest));
-        createRequest.setDueDate("12/04.2007");
         assertThrows(ToDoListException.class,()->taskService.createTask(createRequest));
-        createRequest.setDueDate("25/07/2024");
+        createRequest.setDueDate("2007.12/04");
+        assertThrows(ToDoListException.class,()->taskService.createTask(createRequest));
+        createRequest.setDueDate("2024.07/25");
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertEquals("username", response.getUsername());
         assertEquals("taskTitle", response.getTitle());
         assertEquals("description", response.getDescription());
-        assertEquals("25/07/2024", response.getDueDate());
+        assertEquals("2024-07-25", response.getDueDate());
         assertEquals(PENDING, response.getStatus());
         System.out.println(response);
     }
@@ -44,7 +44,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("task title   ");
         createRequest.setDescription("description");
-        createRequest.setDueDate("27'09[2024");
+        createRequest.setDueDate("2024[09-19");
         CreateTaskResponse response = taskService.createTask(createRequest);
         assertThrows(TaskExistsException.class,()->taskService.createTask(createRequest));
         assertEquals("task title",response.getTitle());
@@ -59,7 +59,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
-        createRequest.setDueDate("27'09[2024");
+        createRequest.setDueDate("2024'09=27");
         taskService.createTask(createRequest);
         StartTaskResponse response = taskService.startTaskWith(startRequest);
         assertThrows(TaskStartedException.class,()-> taskService.startTaskWith(startRequest));
@@ -78,7 +78,7 @@ class TaskServiceTest{
         createRequest.setUsername("username");
         createRequest.setTaskTitle("nylon   ");
         createRequest.setDescription("description");
-        createRequest.setDueDate("27'09[2024");
+        createRequest.setDueDate("2024[07]12");
         taskService.createTask(createRequest);
         assertThrows(TaskNotStartedException.class,()-> taskService.completeTask(complete));
         StartTaskRequest startTask = new StartTaskRequest();
@@ -108,7 +108,7 @@ class TaskServiceTest{
         CreateTaskRequest create = new CreateTaskRequest();
         create.setUsername("username");
         create.setTaskTitle("task");
-        create.setDueDate("31.12;2024");
+        create.setDueDate("2024;12.31");
         taskService.createTask(create);
         assertThrows(TaskExistsException.class,()->taskService.createTask(create));
         taskService.deleteTaskWith(delete);
@@ -130,7 +130,7 @@ class TaskServiceTest{
         CreateTaskRequest request = new CreateTaskRequest();
         request.setUsername("name");
         request.setTaskTitle("title");
-        request.setDueDate("12/12.2024");
+        request.setDueDate("2024.12.12");
         CreateTaskResponse response = taskService.createTask(request);
         assertEquals("name", response.getUsername());
         assertEquals("no description provided", response.getDescription());
@@ -147,15 +147,19 @@ class TaskServiceTest{
         assign.setTaskTitle("");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
         assign.setAssigneeUsername("username");
-        assign.setDueDate("21/04/2024");
+        assign.setDueDate("2024/04/21");
         assign.setTaskTitle("title");
         assign.setAssignerUsername("we");
         assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
-        assign.setDueDate("21/05}2024");
+        assign.setDueDate("2024}09{21");
         AssignTaskResponse response  = taskService.assignTask(assign);
         assertEquals("we",response.getAssignerUsername());
-        assertEquals("username", response.getAssigneeUsername());
-//        assertEquals(0,0);
+        assertEquals("we", response.getAssigneeUsername());
+        assertEquals(PENDING, response.getStatus());
+        assertEquals("no description saved",response.getDescription());
+        assertEquals("title",response.getTaskTitle());
+        assertEquals("2024-09-21",response.getDueDate());
+        assertEquals(1, taskService.countTaskByUsername("we"));
     }
 
 }

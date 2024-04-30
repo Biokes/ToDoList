@@ -6,7 +6,7 @@ public enum ExceptionMessages{
     TASK_EXISTS("Task with title already exists"),
     TASK_NOT_STARTED("Task not started"),
     ELAPSED_DATE("Date provided has elapsed"),
-    INVALID_DATE("Invalid date provided.Pls provide date in dd/mm/yyyy format"),
+    INVALID_DATE("Invalid date provided.Pls provide date in yyyy-mm-dd format"),
     INVALID_DETAILS("Invalid details provided");
     ExceptionMessages(String message){
         this.message = message;

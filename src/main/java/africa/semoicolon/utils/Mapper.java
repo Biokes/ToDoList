@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
@@ -30,9 +31,9 @@ public class Mapper{
     }
     public static LocalDate convertToDate(String dateGiven){
         try{
-            dateGiven = dateGiven.replaceAll("\\s+", " ");
-            dateGiven = dateGiven.replaceAll("\\D+", "/");
-            return LocalDate.parse(dateGiven, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            dateGiven = dateGiven.replaceAll("\\s+", "/");
+            dateGiven = dateGiven.replaceAll("[^0-9]", "-");
+            return LocalDate.parse(dateGiven, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
         catch (Exception exception){
             throw new InvalidDetails(INVALID_DATE.getMessage());
@@ -45,8 +46,8 @@ public class Mapper{
         response.setUsername(task.getUsername());
         response.setTitle(task.getTaskTitle());
         LocalDateTime created = LocalDateTime.parse(task.getDateCreated());
-        response.setDateCreated(created.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
-        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        response.setDateCreated(created.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
+        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         response.setStatus(task.getStatus());
         return response;
     }
@@ -111,7 +112,8 @@ public class Mapper{
         response.setAssignerUsername(task.getAssignerUsername());
         response.setStatus(task.getStatus());
         response.setTaskTitle(task.getTaskTitle());
-        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        String date = task.getDueDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        response.setDueDate(date);
         response.setAssigneeUsername(task.getUsername());
         response.setDescription(task.getDescription());
         return response;

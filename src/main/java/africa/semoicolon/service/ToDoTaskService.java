@@ -10,6 +10,7 @@ import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +58,6 @@ public class ToDoTaskService implements TaskService{
             throw new ToDoListException(TASK_NOT_FOUND.getMessage());
         repository.deleteTaskByUsernameAndTaskTitle(delete.getUsername(),delete.getTaskName());
     }
-
-    @Override
     public UpdateTaskResponse updateTask(UpdateTaskRequest update) {
         validateUpdate(update);
         if(isExistingTask(update.getOldTitle(),update.getUsername())) {
@@ -68,15 +67,21 @@ public class ToDoTaskService implements TaskService{
         }
         throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
-
-    @Override
     public AssignTaskResponse assignTask(AssignTaskRequest assign) {
         Validator.validateAssignTaskRequest(assign);
         Task task  = Mapper.mapToAssignTask(assign);
         task = repository.save(task);
         return Mapper.mapToAssignTaskResponse(task);
     }
-
+    public long countTaskByUsername(String username) {
+        return findAll(username).size();
+    }
+    public List<Task> findAll(String username){
+        List<Task> tasks = repository.findAll();
+        List<Task> userTask = new ArrayList<>();
+        tasks.forEach(task -> {if(task.getUsername().equalsIgnoreCase(username))userTask.add(task);});
+        return userTask;
+    }
     private void checkTaskExistence(Optional<Task> taskFound){
         if(taskFound.isEmpty())
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
