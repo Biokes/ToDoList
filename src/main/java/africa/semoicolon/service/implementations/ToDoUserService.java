@@ -31,13 +31,16 @@ public class ToDoUserService implements UserService {
         return repository.count();
     }
     public void deleteUser(DeleteUserRequest delete){
+        Validator.validateDeleteUer(delete);
         List<User> users = repository.findAll();
         for(User user : users){
-            if(user.getUsername().equalsIgnoreCase(delete.getPassword()) &&user.getPassword().equalsIgnoreCase(delete.getPassword())) {
-                repository.delete(user);
-                return;
-            }
-            }
+            if(user.getUsername().equalsIgnoreCase(delete.getUsername()))
+                    if(user.getPassword().equalsIgnoreCase(delete.getPassword())) {
+                        repository.delete(user);
+                        return;
+                    }
+            throw new InvalidDetails(USER_DOES_NOT_EXIST.getMessage());
+        }
         throw new InvalidDetails(USER_DOES_NOT_EXIST.getMessage());
     }
     public void deleteAll(){

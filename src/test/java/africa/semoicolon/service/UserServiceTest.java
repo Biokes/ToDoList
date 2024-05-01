@@ -1,6 +1,7 @@
 package africa.semoicolon.service;
 
 import africa.semoicolon.dtos.request.DeleteUserRequest;
+import africa.semoicolon.dtos.request.LoginRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
@@ -51,12 +52,15 @@ public class UserServiceTest {
         delete.setPassword("password");
         assertThrows(ToDoListException.class,()->userService.deleteUser(delete));
         assertEquals(1, userService.countAllUsers());
-        delete.setPassword("password1");
+        delete.setPassword(request.getPassword());
         userService.deleteUser(delete);
         assertEquals(0, userService.countAllUsers());
     }
     @Test
     public void testUserCanLogIn(){
+        LoginRequest login = new LoginRequest();
+        login.setUsername("");
+        login.setPassword("");
     }
 
 }
