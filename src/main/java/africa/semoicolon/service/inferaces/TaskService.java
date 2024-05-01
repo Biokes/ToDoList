@@ -4,7 +4,6 @@ import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service

@@ -7,7 +7,6 @@ import africa.semoicolon.data.model.Task;
 import africa.semoicolon.data.repo.TaskRepository;
 import africa.semoicolon.service.inferaces.TaskService;
 import africa.semoicolon.utils.Mapper;
-import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,8 +68,8 @@ public class ToDoTaskService implements TaskService {
         }
         throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
-    public AssignTaskResponse assignTask(AssignTaskRequest assign) {
-        Validator.validateAssignTaskRequest(assign);
+    public AssignTaskResponse assignTask(AssignTaskRequest assign){
+        validateAssignTaskRequest(assign);
         Task task = repository.save(Mapper.mapToAssignTask(assign));
         return Mapper.mapToAssignTaskResponse(task);
     }
