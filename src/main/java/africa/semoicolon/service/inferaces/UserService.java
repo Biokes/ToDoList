@@ -1,6 +1,7 @@
 package africa.semoicolon.service.inferaces;
 
 import africa.semoicolon.dtos.request.DeleteUserRequest;
+import africa.semoicolon.dtos.request.LoginRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import org.springframework.stereotype.Service;
 
@@ -10,4 +11,5 @@ public interface UserService {
     long countAllUsers();
     void deleteUser(DeleteUserRequest delete);
     void deleteAll();
+    void login(LoginRequest login);
 }

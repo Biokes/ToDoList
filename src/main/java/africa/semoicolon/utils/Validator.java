@@ -75,6 +75,9 @@ public class Validator{
     public static void validateDeleteUer(DeleteUserRequest delete) {
         delete.setPassword(validate(delete.getPassword()));
         delete.setUsername(validate(delete.getUsername()));
-
+    }
+    public static void validateLogin(LoginRequest login) {
+        login.setUsername(validate(login.getUsername()));
+        login.setPassword(validate(login.getPassword()));
     }
 }

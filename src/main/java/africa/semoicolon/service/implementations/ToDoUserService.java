@@ -3,6 +3,7 @@ package africa.semoicolon.service.implementations;
 import africa.semoicolon.data.model.User;
 import africa.semoicolon.data.repo.UserRepository;
 import africa.semoicolon.dtos.request.DeleteUserRequest;
+import africa.semoicolon.dtos.request.LoginRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
@@ -45,6 +46,17 @@ public class ToDoUserService implements UserService {
     }
     public void deleteAll(){
         repository.deleteAll();
+    }
+    public void login(LoginRequest login){
+        Validator.validateLogin(login);
+        validateLoginDetails(login);
+    }
+    private void validateLoginDetails(LoginRequest login){
+        List<User> allUsers = repository.findAll();
+        for(User user: allUsers)
+            if(user.getUsername().equalsIgnoreCase(login.getUsername())&&user.getPassword().equalsIgnoreCase(login.getPassword()))
+                return;
+        throw new ToDoListException(USER_DOES_NOT_EXIST.getMessage());
     }
     private void validateUserExistence(String username){
         List<User> allUsers = repository.findAll();

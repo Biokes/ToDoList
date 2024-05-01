@@ -61,6 +61,14 @@ public class UserServiceTest {
         LoginRequest login = new LoginRequest();
         login.setUsername("");
         login.setPassword("");
+        assertThrows(ToDoListException.class,()->userService.login(login));
+        RegisterRequest request = new RegisterRequest();
+        request.setUsername("username");
+        request.setPassword("password");
+        userService.register(request);
+        login.setUsername("username");
+        login.setPassword("password");
+        userService.login(login);
     }
 
 }
