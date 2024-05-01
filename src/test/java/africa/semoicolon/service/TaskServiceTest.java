@@ -175,7 +175,7 @@ class TaskServiceTest{
         assertEquals("no description saved",response.getDescription());
         assertEquals("title",response.getTaskTitle());
         assertEquals("2024-09-21",response.getDueDate());
-        assertEquals(1, taskService.countTaskByUsername("we"));
+        assertEquals(1, taskService.countTaskByUsername("username"));
         StartTaskRequest startTask = new StartTaskRequest();
         startTask.setUsername("username");
         startTask.setTaskName("title");

@@ -69,8 +69,7 @@ public class ToDoTaskService implements TaskService{
     }
     public AssignTaskResponse assignTask(AssignTaskRequest assign) {
         Validator.validateAssignTaskRequest(assign);
-        Task task  = Mapper.mapToAssignTask(assign);
-        task = repository.save(task);
+        Task task = repository.save(Mapper.mapToAssignTask(assign));
         return Mapper.mapToAssignTaskResponse(task);
     }
     public long countTaskByUsername(String username) {
