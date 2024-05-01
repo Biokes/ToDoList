@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -52,12 +53,6 @@ public class Mapper{
         response.setStatus(task.getStatus());
         return response;
     }
-    private static String setDescription(String given){
-        Optional<String> string = Optional.ofNullable(given);
-        if(string.isEmpty())
-            given= "no description provided";
-        return given;
-    }
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
         StartTaskResponse response = new StartTaskResponse();
         response.setTaskTitle(task.getTaskTitle());
@@ -84,13 +79,6 @@ public class Mapper{
         LocalDateTime date = complete.getDateStarted();
         response.setStartDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
         return response;
-    }
-    private static String getDuration(String status){
-        Duration time = Duration.between(LocalDateTime.parse(status),LocalDateTime.now());
-        return String.format("%s days, %s hours, %s minutes, %s seconds", time.toDays()%24,
-                time.toHours()%(60),
-                time.toMinutes()%(60),
-                time.toSeconds()%60);
     }
     public static UpdateTaskResponse mapTaskToUpdateResponse(Task task) {
         UpdateTaskResponse response = new UpdateTaskResponse();
@@ -127,8 +115,22 @@ public class Mapper{
         response.setAssignerUsername(task.getAssignerUsername());
         return response;
     }
-
     public static List<CreateTaskResponse> mapAllToCreateTaskResponse(List<Task> pendingTasks) {
-
+        List<CreateTaskResponse> response = new ArrayList<>();
+        pendingTasks.forEach(task -> {response.add(mapTaskToResponse(task));});
+        return response;
+    }
+    private static String getDuration(String status){
+        Duration time = Duration.between(LocalDateTime.parse(status),LocalDateTime.now());
+        return String.format("%s days, %s hours, %s minutes, %s seconds", time.toDays()%24,
+                time.toHours()%(60),
+                time.toMinutes()%(60),
+                time.toSeconds()%60);
+    }
+    private static String setDescription(String given){
+        Optional<String> string = Optional.ofNullable(given);
+        if(string.isEmpty())
+            given= "no description provided";
+        return given;
     }
 }
