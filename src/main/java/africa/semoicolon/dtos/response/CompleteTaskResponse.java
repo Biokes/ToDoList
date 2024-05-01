@@ -11,4 +11,5 @@ public class CompleteTaskResponse{
     private String dateCreated;
     private TaskStatus status;
     private String duration;
+    private String assignerUsername;
 }

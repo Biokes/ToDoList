@@ -5,7 +5,6 @@ import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
@@ -37,7 +36,7 @@ public class Validator{
         complete.setTaskName(validate(complete.getTaskName()));
         complete.setUsername(validate(complete.getUsername()));
     }
-    public static void validateStartTAskRequest(StartTaskRequest startRequest){
+    public static void validateStartTaskRequest(StartTaskRequest startRequest){
         startRequest.setTaskName(validate(startRequest.getTaskName()));
         startRequest.setUsername(validate(startRequest.getUsername()));
     }
@@ -65,7 +64,7 @@ public class Validator{
     public static void validateAssignTaskRequest(AssignTaskRequest assign) {
         assign.setTaskTitle(validate(assign.getTaskTitle()));
         assign.setAssignerUsername(validate(assign.getAssignerUsername()));
-        assign.setAssigneeUsername(validate(assign.getAssignerUsername()));
+        assign.setAssigneeUsername(validate(assign.getAssigneeUsername()));
         assign.setDueDate(cleanDate(assign.getDueDate()).toString());
         if(Optional.ofNullable(assign.getDescription()).isPresent()){
             assign.setDescription(validate(assign.getDescription()));

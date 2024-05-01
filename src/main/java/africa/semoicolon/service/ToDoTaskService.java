@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static africa.semoicolon.data.model.TaskStatus.*;
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
-import static africa.semoicolon.data.model.TaskStatus.COMPLETED;
-import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.utils.Validator.*;
 
 @Service
@@ -35,14 +34,23 @@ public class ToDoTaskService implements TaskService{
         return Mapper.mapTaskToResponse(task);
     }
     public StartTaskResponse startTaskWith(StartTaskRequest startRequest){
-        validateStartTAskRequest(startRequest);
-        Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(startRequest.getTaskName(),startRequest.getUsername());
+        validateStartTaskRequest(startRequest);
+        checkTaskStatus(startRequest);
+        Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(startRequest.getTaskName(),
+                                                                             startRequest.getUsername());
         validateTask(taskFound);
         taskFound.get().setStatus(IN_PROGRESS);
         taskFound.get().setDateStarted(taskFound.get()
                                                .getStatus()
                                                .getDate());
         return Mapper.mapTaskToStartTaskResponse(repository.save(taskFound.get()));
+    }
+    private void checkTaskStatus(StartTaskRequest startRequest) {
+        Optional<Task> task =repository.findTaskByTaskTitleAndUsername(startRequest.getTaskName(),
+                                                                       startRequest.getUsername());
+        if(task.isPresent() && (task.get().getStatus()== IN_PROGRESS || task.get().getStatus()== COMPLETED))
+            throw new TaskStartedException(TASK_STARTED.getMessage());
+        if(task.isEmpty()) throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
     public CompleteTaskResponse completeTask(CompleteTaskRequest complete){
         validateCompleteTaskRequest(complete);
@@ -72,9 +80,24 @@ public class ToDoTaskService implements TaskService{
         Task task = repository.save(Mapper.mapToAssignTask(assign));
         return Mapper.mapToAssignTaskResponse(task);
     }
-    public long countTaskByUsername(String username) {
+    public long countTaskByUsername(String username){
         return findAll(username).size();
     }
+    public void deleteTasksByUsername(String username){
+        repository.deleteAll(findAll(username ));
+    }
+
+    public List<CreateTaskResponse> countPendingTask(String username) {
+        List<Task> allTasks = repository.findAll();
+        return getPendingTasks(allTasks);
+    }
+
+    private List<CreateTaskResponse> getPendingTasks(List<Task> allTasks) {
+        List<Task> pendingTasks = new ArrayList<>();
+        allTasks.forEach(task -> {if(task.getStatus()== PENDING)pendingTasks.add(task);});
+        return Mapper.mapAllToCreateTaskResponse(pendingTasks);
+    }
+
     public List<Task> findAll(String username){
         List<Task> tasks = repository.findAll();
         List<Task> userTask = new ArrayList<>();

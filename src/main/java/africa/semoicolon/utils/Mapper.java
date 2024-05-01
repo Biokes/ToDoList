@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
@@ -77,6 +78,9 @@ public class Mapper{
         response.setStatus(complete.getStatus());
         response.setDateCreated(complete.getDateCreated());
         response.setDuration(getDuration(complete.getDateStarted().toString()));
+        if(Optional.ofNullable(complete.getAssignerUsername()).isEmpty())
+            response.setAssignerUsername(complete.getUsername());
+        else response.setAssignerUsername(complete.getAssignerUsername());
         LocalDateTime date = complete.getDateStarted();
         response.setStartDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
         return response;
@@ -105,6 +109,7 @@ public class Mapper{
         task.setStatus(PENDING);
         task.setTaskTitle(assign.getTaskTitle());
         task.setAssignerUsername(assign.getAssignerUsername());
+        task.setDateCreated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
         return task;
     }
     public static AssignTaskResponse mapToAssignTaskResponse(Task task) {
@@ -121,5 +126,9 @@ public class Mapper{
         }
         response.setAssignerUsername(task.getAssignerUsername());
         return response;
+    }
+
+    public static List<CreateTaskResponse> mapAllToCreateTaskResponse(List<Task> pendingTasks) {
+
     }
 }
