@@ -254,6 +254,6 @@ class TaskServiceTest{
         taskService.createTask(createRequest);
         createRequest.setTaskTitle("taskTitle3");
         taskService.createTask(createRequest);
-        assertEquals(4, taskService.countPendingTask("username"));
+        assertEquals(4, taskService.countPendingTask("username").size());
     }
 }

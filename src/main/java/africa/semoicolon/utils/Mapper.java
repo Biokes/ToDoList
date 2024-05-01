@@ -51,6 +51,11 @@ public class Mapper{
         response.setDateCreated(created.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
         response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         response.setStatus(task.getStatus());
+        if(Optional.ofNullable(task.getAssignerUsername()).isPresent()) {
+            response.setAssignerUsername(task.getAssignerUsername());
+            return response;
+        }
+        response.setAssignerUsername(task.getUsername());
         return response;
     }
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){

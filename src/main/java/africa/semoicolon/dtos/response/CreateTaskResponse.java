@@ -2,6 +2,7 @@ package africa.semoicolon.dtos.response;
 
 import africa.semoicolon.data.model.TaskStatus;
 import lombok.Data;
+import org.springframework.context.annotation.Lazy;
 
 @Data
 public class CreateTaskResponse{
@@ -11,4 +12,5 @@ public class CreateTaskResponse{
     private TaskStatus status;
     private String dateCreated;
     private String dueDate;
+    private String assignerUsername;
 }
