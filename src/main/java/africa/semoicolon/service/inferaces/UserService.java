@@ -1,5 +1,6 @@
 package africa.semoicolon.service.inferaces;
 
+import africa.semoicolon.dtos.request.CreateTaskRequest;
 import africa.semoicolon.dtos.request.DeleteUserRequest;
 import africa.semoicolon.dtos.request.LoginRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
@@ -12,4 +13,5 @@ public interface UserService {
     void deleteUser(DeleteUserRequest delete);
     void deleteAll();
     void login(LoginRequest login);
+    void validatUserExistence(String username);
 }

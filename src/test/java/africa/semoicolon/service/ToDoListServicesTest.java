@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static africa.semoicolon.data.model.TaskStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -37,12 +38,17 @@ public class ToDoListServicesTest {
         register.setPassword("password");
         appService.register(register);
         CreateTaskRequest createRequest = new CreateTaskRequest();
-        createRequest.setUsername("username");
+        createRequest.setUsername("name");
         createRequest.setDueDate("2021-04-21");
         createRequest.setTaskTitle("");
         assertThrows(ToDoListException.class,()->appService.createTask(createRequest));
         createRequest.setDueDate("2024-08-21");
         createRequest.setTaskTitle("task1");
+        assertThrows(ToDoListException.class,()->appService.createTask(createRequest));
+        createRequest.setUsername("username");
         CreateTaskResponse createResponse = appService.createTask(createRequest);
+        assertEquals("username",createRequest.getUsername());
+        assertEquals("task1", createResponse.getTitle());
+        assertEquals(PENDING,createResponse.getStatus());
     }
 }
