@@ -314,8 +314,9 @@ class TaskServiceTest{
         assign.setTaskTitle("title");
         assign.setAssignerUsername("boss");
         assign.setDueDate("2024}09{21");
-        AssignTaskResponse response  = taskService.assignTask(assign);
+        taskService.assignTask(assign);
         assertEquals(1, taskService.getallAssignedTasks("boss").size());
+        System.out.println(taskService.getallAssignedTasks("boss"));
     }
 }
 //find all created tasks

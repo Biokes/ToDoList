@@ -135,9 +135,24 @@ public class Mapper{
         return response;
     }
     public static List<AssignedTasksResponse> mapAllToAssignedTasksResponse(List<Task> allTasks) {
-
-        return null;
+        List<AssignedTasksResponse> output = new ArrayList<>();
+        allTasks.forEach(task->{output.add(Mapper.mapToAssignedTasksResponse(task));});
+        return output;
     }
+
+    private static AssignedTasksResponse mapToAssignedTasksResponse(Task task) {
+        AssignedTasksResponse response = new AssignedTasksResponse();
+        response.setUsername(task.getAssignerUsername());
+        response.setAssigneeUsername(task.getUsername());
+        response.setStatus(task.getStatus());
+        response.setDateAssigned(task.getDateCreated());
+        response.setDueDate(task.getDueDate().toString());
+        response.setTitle(task.getTaskTitle());
+        response.setDescription(task.getDescription());
+        response.setDateStarted(task.getDateStarted().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")));
+        return response;
+    }
+
     private static String getDuration(String status){
         Duration time = Duration.between(LocalDateTime.parse(status),LocalDateTime.now());
         return String.format("%s days, %s hours, %s minutes, %s seconds", time.toDays()%24,
