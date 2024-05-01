@@ -1,9 +1,11 @@
 package africa.semoicolon.utils;
 
 import africa.semoicolon.data.model.Task;
+import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.AssignTaskRequest;
 import africa.semoicolon.dtos.request.CompleteTaskRequest;
 import africa.semoicolon.dtos.request.CreateTaskRequest;
+import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.InvalidDetails;
 
@@ -167,5 +169,11 @@ public class Mapper{
         if(string.isEmpty())
             given= "no description provided";
         return given;
+    }
+    public static User mapToUser(RegisterRequest request) {
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(request.getPassword());
+        return user;
     }
 }

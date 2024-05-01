@@ -40,18 +40,15 @@ public class Validator{
         startRequest.setTaskName(validate(startRequest.getTaskName()));
         startRequest.setUsername(validate(startRequest.getUsername()));
     }
-
     public static void validateDeleteTaskRequest(DeleteTaskRequest delete){
         delete.setTaskName(validate(delete.getTaskName()));
         delete.setUsername(validate(delete.getUsername()));
     }
-
     public static LocalDate validateDate(LocalDate localDate) {
         if(localDate.isBefore(LocalDate.now()))
             throw new ToDoListException(ELAPSED_DATE.getMessage());
         return localDate;
     }
-
     public static void validateUpdate(UpdateTaskRequest update) {
         update.setUsername(validate(update.getUsername()));
         update.setNewTitle(validate(update.getNewTitle()));
@@ -60,7 +57,6 @@ public class Validator{
             update.setDescription(validate(update.getDescription()));
         }
     }
-
     public static void validateAssignTaskRequest(AssignTaskRequest assign) {
         assign.setTaskTitle(validate(assign.getTaskTitle()));
         assign.setAssignerUsername(validate(assign.getAssignerUsername()));
@@ -71,5 +67,9 @@ public class Validator{
             return;
         }
         assign.setDescription("no description saved");
+    }
+    public static void validateRegister(RegisterRequest request) {
+        request.setUsername(validate(request.getUsername()));
+        request.setPassword(validate(request.getPassword()));
     }
 }
