@@ -21,4 +21,6 @@ public interface TaskService{
     List<CreateTaskResponse> getAllPendingTasks(String username);
     List<StartTaskResponse> getAllTasksInProgress(String username);
     List<CompleteTaskResponse> getAllCompleteTasks(String username);
+    List<AssignedTasksResponse> getallAssignedTasks(String boss);
+
 }

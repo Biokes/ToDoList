@@ -286,6 +286,7 @@ class TaskServiceTest{
     }
     @Test
     public void findAllCompleted_testAllTaskCompletedIsCompleted(){
+        assertEquals(0,taskService.getAllCompleteTasks("username").size());
         CreateTaskRequest createRequest = new CreateTaskRequest();
         createRequest.setUsername("username");
         createRequest.setDescription("description");
@@ -306,5 +307,24 @@ class TaskServiceTest{
         taskService.completeTask(complete);
         assertEquals(1,taskService.getAllCompleteTasks("username").size());
     }
-
+    @Test
+    public void assignTask_testTaskIsPartOfTask(){
+        AssignTaskRequest assign= new AssignTaskRequest();
+        assign.setAssigneeUsername("worker");
+        assign.setTaskTitle("title");
+        assign.setAssignerUsername("boss");
+        assign.setDueDate("2024}09{21");
+        AssignTaskResponse response  = taskService.assignTask(assign);
+        assertEquals(1, taskService.getallAssignedTasks("boss").size());
+    }
 }
+//find all created tasks
+// find all pending tasks
+//find all completed tasks
+// delete all tasks by username
+// complete task
+// start task
+// update task
+// delete task
+// create task
+// assign task

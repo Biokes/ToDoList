@@ -91,6 +91,17 @@ public class ToDoTaskService implements TaskService{
         List<Task> allTasks = findAll(username);
         return getAllCompletedTasks(allTasks);
     }
+    public List<AssignedTasksResponse> getallAssignedTasks(String boss) {
+        List<Task> allTasks= findAllAssignedTasks(boss);
+        return Mapper.mapAllToAssignedTasksResponse(allTasks);
+    }
+    private List<Task> findAllAssignedTasks(String boss) {
+        List<Task> allTasks= repository.findAll();
+        List<Task> assignedTasks = new ArrayList<>();
+        allTasks.forEach(task -> {if(task.getAssignerUsername().
+                                          equalsIgnoreCase(boss))assignedTasks.add(task);});
+       return assignedTasks;
+    }
     public List<Task> findAll(String username){
         List<Task> tasks = repository.findAll();
         List<Task> userTask = new ArrayList<>();

@@ -56,7 +56,7 @@ public class Mapper{
             response.setAssignerUsername(task.getAssignerUsername());
             return response;
         }
-        response.setAssignerUsername(task.getUsername());
+        response.setAssignerUsername("self");
         return response;
     }
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
@@ -134,6 +134,10 @@ public class Mapper{
         pendingTasks.forEach(task -> {response.add(mapTaskToResponse(task));});
         return response;
     }
+    public static List<AssignedTasksResponse> mapAllToAssignedTasksResponse(List<Task> allTasks) {
+
+        return null;
+    }
     private static String getDuration(String status){
         Duration time = Duration.between(LocalDateTime.parse(status),LocalDateTime.now());
         return String.format("%s days, %s hours, %s minutes, %s seconds", time.toDays()%24,
@@ -147,5 +151,4 @@ public class Mapper{
             given= "no description provided";
         return given;
     }
-
 }
