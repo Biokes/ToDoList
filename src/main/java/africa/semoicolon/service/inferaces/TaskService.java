@@ -1,4 +1,4 @@
-package africa.semoicolon.service;
+package africa.semoicolon.service.inferaces;
 
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;

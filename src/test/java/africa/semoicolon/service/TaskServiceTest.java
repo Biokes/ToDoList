@@ -3,6 +3,7 @@ import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.*;
 
+import africa.semoicolon.service.inferaces.TaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -329,3 +330,4 @@ class TaskServiceTest{
 // delete task
 // create task
 // assign task
+// find all assigned task

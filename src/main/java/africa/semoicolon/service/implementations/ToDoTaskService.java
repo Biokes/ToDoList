@@ -1,10 +1,11 @@
-package africa.semoicolon.service;
+package africa.semoicolon.service.implementations;
 
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.*;
 import africa.semoicolon.data.model.Task;
 import africa.semoicolon.data.repo.TaskRepository;
+import africa.semoicolon.service.inferaces.TaskService;
 import africa.semoicolon.utils.Mapper;
 import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import static africa.semoicolon.exceptions.ExceptionMessages.*;
 import static africa.semoicolon.utils.Validator.*;
 
 @Service
-public class ToDoTaskService implements TaskService{
+public class ToDoTaskService implements TaskService {
     @Autowired
     private TaskRepository repository;
     public void deleteAll(){
