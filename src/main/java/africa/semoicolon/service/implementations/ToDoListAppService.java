@@ -1,6 +1,8 @@
 package africa.semoicolon.service.implementations;
 
+import africa.semoicolon.dtos.request.CreateTaskRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
+import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.service.inferaces.TaskService;
 import africa.semoicolon.service.inferaces.AppService;
 import africa.semoicolon.service.inferaces.UserService;
@@ -17,10 +19,18 @@ public class ToDoListAppService implements AppService {
         taskService.deleteAll();
         userService.deleteAll();
     }
-
-    @Override
-    public void register(RegisterRequest register) {
+    public void register(RegisterRequest register){
        userService.register(register);
+    }
+    public long countAllUsers(){
+        return userService.countAllUsers();
+    }
+    public CreateTaskResponse createTask(CreateTaskRequest createTaskRequest) {
+
+        return null;
+    }
+    public void createTask(){
+
     }
 
 }
