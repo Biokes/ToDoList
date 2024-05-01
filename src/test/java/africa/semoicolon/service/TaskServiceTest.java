@@ -242,6 +242,26 @@ class TaskServiceTest{
     }
     @Test
     public void findAllStartedTask_testAllStartedTaskAreFound(){
+        assertEquals(0, taskService.countPendingTask("username").size());
+        System.out.println(taskService.countPendingTask("username"));
+        CreateTaskRequest createRequest = new CreateTaskRequest();
+        createRequest.setUsername("username");
+        createRequest.setDescription("description");
+        createRequest.setTaskTitle("taskTitle");
+        createRequest.setDueDate("2024.07/25");
+        taskService.createTask(createRequest);
+        createRequest.setTaskTitle("taskTitle1");
+        taskService.createTask(createRequest);
+        createRequest.setTaskTitle("taskTitle2");
+        taskService.createTask(createRequest);
+        createRequest.setTaskTitle("taskTitle3");
+        taskService.createTask(createRequest);
+        assertEquals(4, taskService.countPendingTask("username").size());
+    }
+    @Test
+    public void findAllTaskInProgress_testAllTaskInProgressIsFound(){
+        assertEquals(0, taskService.countPendingTask("username").size());
+        System.out.println(taskService.countPendingTask("username"));
         CreateTaskRequest createRequest = new CreateTaskRequest();
         createRequest.setUsername("username");
         createRequest.setDescription("description");
