@@ -79,15 +79,33 @@ public class ToDoTaskService implements TaskService{
     public void deleteTasksByUsername(String username){
         repository.deleteAll(findAll(username ));
     }
-    public List<CreateTaskResponse> countPendingTask(String username){
-        List<Task> allTasks = repository.findAll();
+    public List<CreateTaskResponse> getAllPendingTasks(String username){
+        List<Task> allTasks = findAll(username);
         return getPendingTasks(allTasks);
+    }
+    public List<StartTaskResponse> getAllTasksInProgress(String username){
+        List<Task> allTasks = findAll(username);
+        return getAllTaskInProgress(allTasks);
+    }
+    public List<CompleteTaskResponse> getAllCompleteTasks(String username) {
+        List<Task> allTasks = findAll(username);
+        return getAllCompletedTasks(allTasks);
     }
     public List<Task> findAll(String username){
         List<Task> tasks = repository.findAll();
         List<Task> userTask = new ArrayList<>();
         tasks.forEach(task -> {if(task.getUsername().equalsIgnoreCase(username))userTask.add(task);});
         return userTask;
+    }
+    private List<CompleteTaskResponse> getAllCompletedTasks(List<Task> allTasks) {
+        List<Task> completedTasks = new ArrayList<>();
+        allTasks.forEach(task -> {if (task.getStatus() == COMPLETED) completedTasks.add(task);});
+        return Mapper.mapAllToCompleteTaskResponses(completedTasks);
+    }
+    private List<StartTaskResponse> getAllTaskInProgress(List<Task> allTasks){
+        List<Task> pendingTasks = new ArrayList<>();
+        allTasks.forEach(task -> {if(task.getStatus()== IN_PROGRESS)pendingTasks.add(task);});
+        return Mapper.mapAllToStartTaskResponse(pendingTasks);
     }
     private void checkTaskExistence(Optional<Task> taskFound){
         if(taskFound.isEmpty())
@@ -100,7 +118,7 @@ public class ToDoTaskService implements TaskService{
             throw new TaskStartedException(TASK_STARTED.getMessage());
         if(task.isEmpty()) throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
-    private List<CreateTaskResponse> getPendingTasks(List<Task> allTasks) {
+    private List<CreateTaskResponse> getPendingTasks(List<Task> allTasks){
         List<Task> pendingTasks = new ArrayList<>();
         allTasks.forEach(task -> {if(task.getStatus()== PENDING)pendingTasks.add(task);});
         return Mapper.mapAllToCreateTaskResponse(pendingTasks);

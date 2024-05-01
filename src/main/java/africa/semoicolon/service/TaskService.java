@@ -1,10 +1,10 @@
 package africa.semoicolon.service;
 
-import africa.semoicolon.data.model.Task;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -18,5 +18,7 @@ public interface TaskService{
     AssignTaskResponse assignTask(AssignTaskRequest assign);
     long countTaskByUsername(String username);
     void deleteTasksByUsername(String username);
-    List<CreateTaskResponse> countPendingTask(String username);
+    List<CreateTaskResponse> getAllPendingTasks(String username);
+    List<StartTaskResponse> getAllTasksInProgress(String username);
+    List<CompleteTaskResponse> getAllCompleteTasks(String username);
 }

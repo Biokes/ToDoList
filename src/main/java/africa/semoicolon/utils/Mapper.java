@@ -2,6 +2,7 @@ package africa.semoicolon.utils;
 
 import africa.semoicolon.data.model.Task;
 import africa.semoicolon.dtos.request.AssignTaskRequest;
+import africa.semoicolon.dtos.request.CompleteTaskRequest;
 import africa.semoicolon.dtos.request.CreateTaskRequest;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.InvalidDetails;
@@ -61,9 +62,7 @@ public class Mapper{
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
         StartTaskResponse response = new StartTaskResponse();
         response.setTaskTitle(task.getTaskTitle());
-        task.setStatus(IN_PROGRESS);
         response.setStatus(task.getStatus());
-        LocalDateTime date = task.getStatus( ).getDate( );
         task.setDateStarted(task.getStatus().getDate());
         if(task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");
@@ -120,6 +119,16 @@ public class Mapper{
         response.setAssignerUsername(task.getAssignerUsername());
         return response;
     }
+    public static List<StartTaskResponse> mapAllToStartTaskResponse(List<Task> pendingTasks) {
+        List<StartTaskResponse> response = new ArrayList<>();
+        pendingTasks.forEach(task -> {response.add(mapTaskToStartTaskResponse(task));});
+        return response;
+    }
+    public static List<CompleteTaskResponse> mapAllToCompleteTaskResponses(List<Task> completedTasks) {
+        List<CompleteTaskResponse> responseList = new ArrayList<>();
+        completedTasks.forEach(task -> {responseList.add(mapToCompleteTaskResponse(task));});
+        return responseList;
+    }
     public static List<CreateTaskResponse> mapAllToCreateTaskResponse(List<Task> pendingTasks) {
         List<CreateTaskResponse> response = new ArrayList<>();
         pendingTasks.forEach(task -> {response.add(mapTaskToResponse(task));});
@@ -138,4 +147,5 @@ public class Mapper{
             given= "no description provided";
         return given;
     }
+
 }

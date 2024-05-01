@@ -242,8 +242,7 @@ class TaskServiceTest{
     }
     @Test
     public void findAllStartedTask_testAllStartedTaskAreFound(){
-        assertEquals(0, taskService.countPendingTask("username").size());
-        System.out.println(taskService.countPendingTask("username"));
+        assertEquals(0, taskService.getAllPendingTasks("username").size());
         CreateTaskRequest createRequest = new CreateTaskRequest();
         createRequest.setUsername("username");
         createRequest.setDescription("description");
@@ -256,12 +255,11 @@ class TaskServiceTest{
         taskService.createTask(createRequest);
         createRequest.setTaskTitle("taskTitle3");
         taskService.createTask(createRequest);
-        assertEquals(4, taskService.countPendingTask("username").size());
+        assertEquals(4, taskService.getAllPendingTasks("username").size());
     }
     @Test
     public void findAllTaskInProgress_testAllTaskInProgressIsFound(){
-        assertEquals(0, taskService.countPendingTask("username").size());
-        System.out.println(taskService.countPendingTask("username"));
+        assertEquals(0, taskService.getAllPendingTasks("username").size());
         CreateTaskRequest createRequest = new CreateTaskRequest();
         createRequest.setUsername("username");
         createRequest.setDescription("description");
@@ -274,6 +272,39 @@ class TaskServiceTest{
         taskService.createTask(createRequest);
         createRequest.setTaskTitle("taskTitle3");
         taskService.createTask(createRequest);
-        assertEquals(4, taskService.countPendingTask("username").size());
+        assertEquals(4, taskService.getAllPendingTasks("username").size());
+        StartTaskRequest startRequest = new StartTaskRequest();
+        startRequest.setUsername("username");
+        startRequest.setTaskName("taskTitle");
+        taskService.startTaskWith(startRequest);
+        startRequest.setTaskName("taskTitle1");
+        taskService.startTaskWith(startRequest);
+        startRequest.setTaskName("taskTitle3");
+        taskService.startTaskWith(startRequest);
+        assertEquals(1, taskService.getAllPendingTasks("username").size());
+        assertEquals(3, taskService.getAllTasksInProgress("username").size());
     }
+    @Test
+    public void findAllCompleted_testAllTaskCompletedIsCompleted(){
+        CreateTaskRequest createRequest = new CreateTaskRequest();
+        createRequest.setUsername("username");
+        createRequest.setDescription("description");
+        createRequest.setTaskTitle("taskTitle");
+        createRequest.setDueDate("2024.07/25");
+        taskService.createTask(createRequest);
+        createRequest.setTaskTitle("taskTitle1");
+        taskService.createTask(createRequest);
+        StartTaskRequest startRequest = new StartTaskRequest();
+        startRequest.setUsername("username");
+        startRequest.setTaskName("taskTitle");
+        taskService.startTaskWith(startRequest);
+        startRequest.setTaskName("taskTitle1");
+        taskService.startTaskWith(startRequest);
+        CompleteTaskRequest complete = new CompleteTaskRequest();
+        complete.setTaskName("taskTitle");
+        complete.setUsername("username");
+        taskService.completeTask(complete);
+        assertEquals(1,taskService.getAllCompleteTasks("username").size());
+    }
+
 }
