@@ -5,6 +5,7 @@ import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class UserServiceTest {
     @Autowired
     private UserService userService;
+    @BeforeEach
+    void wipe(){
+        userService.deleteAll();
+    }
     @Test
     public void register_testUserIsregistered(){
         RegisterRequest request = new RegisterRequest();
@@ -50,4 +55,8 @@ public class UserServiceTest {
         userService.deleteUser(delete);
         assertEquals(0, userService.countAllUsers());
     }
+    @Test
+    public void testUserCanLogIn(){
+    }
+
 }

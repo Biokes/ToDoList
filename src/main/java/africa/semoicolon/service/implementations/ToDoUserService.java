@@ -4,6 +4,7 @@ import africa.semoicolon.data.model.User;
 import africa.semoicolon.data.repo.UserRepository;
 import africa.semoicolon.dtos.request.DeleteUserRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
+import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.UserService;
 import africa.semoicolon.utils.Mapper;
@@ -31,15 +32,18 @@ public class ToDoUserService implements UserService {
     }
     public void deleteUser(DeleteUserRequest delete){
         List<User> users = repository.findAll();
-        users.forEach(user->{if(user.getUsername().equalsIgnoreCase(delete.getPassword()) &&
-                    user.getPassword().equalsIgnoreCase(delete.getPassword())){
-            users.remove(user);
-            return;
-        }
-        });
-        throw new ToDoListException(USER_DOES_NOT_EXIST.getMessage());
+        for(User user : users){
+            if(user.getUsername().equalsIgnoreCase(delete.getPassword()) &&user.getPassword().equalsIgnoreCase(delete.getPassword())) {
+                repository.delete(user);
+                return;
+            }
+            }
+        throw new InvalidDetails(USER_DOES_NOT_EXIST.getMessage());
     }
-    private void validateUserExistence(String username) {
+    public void deleteAll(){
+        repository.deleteAll();
+    }
+    private void validateUserExistence(String username){
         List<User> allUsers = repository.findAll();
         allUsers.forEach(user->{if(user.getUsername().equalsIgnoreCase(username)){
             throw new ToDoListException(USER_ALREADY_EXIST.getMessage());}});

@@ -9,4 +9,5 @@ public interface UserService {
     void register(RegisterRequest request);
     long countAllUsers();
     void deleteUser(DeleteUserRequest delete);
+    void deleteAll();
 }
