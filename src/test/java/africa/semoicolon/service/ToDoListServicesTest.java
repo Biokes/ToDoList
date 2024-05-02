@@ -156,9 +156,12 @@ public class ToDoListServicesTest {
         createTaskRequest.setDescription("timing");
         appService.createTask(createTaskRequest);
         assertThrows(ToDoListException.class,()->appService.startTask(startTaskRequest));
+        startTaskRequest.setUsername("username");
+        startTaskRequest.setPassword("password");
         StartTaskResponse startTaskResponse = appService.startTask(startTaskRequest);
         assertEquals("username", startTaskResponse.getUsername());
         assertEquals(IN_PROGRESS, startTaskResponse.getStatus());
+        System.out.println(startTaskResponse);
     }
 }
 //find all created tasks
