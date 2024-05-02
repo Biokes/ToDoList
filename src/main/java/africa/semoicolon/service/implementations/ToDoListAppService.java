@@ -1,10 +1,13 @@
 package africa.semoicolon.service.implementations;
 
+import africa.semoicolon.data.model.Notifications;
+import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.service.inferaces.TaskService;
 import africa.semoicolon.service.inferaces.AppService;
 import africa.semoicolon.service.inferaces.UserService;
+import africa.semoicolon.utils.Mapper;
 import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,17 +62,24 @@ public class ToDoListAppService implements AppService {
         Validator.validateAssignTaskRequest(assignTaskRequest);
         validateUserInfo(assignTaskRequest.getAssignerUsername(), assignTaskRequest.getPassword());
         userService.isValidUsername(assignTaskRequest.getAssigneeUsername());
-        notifyUserForNotification(assignTaskRequest.getAssigneeUsername());
+        notifyUserForNotification(assignTaskRequest);
         return taskService.assignTask(assignTaskRequest);
     }
-    private void notifyUserForNotification(String assigneeUsername) {
-        userService.getUser(assigneeUsername);
+    private void notifyUserForNotification(AssignTaskRequest assignTaskRequest){
+       User user =  userService.getUser(assignTaskRequest.getAssigneeUsername());
+        extracted(assignTaskRequest, user);
+    }
+    private static void extracted(AssignTaskRequest assignTaskRequest, User user) {
+        Notifications notification = Mapper.mapAssignTaskToNotification(assignTaskRequest);
+        List<Notifications> notifications = user.getNotifications();
+        notifications.add(notification);
+        user.setNotifications(notifications);
     }
 
     public LoginResponse login(LoginRequest login){
         validateUserInfo(login.getUsername(),login.getPassword());
-        userService.getUser(login);
-        return null;
+        User user = userService.getUser(login);
+        return Mapper.mapUserToLogInResponse(user);
     }
     private void validateUserInfo(String username, String password){
         LoginRequest loginRequest = new LoginRequest();

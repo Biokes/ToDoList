@@ -1,5 +1,6 @@
 package africa.semoicolon.utils;
 
+import africa.semoicolon.data.model.Notifications;
 import africa.semoicolon.data.model.Task;
 import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.AssignTaskRequest;
@@ -175,5 +176,20 @@ public class Mapper{
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         return user;
+    }
+
+    public static Notifications mapAssignTaskToNotification(AssignTaskRequest assignTaskRequest) {
+        Notifications notification = new Notifications();
+        StringBuilder builder = new StringBuilder();
+        builder.append(assignTaskRequest.getAssignerUsername()+ "Assigned you a task");
+        notification.setNotification(builder.toString());
+        notification.setTimeCreated(LocalDateTime.now());
+        return notification;
+    }
+
+    public static LoginResponse mapUserToLogInResponse(User user){
+        LoginResponse response = new LoginResponse();
+        response.setNotification(user.getNotifications());
+        return null;
     }
 }
