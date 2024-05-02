@@ -3,6 +3,7 @@ package africa.semoicolon.service;
 
 import africa.semoicolon.dtos.request.CreateTaskRequest;
 import africa.semoicolon.dtos.request.DeleteTaskRequest;
+import africa.semoicolon.dtos.request.DeleteUserRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.exceptions.ToDoListException;
@@ -55,12 +56,29 @@ public class ToDoListServicesTest {
     }
     @Test
     public void deleteAccount_testAccountAndTaskAreDeleted(){
+        DeleteUserRequest deleteRequest = new DeleteUserRequest();
+        deleteRequest.setUsername("username");
+        deleteRequest.setPassword("password");
+        assertThrows(ToDoListException.class,()-> appService.deleteAccount(deleteRequest));
         RegisterRequest register = new RegisterRequest();
         register.setUsername("username");
-        register.setPassword("password");
+        register.setPassword("password1");
         appService.register(register);
-        DeleteTaskRequest deleteRequest = new DeleteTaskRequest();
-        deleteRequest.setUsername("username");
-        
+        CreateTaskRequest createRequest = new CreateTaskRequest();
+        createRequest.setUsername("username");
+        createRequest.setTaskTitle("title");
+        createRequest.setDueDate("2013-12-30");
+        createRequest.setDescription("description");
+        appService.createTask(createRequest);
+        createRequest.setTaskTitle("title1");
+        appService.createTask(createRequest);
+        createRequest.setTaskTitle("title2");
+        appService.createTask(createRequest);
+        assertThrows(ToDoListException.class,()->appService.deleteAccount(deleteRequest));
+        deleteRequest.setPassword("password1");
+        appService.deleteAccount(deleteRequest);
+        assertEquals(0,appService.countAllUsers());
+        assertThrows(ToDoListException.class,()->appService.getAllUserTasks(deleteRequest.getUsername()));
+
     }
 }
