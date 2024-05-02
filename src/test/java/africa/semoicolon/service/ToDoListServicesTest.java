@@ -1,10 +1,7 @@
 package africa.semoicolon.service;
 
 
-import africa.semoicolon.dtos.request.CreateTaskRequest;
-import africa.semoicolon.dtos.request.DeleteTaskRequest;
-import africa.semoicolon.dtos.request.DeleteUserRequest;
-import africa.semoicolon.dtos.request.RegisterRequest;
+import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
@@ -87,9 +84,6 @@ public class ToDoListServicesTest {
     @Test
     public void deleteTask_testTaskIsDeleted(){
         DeleteTaskRequest deleteTaskRequest = new DeleteTaskRequest();
-        deleteTaskRequest.setTaskName("task1");
-        deleteTaskRequest.setUsername("username");
-        deleteTaskRequest.setPassword("");
         RegisterRequest register = new RegisterRequest();
         register.setUsername("username");
         register.setPassword("password");
@@ -105,7 +99,19 @@ public class ToDoListServicesTest {
         createTaskRequest.setDueDate("2024-06-10");
         appService.createTask(createTaskRequest);
         assertThrows(ToDoListException.class,()->appService.deleteTask(deleteTaskRequest));
+        deleteTaskRequest.setUsername("username");
         deleteTaskRequest.setPassword("password");
+        deleteTaskRequest.setTaskName("task1");
+        appService.deleteTask(deleteTaskRequest);
+        assertEquals(0, appService.countAllUserTask("username"));
+    }
+    @Test
+    public void updateTask_TestTaskIsUpdated(){
+        RegisterRequest request = new RegisterRequest();
+        request.setUsername("username");
+        request.setPassword("password");
+        UpdateTaskRequest updateTask = new UpdateTaskRequest();
+
     }
 }
 //register

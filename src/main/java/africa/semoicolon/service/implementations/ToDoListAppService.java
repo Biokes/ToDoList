@@ -47,7 +47,7 @@ public class ToDoListAppService implements AppService {
     private void validateUserInfo(String username, String password) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setPassword(password);
-        loginRequest.setPassword(username);
+        loginRequest.setUsername(username);
         userService.login(loginRequest);
     }
 }
