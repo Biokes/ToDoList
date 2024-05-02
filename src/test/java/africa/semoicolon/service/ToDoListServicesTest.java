@@ -111,7 +111,9 @@ public class ToDoListServicesTest {
         request.setUsername("username");
         request.setPassword("password");
         UpdateTaskRequest updateTask = new UpdateTaskRequest();
-
+        updateTask.setNewTitle("taskName");
+        updateTask.setDescription("pillow");
+        assertThrows(ToDoListException.class,()->appService.updateTask(updateTask));
     }
 }
 //register
