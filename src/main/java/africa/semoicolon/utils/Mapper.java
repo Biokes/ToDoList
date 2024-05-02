@@ -190,6 +190,6 @@ public class Mapper{
     public static LoginResponse mapUserToLogInResponse(User user){
         LoginResponse response = new LoginResponse();
         response.setNotification(user.getNotifications());
-        return null;
+        return response;
     }
 }
