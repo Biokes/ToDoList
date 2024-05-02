@@ -90,7 +90,7 @@ public class Mapper{
         UpdateTaskResponse response = new UpdateTaskResponse();
         response.setUsername(task.getUsername());
         response.setStatus(task.getStatus());
-        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        response.setDueDate(task.getDueDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         response.setTaskTitle(task.getTaskTitle());
         return response;
     }
