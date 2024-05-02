@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static africa.semoicolon.exceptions.ExceptionMessages.USER_ALREADY_EXIST;
-import static africa.semoicolon.exceptions.ExceptionMessages.USER_DOES_NOT_EXIST;
+import static africa.semoicolon.exceptions.ExceptionMessages.*;
 
 @Service
 public class ToDoUserService implements UserService {
@@ -64,6 +63,9 @@ public class ToDoUserService implements UserService {
         && user.getPassword().equalsIgnoreCase(login.getPassword()))
         output.set(user);});
         return output.get();
+    }
+    public User getUser(String username){
+           return repository.findAllByUsernameIgnoreCase(username).get();
     }
     private void validateLoginDetails(LoginRequest login){
         Validator.validateLogin(login);

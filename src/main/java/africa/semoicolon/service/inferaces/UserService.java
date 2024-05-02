@@ -15,4 +15,5 @@ public interface UserService {
     void login(LoginRequest login);
     void isValidUsername(String username);
     User getUser(LoginRequest login);
+    User getUser(String username);
 }
