@@ -3,6 +3,7 @@ package africa.semoicolon.service;
 
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.StartTaskResponse;
 import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.data.model.TaskStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -127,7 +129,6 @@ public class ToDoListServicesTest {
         createTaskRequest.setTaskTitle("task1");
         createTaskRequest.setDescription("decription");
         CreateTaskResponse  createResponse = appService.createTask(createTaskRequest);
-        System.out.println(createResponse);
         updateTask.setUsername("username");
         updateTask.setPassword("password");
         UpdateTaskResponse updateResponse = appService.updateTask(updateTask);
@@ -135,12 +136,41 @@ public class ToDoListServicesTest {
         assertEquals(PENDING,updateResponse.getStatus());
         assertEquals("2024-05-31",updateResponse.getDueDate());
         assertEquals("username",updateResponse.getUsername());
-        System.out.println(updateResponse);
 
     }
     @Test
-    public void test(){}
+    public void startTask_testTaskIsStarted(){
+        StartTaskRequest startTaskRequest = new StartTaskRequest();
+        startTaskRequest.setUsername("usernam");
+        startTaskRequest.setTaskName("task1");
+        assertThrows(ToDoListException.class,()->appService.startTask(startTaskRequest));
+        RegisterRequest register = new RegisterRequest();
+        register.setUsername("username");
+        register.setPassword("password");
+        appService.register(register);
+        assertThrows(ToDoListException.class,()->appService.startTask(startTaskRequest));
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest();
+        createTaskRequest.setUsername("username");
+        createTaskRequest.setTaskTitle("task1");
+        createTaskRequest.setDueDate("2024-07-12");
+        createTaskRequest.setDescription("timing");
+        appService.createTask(createTaskRequest);
+        assertThrows(ToDoListException.class,()->appService.startTask(startTaskRequest));
+        StartTaskResponse startTaskResponse = appService.startTask(startTaskRequest);
+        assertEquals("username", startTaskResponse.getUsername());
+        assertEquals(IN_PROGRESS, startTaskResponse.getStatus());
+    }
 }
+//find all created tasks
+// find all pending tasks
+//find all completed tasks
+// complete task
+// start task
+// assign task
+// find all assigned task
+
+
+
 //register user
 // delete user
 //create task

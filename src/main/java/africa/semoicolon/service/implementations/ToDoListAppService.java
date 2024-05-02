@@ -2,6 +2,7 @@ package africa.semoicolon.service.implementations;
 
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.StartTaskResponse;
 import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.dtos.response.ViewTaskResponse;
 import africa.semoicolon.service.inferaces.TaskService;
@@ -28,7 +29,7 @@ public class ToDoListAppService implements AppService {
     public long countAllUsers(){
         return userService.countAllUsers();
     }
-    public CreateTaskResponse createTask(CreateTaskRequest createTaskRequest) {
+    public CreateTaskResponse createTask(CreateTaskRequest createTaskRequest){
         userService.isValidUsername(createTaskRequest.getUsername());
         return taskService.createTask(createTaskRequest);
     }
@@ -47,6 +48,10 @@ public class ToDoListAppService implements AppService {
     public UpdateTaskResponse updateTask(UpdateTaskRequest updateTask) {
         validateUserInfo(updateTask.getUsername(), updateTask.getPassword());
         return taskService.updateTask(updateTask);
+    }
+    public StartTaskResponse startTask(StartTaskRequest startTaskRequest) {
+        validateUserInfo(startTaskRequest.getUsername(), startTaskRequest.getPassword());
+        return null;
     }
     private void validateUserInfo(String username, String password){
         LoginRequest loginRequest = new LoginRequest();
