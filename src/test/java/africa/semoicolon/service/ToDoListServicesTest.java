@@ -214,6 +214,7 @@ public class ToDoListServicesTest {
         login.setUsername("user101");
         login.setPassword("password1");
         assertThrows(ToDoListException.class,()->appService.login(login));
+        login.setPassword("password");
         LoginResponse loginResponse = appService.login(login);
         assertEquals(1,loginResponse.getNotification().size());
     }

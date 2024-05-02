@@ -59,12 +59,13 @@ public class ToDoListAppService implements AppService {
         Validator.validateAssignTaskRequest(assignTaskRequest);
         validateUserInfo(assignTaskRequest.getAssignerUsername(), assignTaskRequest.getPassword());
         userService.isValidUsername(assignTaskRequest.getAssigneeUsername());
+        return taskService.assignTask(assignTaskRequest);
+    }
+    public LoginResponse login(LoginRequest login){
+        validateUserInfo(login.getUsername(),login.getPassword());
+        userService.getUser(login);
         return null;
     }
-    public LoginResponse login(LoginRequest login) {
-        return null;
-    }
-
     private void validateUserInfo(String username, String password){
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setPassword(password);

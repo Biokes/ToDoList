@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static africa.semoicolon.exceptions.ExceptionMessages.USER_ALREADY_EXIST;
 import static africa.semoicolon.exceptions.ExceptionMessages.USER_DOES_NOT_EXIST;
@@ -56,7 +57,16 @@ public class ToDoUserService implements UserService {
         for(User user : users){if(user.getUsername().equalsIgnoreCase(username))return;}
         throw new ToDoListException(USER_DOES_NOT_EXIST.getMessage());
     }
+    public User getUser(LoginRequest login) {
+        validateLoginDetails(login);
+        AtomicReference<User> output = new AtomicReference<>(new User());
+        repository.findAll().forEach(user->{if(user.getUsername().equalsIgnoreCase(login.getUsername())
+        && user.getPassword().equalsIgnoreCase(login.getPassword()))
+        output.set(user);});
+        return output.get();
+    }
     private void validateLoginDetails(LoginRequest login){
+        Validator.validateLogin(login);
         List<User> allUsers = repository.findAll();
         for(User user: allUsers)
             if(user.getUsername().equalsIgnoreCase(login.getUsername())&&user.getPassword().equalsIgnoreCase(login.getPassword()))
