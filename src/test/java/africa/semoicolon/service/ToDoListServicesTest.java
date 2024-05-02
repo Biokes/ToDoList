@@ -3,6 +3,7 @@ package africa.semoicolon.service;
 
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
+import africa.semoicolon.dtos.response.UpdateTaskResponse;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
 import org.junit.jupiter.api.BeforeEach;
@@ -111,12 +112,31 @@ public class ToDoListServicesTest {
         request.setUsername("username");
         request.setPassword("password");
         UpdateTaskRequest updateTask = new UpdateTaskRequest();
-        updateTask.setNewTitle("taskName");
+        updateTask.setNewTitle("task2");
         updateTask.setDescription("pillow");
         assertThrows(ToDoListException.class,()->appService.updateTask(updateTask));
+        updateTask.setOldTitle("task1");
+        assertThrows(ToDoListException.class,()->appService.updateTask(updateTask));
+        updateTask.setPassword("password");
+        assertThrows(ToDoListException.class,()->appService.updateTask(updateTask));
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest();
+        createTaskRequest.setUsername("username");
+        createTaskRequest.setDueDate("2024-05-31");
+        createTaskRequest.setTaskTitle("task1");
+        createTaskRequest.setDescription("decription");
+        CreateTaskResponse  createResponse = appService.createTask(createTaskRequest);
+        System.out.println(createResponse);
+        UpdateTaskResponse updateResponse = appService.updateTask(updateTask);
+        assertEquals("task2",updateResponse.getTaskTitle());
+        assertEquals(PENDING,updateResponse.getStatus());
+        assertEquals("2024-05-31",updateResponse.getDueDate());
+        assertEquals("username",updateResponse.getUsername());
+        System.out.println(updateResponse);
+
     }
 }
-//register
+//register user
 // delete user
 //create task
-//delete
+//delete task
+//update task

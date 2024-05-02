@@ -8,4 +8,5 @@ public class UpdateTaskRequest {
     private String oldTitle;
     private String newTitle;
     private String description;
+    private String password;
 }

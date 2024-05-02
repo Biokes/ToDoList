@@ -45,6 +45,7 @@ public class ToDoListAppService implements AppService {
         taskService.deleteTaskWith(deleteTaskRequest);
     }
     public UpdateTaskResponse updateTask(UpdateTaskRequest updateTask) {
+        validateUserInfo(updateTask.getUsername(), updateTask.getPassword());
         return null;
     }
     private void validateUserInfo(String username, String password){
