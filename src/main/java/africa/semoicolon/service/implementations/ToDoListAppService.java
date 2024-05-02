@@ -1,13 +1,11 @@
 package africa.semoicolon.service.implementations;
 
 import africa.semoicolon.dtos.request.*;
-import africa.semoicolon.dtos.response.CreateTaskResponse;
-import africa.semoicolon.dtos.response.StartTaskResponse;
-import africa.semoicolon.dtos.response.UpdateTaskResponse;
-import africa.semoicolon.dtos.response.ViewTaskResponse;
+import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.service.inferaces.TaskService;
 import africa.semoicolon.service.inferaces.AppService;
 import africa.semoicolon.service.inferaces.UserService;
+import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +49,22 @@ public class ToDoListAppService implements AppService {
     }
     public StartTaskResponse startTask(StartTaskRequest startTaskRequest) {
         validateUserInfo(startTaskRequest.getUsername(), startTaskRequest.getPassword());
+        return taskService.startTaskWith(startTaskRequest);
+    }
+    public CompleteTaskResponse completeTask(CompleteTaskRequest completeTaskRequest) {
+        validateUserInfo(completeTaskRequest.getUsername(),completeTaskRequest.getPassword());
+        return taskService.completeTask(completeTaskRequest);
+    }
+    public AssignTaskResponse assignTask(AssignTaskRequest assignTaskRequest) {
+        Validator.validateAssignTaskRequest(assignTaskRequest);
+        validateUserInfo(assignTaskRequest.getAssignerUsername(), assignTaskRequest.getPassword());
+        userService.isValidUsername(assignTaskRequest.getAssigneeUsername());
         return null;
     }
+    public LoginResponse login(LoginRequest login) {
+        return null;
+    }
+
     private void validateUserInfo(String username, String password){
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setPassword(password);

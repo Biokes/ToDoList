@@ -3,8 +3,7 @@ package africa.semoicolon.dtos.request;
 import lombok.Data;
 
 @Data
-public class CompleteTaskRequest{
-    private String taskName;
+public class LogOut {
     private String username;
     private String password;
 }

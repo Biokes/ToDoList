@@ -63,6 +63,7 @@ public class Validator{
         assign.setAssignerUsername(validate(assign.getAssignerUsername()));
         assign.setAssigneeUsername(validate(assign.getAssigneeUsername()));
         assign.setDueDate(cleanDate(assign.getDueDate()).toString());
+        assign.setPassword(validate(assign.getPassword()));
         if(Optional.ofNullable(assign.getDescription()).isPresent()){
             assign.setDescription(validate(assign.getDescription()));
             return;

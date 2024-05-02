@@ -9,4 +9,5 @@ public class AssignTaskRequest {
     private String description;
     private String dueDate;
     private String assigneeUsername;
+    private String password;
 }
