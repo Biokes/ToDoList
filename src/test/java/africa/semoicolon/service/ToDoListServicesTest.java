@@ -2,6 +2,7 @@ package africa.semoicolon.service;
 
 
 import africa.semoicolon.dtos.request.CreateTaskRequest;
+import africa.semoicolon.dtos.request.DeleteTaskRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.exceptions.ToDoListException;
@@ -50,5 +51,16 @@ public class ToDoListServicesTest {
         assertEquals("username",createRequest.getUsername());
         assertEquals("task1", createResponse.getTitle());
         assertEquals(PENDING,createResponse.getStatus());
+        System.out.println(createResponse);
+    }
+    @Test
+    public void deleteAccount_testAccountAndTaskAreDeleted(){
+        RegisterRequest register = new RegisterRequest();
+        register.setUsername("username");
+        register.setPassword("password");
+        appService.register(register);
+        DeleteTaskRequest deleteRequest = new DeleteTaskRequest();
+        deleteRequest.setUsername("username");
+        
     }
 }

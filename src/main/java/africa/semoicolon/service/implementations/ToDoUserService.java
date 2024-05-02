@@ -51,12 +51,11 @@ public class ToDoUserService implements UserService {
         Validator.validateLogin(login);
         validateLoginDetails(login);
     }
-    public void validatUserExistence(String username) {
+    public void isValidUsername(String username) {
         List<User> users = repository.findAll();
-        users.forEach(user-> {if(user.getUsername().equalsIgnoreCase(username))return;});
+        for(User user : users){if(user.getUsername().equalsIgnoreCase(username))return;}
         throw new ToDoListException(USER_DOES_NOT_EXIST.getMessage());
     }
-
     private void validateLoginDetails(LoginRequest login){
         List<User> allUsers = repository.findAll();
         for(User user: allUsers)

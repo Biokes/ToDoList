@@ -26,11 +26,7 @@ public class ToDoListAppService implements AppService {
         return userService.countAllUsers();
     }
     public CreateTaskResponse createTask(CreateTaskRequest createTaskRequest) {
-        userService.validatUserExistence(createTaskRequest.getUsername());
-        return null;
+        userService.isValidUsername(createTaskRequest.getUsername());
+        return taskService.createTask(createTaskRequest);
     }
-    public void createTask(){
-
-    }
-
 }

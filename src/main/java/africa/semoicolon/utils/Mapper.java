@@ -86,7 +86,7 @@ public class Mapper{
         response.setStartDate(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss a")));
         return response;
     }
-    public static UpdateTaskResponse mapTaskToUpdateResponse(Task task) {
+    public static UpdateTaskResponse mapTaskToUpdateResponse(Task task){
         UpdateTaskResponse response = new UpdateTaskResponse();
         response.setUsername(task.getUsername());
         response.setStatus(task.getStatus());
@@ -94,7 +94,7 @@ public class Mapper{
         response.setTaskTitle(task.getTaskTitle());
         return response;
     }
-    public static Task mapToAssignTask(AssignTaskRequest assign) {
+    public static Task mapToAssignTask(AssignTaskRequest assign){
         validateAssignTaskRequest(assign);
         Task task = new Task();
         task.setUsername(assign.getAssigneeUsername());
@@ -106,7 +106,7 @@ public class Mapper{
         task.setDateCreated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
         return task;
     }
-    public static AssignTaskResponse mapToAssignTaskResponse(Task task) {
+    public static AssignTaskResponse mapToAssignTaskResponse(Task task){
         AssignTaskResponse response = new AssignTaskResponse();
         response.setStatus(task.getStatus());
         response.setTaskTitle(task.getTaskTitle());
@@ -136,12 +136,12 @@ public class Mapper{
         pendingTasks.forEach(task -> {response.add(mapTaskToResponse(task));});
         return response;
     }
-    public static List<AssignedTasksResponse> mapAllToAssignedTasksResponse(List<Task> allTasks) {
+    public static List<AssignedTasksResponse> mapAllToAssignedTasksResponse(List<Task> allTasks){
         List<AssignedTasksResponse> output = new ArrayList<>();
         allTasks.forEach(task->{output.add(Mapper.mapToAssignedTasksResponse(task));});
         return output;
     }
-    private static AssignedTasksResponse mapToAssignedTasksResponse(Task task) {
+    private static AssignedTasksResponse mapToAssignedTasksResponse(Task task){
         AssignedTasksResponse response = new AssignedTasksResponse();
         response.setUsername(task.getAssignerUsername());
         response.setAssigneeUsername(task.getUsername());

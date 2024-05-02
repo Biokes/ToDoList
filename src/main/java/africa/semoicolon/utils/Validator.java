@@ -1,5 +1,6 @@
 package africa.semoicolon.utils;
 
+import africa.semoicolon.data.repo.UserRepository;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
@@ -80,4 +81,5 @@ public class Validator{
         login.setUsername(validate(login.getUsername()));
         login.setPassword(validate(login.getPassword()));
     }
+
 }
