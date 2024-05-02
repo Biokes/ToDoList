@@ -119,6 +119,8 @@ public class ToDoListServicesTest {
         assertThrows(ToDoListException.class,()->appService.updateTask(updateTask));
         updateTask.setPassword("password");
         assertThrows(ToDoListException.class,()->appService.updateTask(updateTask));
+        appService.register(request);
+        assertThrows(ToDoListException.class,()->appService.register(request));
         CreateTaskRequest createTaskRequest = new CreateTaskRequest();
         createTaskRequest.setUsername("username");
         createTaskRequest.setDueDate("2024-05-31");
@@ -126,6 +128,8 @@ public class ToDoListServicesTest {
         createTaskRequest.setDescription("decription");
         CreateTaskResponse  createResponse = appService.createTask(createTaskRequest);
         System.out.println(createResponse);
+        updateTask.setUsername("username");
+        updateTask.setPassword("password");
         UpdateTaskResponse updateResponse = appService.updateTask(updateTask);
         assertEquals("task2",updateResponse.getTaskTitle());
         assertEquals(PENDING,updateResponse.getStatus());

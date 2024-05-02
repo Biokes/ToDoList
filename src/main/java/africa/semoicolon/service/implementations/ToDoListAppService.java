@@ -46,7 +46,7 @@ public class ToDoListAppService implements AppService {
     }
     public UpdateTaskResponse updateTask(UpdateTaskRequest updateTask) {
         validateUserInfo(updateTask.getUsername(), updateTask.getPassword());
-        return null;
+        return taskService.updateTask(updateTask);
     }
     private void validateUserInfo(String username, String password){
         LoginRequest loginRequest = new LoginRequest();
