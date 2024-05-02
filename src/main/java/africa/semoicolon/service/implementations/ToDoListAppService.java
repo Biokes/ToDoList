@@ -1,8 +1,6 @@
 package africa.semoicolon.service.implementations;
 
-import africa.semoicolon.dtos.request.CreateTaskRequest;
-import africa.semoicolon.dtos.request.DeleteUserRequest;
-import africa.semoicolon.dtos.request.RegisterRequest;
+import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.dtos.response.ViewTaskResponse;
 import africa.semoicolon.service.inferaces.TaskService;
@@ -33,12 +31,23 @@ public class ToDoListAppService implements AppService {
         userService.isValidUsername(createTaskRequest.getUsername());
         return taskService.createTask(createTaskRequest);
     }
-    public void deleteAccount(DeleteUserRequest deleteRequest) {
-
+    public void deleteAccount(DeleteUserRequest deleteRequest){
+        userService.deleteUser(deleteRequest);
+    }
+    public long countAllUserTask(String username) {
+        userService.isValidUsername(username);
+        return taskService.countTaskByUsername(username);
+    }
+    public void deleteTask(DeleteTaskRequest deleteTaskRequest) {
+        userService.isValidUsername(deleteTaskRequest.getUsername());
+        validateUserInfo(deleteTaskRequest.getUsername(),deleteTaskRequest.getPassword());
+        taskService.deleteTaskWith(deleteTaskRequest);
     }
 
-    @Override
-    public List<ViewTaskResponse> getAllUserTasks(String username) {
-        return null;
+    private void validateUserInfo(String username, String password) {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setPassword(password);
+        loginRequest.setPassword(username);
+        userService.login(loginRequest);
     }
 }

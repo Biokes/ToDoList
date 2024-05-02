@@ -1,13 +1,11 @@
 package africa.semoicolon.service.inferaces;
 
 import africa.semoicolon.dtos.request.CreateTaskRequest;
+import africa.semoicolon.dtos.request.DeleteTaskRequest;
 import africa.semoicolon.dtos.request.DeleteUserRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.dtos.response.CreateTaskResponse;
-import africa.semoicolon.dtos.response.ViewTaskResponse;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface AppService {
@@ -16,5 +14,6 @@ public interface AppService {
     long countAllUsers();
     CreateTaskResponse createTask(CreateTaskRequest createTaskRequest);
     void deleteAccount(DeleteUserRequest deleteRequest);
-    List<ViewTaskResponse> getAllUserTasks(String username);
+    long countAllUserTask(String username);
+    void deleteTask(DeleteTaskRequest deleteTaskRequest);
 }

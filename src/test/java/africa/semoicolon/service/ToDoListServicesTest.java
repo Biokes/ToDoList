@@ -67,18 +67,48 @@ public class ToDoListServicesTest {
         CreateTaskRequest createRequest = new CreateTaskRequest();
         createRequest.setUsername("username");
         createRequest.setTaskTitle("title");
-        createRequest.setDueDate("2013-12-30");
+        createRequest.setDueDate("2014.07.25");
         createRequest.setDescription("description");
+        assertThrows(ToDoListException.class,()->appService.createTask(createRequest));
+        createRequest.setDueDate("2024.07.25");
         appService.createTask(createRequest);
         createRequest.setTaskTitle("title1");
         appService.createTask(createRequest);
         createRequest.setTaskTitle("title2");
         appService.createTask(createRequest);
+        assertEquals(3,appService.countAllUserTask(deleteRequest.getUsername()));
         assertThrows(ToDoListException.class,()->appService.deleteAccount(deleteRequest));
         deleteRequest.setPassword("password1");
         appService.deleteAccount(deleteRequest);
         assertEquals(0,appService.countAllUsers());
-        assertThrows(ToDoListException.class,()->appService.getAllUserTasks(deleteRequest.getUsername()));
+        assertThrows(ToDoListException.class,()->appService.countAllUserTask(deleteRequest.getUsername()));
 
     }
+    @Test
+    public void deleteTask_testTaskIsDeleted(){
+        DeleteTaskRequest deleteTaskRequest = new DeleteTaskRequest();
+        deleteTaskRequest.setTaskName("task1");
+        deleteTaskRequest.setUsername("username");
+        deleteTaskRequest.setPassword("");
+        RegisterRequest register = new RegisterRequest();
+        register.setUsername("username");
+        register.setPassword("password");
+        appService.register(register);
+        assertThrows(ToDoListException.class,()->appService.deleteTask(deleteTaskRequest));
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest();
+        createTaskRequest.setUsername("usernam");
+        createTaskRequest.setTaskTitle("task1");
+        createTaskRequest.setDueDate("2023-07-09");
+        assertThrows(ToDoListException.class, ()->appService.createTask(createTaskRequest));
+        createTaskRequest.setUsername("username");
+        assertThrows(ToDoListException.class,()->appService.createTask(createTaskRequest));
+        createTaskRequest.setDueDate("2024-06-10");
+        appService.createTask(createTaskRequest);
+        assertThrows(ToDoListException.class,()->appService.deleteTask(deleteTaskRequest));
+        deleteTaskRequest.setPassword("password");
+    }
 }
+//register
+// delete user
+//create task
+//delete
