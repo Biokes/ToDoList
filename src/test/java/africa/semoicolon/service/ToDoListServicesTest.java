@@ -2,10 +2,7 @@ package africa.semoicolon.service;
 
 
 import africa.semoicolon.dtos.request.*;
-import africa.semoicolon.dtos.response.CreateTaskResponse;
-import africa.semoicolon.dtos.response.LoginResponse;
-import africa.semoicolon.dtos.response.StartTaskResponse;
-import africa.semoicolon.dtos.response.UpdateTaskResponse;
+import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
@@ -13,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
 import static africa.semoicolon.data.model.TaskStatus.PENDING;
@@ -277,7 +276,9 @@ public class ToDoListServicesTest {
         complete.setTaskName("task1");
         appService.completeTask(complete);
         assertEquals(0,appService.login(login1).getNotification().size());
-        assertEquals(1,appService.login(login).getNotification().size());
+        List<Notifier> notes = appService.login(login).getNotification();
+        System.out.println(notes);
+        assertEquals(1,notes.size());
     }
 
 }
