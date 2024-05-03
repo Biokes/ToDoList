@@ -182,6 +182,7 @@ public class Mapper{
         Notifications notification = new Notifications();
         notification.setNotification(assignTaskRequest.getAssignerUsername() + "Assigned you a task");
         notification.setTimeCreated(LocalDateTime.now());
+        notification.setTaskTitle(assignTaskRequest.getTaskTitle());
         return notification;
     }
     public static LoginResponse mapUserToLogInResponse(User user){

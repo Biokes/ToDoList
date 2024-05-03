@@ -249,8 +249,8 @@ public class ToDoListServicesTest {
         login1.setPassword("pass");
         login.setPassword("pass");
         LoginResponse loginResponse = appService.login(login);
-        assertEquals(0, appService.login(login1).getNotification().size());
-        assertEquals(1,loginResponse.getNotification().size());
+        assertEquals(1, appService.login(login1).getNotification().size());
+        assertEquals(0,loginResponse.getNotification().size());
         StartTaskRequest start = new StartTaskRequest();
         start.setUsername("user1");
         start.setPassword("pas1s");
@@ -261,9 +261,14 @@ public class ToDoListServicesTest {
         start.setPassword("pass");
         appService.startTask(start);
         LogOut logout= new LogOut();
-        logout.setUsername("user");
+        logout.setUsername("user1");
         logout.setPassword("password");
         assertThrows(InvalidDetails.class,()->appService.logOut(logout));
+        logout.setPassword("pass");
+        assertEquals(1, appService.login(login1).getNotification().size());
+        CompleteTaskRequest complete = new CompleteTaskRequest();
+        complete.setUsername("user1");
+        complete.setTaskName("task1");
     }
 
 }
