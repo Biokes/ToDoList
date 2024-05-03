@@ -187,10 +187,6 @@ public class Mapper{
     }
     public static LoginResponse mapUserToLogInResponse(User user){
         LoginResponse response = new LoginResponse();
-//        if(Optional.ofNullable(user.getNotifications()).isPresent()){
-//            response.setNotification();
-//            return response;
-//        }
         response.setNotification(user.getNotifications());
         return response;
     }

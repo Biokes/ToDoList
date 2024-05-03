@@ -55,6 +55,9 @@ public class ToDoUserService implements UserService {
     public void login(LoginRequest login){
         Validator.validateLogin(login);
         validateLoginDetails(login);
+        User user = getUser(login.getUsername());
+        user.setLoggedIn(true);
+        repository.save(user);
     }
     public void isValidUsername(String username) {
         List<User> users = repository.findAll();

@@ -231,6 +231,7 @@ public class ToDoListServicesTest {
         register.setPassword("pass");
         appService.register(register);
         register.setUsername("user2");
+        register.setPassword("pass");
         appService.register(register);
         AssignTaskRequest assignTaskRequest = new AssignTaskRequest();
         assignTaskRequest.setTaskTitle("task1");
@@ -241,13 +242,13 @@ public class ToDoListServicesTest {
         assignTaskRequest.setPassword("password");
         assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
         assignTaskRequest.setPassword("pass");
-        assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
+        appService.assignTask(assignTaskRequest);
         LoginRequest login = new LoginRequest();
-        LoginRequest login1 = new LoginRequest();
         login.setUsername("user1");
+        login.setPassword("pass");
+        LoginRequest login1 = new LoginRequest();
         login1.setUsername("user2");
         login1.setPassword("pass");
-        login.setPassword("pass");
         LoginResponse loginResponse = appService.login(login);
         assertEquals(1, appService.login(login1).getNotification().size());
         assertEquals(0,loginResponse.getNotification().size());
@@ -257,18 +258,26 @@ public class ToDoListServicesTest {
         start.setTaskName("task1");
         assertThrows(ToDoListException.class,()->appService.startTask(start));
         start.setUsername("user2");
-        assertThrows(InvalidDetails.class,()->appService.startTask(start));
+        assertThrows(ToDoListException.class,()->appService.startTask(start));
         start.setPassword("pass");
         appService.startTask(start);
         LogOut logout= new LogOut();
-        logout.setUsername("user1");
+        logout.setUsername("user2");
         logout.setPassword("password");
-        assertThrows(InvalidDetails.class,()->appService.logOut(logout));
+        assertThrows(ToDoListException.class,()->appService.logOut(logout));
         logout.setPassword("pass");
         assertEquals(1, appService.login(login1).getNotification().size());
         CompleteTaskRequest complete = new CompleteTaskRequest();
-        complete.setUsername("user1");
+        complete.setUsername("user2");
+        complete.setTaskName("task12");
+        complete.setPassword("pass1");
+        assertThrows(ToDoListException.class,()->appService.completeTask(complete));
+        complete.setPassword("pass");
+        assertThrows(ToDoListException.class,()->appService.completeTask(complete));
         complete.setTaskName("task1");
+        appService.completeTask(complete);
+        assertEquals(0,appService.login(login1).getNotification().size());
+        assertEquals(1,appService.login(login).getNotification().size());
     }
 
 }
