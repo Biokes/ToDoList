@@ -120,6 +120,23 @@ public class ToDoListAppService implements AppService {
     public void logOut(LogOut logout){
         userService.logOut(logout);
     }
+    public List<ViewTaskResponse> findAllTask(LoginRequest login){
+        validateUserInfo(login.getUsername(), login.getPassword());
+
+        return null;
+    }
+    public List<ViewTaskResponse> getAllCompleteTask(LoginRequest login){
+        validateUserInfo(login.getUsername(), login.getPassword());
+        return null;
+    }
+    public List<ViewTaskResponse> getAllCreatedTask(LoginRequest login){
+        validateUserInfo(login.getUsername(), login.getPassword());
+        return null;
+    }
+    public List<ViewTaskResponse> getAllWorkingTask(LoginRequest login){
+        validateUserInfo(login.getUsername(), login.getPassword());
+        return null;
+    }
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {
         notifications.add(notification);
         user.setNotifications(notifications);

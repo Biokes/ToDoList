@@ -306,14 +306,39 @@ public class ToDoListServicesTest {
         login.setUsername("user");
         login.setPassword("pass");
         List<ViewTaskResponse> response = appService.findAllTask(login);
+        assertEquals(0, response.size());
+        CreateTaskRequest create = new CreateTaskRequest();
+        create.setUsername("user");
+        create.setTaskTitle("task1");
+        create.setDueDate("2024-05-03");
+        appService.createTask(create);
+        create.setTaskTitle("title");
+        appService.createTask(create);
+        create.setTaskTitle("title1");
+        appService.createTask(create);
+        assertEquals(2,appService.findAllTask(login).size());
+        StartTaskRequest start = new StartTaskRequest();
+        start.setUsername("user");
+        start.setTaskName("title");
+        start.setPassword("pass");
+        appService.startTask(start);
+        CompleteTaskRequest  complete = new CompleteTaskRequest();
+        complete.setTaskName("title");
+        complete.setPassword("password");
+        complete.setUsername("user");
+        appService.completeTask(complete);
+        start.setTaskName("title1");
+        assertEquals(1,appService.getAllCompleteTask(login).size());
+        assertEquals(1,appService.getAllWorkingTask(login).size());
+        assertEquals(1, appService.getAllCreatedTask(login).size());
     }
 }
-//find all created tasks
-// find all pending tasks
-//find all completed
-// find all assigned task
-// view notifications
+    //find all created tasks
+    // find all pending tasks
+    //find all completed
 
+// find all assigned task
+// get notifications from due tasks not completed
 
 //register user
 // delete user
@@ -323,3 +348,4 @@ public class ToDoListServicesTest {
 // complete task
 // assign task
 //notify user after loggin in
+// view notifications
