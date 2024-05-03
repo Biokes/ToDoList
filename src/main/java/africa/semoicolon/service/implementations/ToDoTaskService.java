@@ -1,6 +1,5 @@
 package africa.semoicolon.service.implementations;
 
-import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.*;
@@ -61,7 +60,7 @@ public class ToDoTaskService implements TaskService {
             throw new ToDoListException(TASK_NOT_FOUND.getMessage());
         repository.deleteTaskByUsernameAndTaskTitle(delete.getUsername(),delete.getTaskName());
     }
-    public UpdateTaskResponse updateTask(UpdateTaskRequest update) {
+    public UpdateTaskResponse updateTask(UpdateTaskRequest update){
         validateUpdate(update);
         if(isExistingTask(update.getOldTitle(),update.getUsername())) {
             Task task = findTask(update.getUsername(), update.getOldTitle());
@@ -99,11 +98,11 @@ public class ToDoTaskService implements TaskService {
     }
     public void checkTaskExistence(AssignTaskRequest request){
         List<Task> tasks = repository.findAll();
-        tasks.forEach(task->{if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())
-                    &&request.getAssignerUsername().equalsIgnoreCase(task.getAssignerUsername()))
-                    throw new ToDoListException
-                    ("you already assigned "+request.getAssigneeUsername()+" "+ request.getTaskTitle());});
-        throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
+        tasks.forEach(task->{
+        if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())
+           && request.getAssignerUsername().equalsIgnoreCase(task.getAssignerUsername()))
+           throw new ToDoListException
+           ("you already assigned "+request.getAssigneeUsername()+" "+ request.getTaskTitle());});
     }
     private List<Task> findAllAssignedTasks(String boss){
         List<Task> allTasks= repository.findAll();
