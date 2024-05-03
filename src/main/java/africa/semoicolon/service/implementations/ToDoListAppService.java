@@ -12,7 +12,9 @@ import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ToDoListAppService implements AppService {
@@ -67,17 +69,21 @@ public class ToDoListAppService implements AppService {
     }
     private void notifyUserForNotification(AssignTaskRequest assignTaskRequest){
        User user =  userService.getUser(assignTaskRequest.getAssigneeUsername());
-        extracted(assignTaskRequest, user);
+       extracted(assignTaskRequest, user);
     }
     private static void extracted(AssignTaskRequest assignTaskRequest, User user) {
         Notifications notification = Mapper.mapAssignTaskToNotification(assignTaskRequest);
         List<Notifications> notifications = user.getNotifications();
-        notifications.add(notification);
-        user.setNotifications(notifications);
+        if(Optional.ofNullable(notifications).isPresent()){
+            notifications.add(notification);
+             user.setNotifications(notifications);
+             return;
+        }
+        user.setNotifications(new ArrayList<>());
     }
 
     public LoginResponse login(LoginRequest login){
-        validateUserInfo(login.getUsername(),login.getPassword());
+        userService.login(login);
         User user = userService.getUser(login);
         return Mapper.mapUserToLogInResponse(user);
     }

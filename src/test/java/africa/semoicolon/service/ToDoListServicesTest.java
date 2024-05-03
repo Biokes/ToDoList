@@ -209,19 +209,24 @@ public class ToDoListServicesTest {
         register.setPassword("password");
         appService.register(register);
         appService.assignTask(assignTaskRequest);
+        assertEquals(0,appService.countAllUserTask("username"));
         assertEquals(1,appService.countAllUserTask("user101"));
         LoginRequest login = new LoginRequest();
+        LoginRequest login1 = new LoginRequest();
         login.setUsername("user101");
+        login1.setUsername("username");
+        login1.setPassword("password");
         login.setPassword("password1");
         assertThrows(ToDoListException.class,()->appService.login(login));
         login.setPassword("password");
         LoginResponse loginResponse = appService.login(login);
+        assertEquals(0, appService.login(login1).getNotification().size());
         assertEquals(1,loginResponse.getNotification().size());
     }
 }
 //find all created tasks
 // find all pending tasks
-//find all completed tasks
+//find all completed
 // find all assigned task
 
 
@@ -233,3 +238,4 @@ public class ToDoListServicesTest {
 //update task
 // complete task
 // assign task
+//notify user after loggin in

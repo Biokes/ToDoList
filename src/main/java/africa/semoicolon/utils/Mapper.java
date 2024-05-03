@@ -177,18 +177,18 @@ public class Mapper{
         user.setPassword(request.getPassword());
         return user;
     }
-
-    public static Notifications mapAssignTaskToNotification(AssignTaskRequest assignTaskRequest) {
+    public static Notifications mapAssignTaskToNotification(AssignTaskRequest assignTaskRequest){
         Notifications notification = new Notifications();
-        StringBuilder builder = new StringBuilder();
-        builder.append(assignTaskRequest.getAssignerUsername()+ "Assigned you a task");
-        notification.setNotification(builder.toString());
+        notification.setNotification(assignTaskRequest.getAssignerUsername() + "Assigned you a task");
         notification.setTimeCreated(LocalDateTime.now());
         return notification;
     }
-
     public static LoginResponse mapUserToLogInResponse(User user){
         LoginResponse response = new LoginResponse();
+//        if(Optional.ofNullable(user.getNotifications()).isPresent()){
+//            response.setNotification();
+//            return response;
+//        }
         response.setNotification(user.getNotifications());
         return response;
     }
