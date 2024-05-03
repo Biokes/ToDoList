@@ -190,8 +190,7 @@ public class Mapper{
         response.setNotification(mapNotificationsToNotifier(user.getNotifications()));
         return response;
     }
-
-    private static List<Notifier> mapNotificationsToNotifier(List<Notifications> notification) {
+    private static List<Notifier> mapNotificationsToNotifier(List<Notifications> notification){
         List<Notifier> output = new ArrayList<>();
         Notifier notifier = new Notifier();
         notification.forEach(note->{
@@ -201,5 +200,6 @@ public class Mapper{
                     format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
             output.add(notifier);
         });
+        return output;
     }
 }

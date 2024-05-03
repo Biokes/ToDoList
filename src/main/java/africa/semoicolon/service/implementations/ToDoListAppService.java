@@ -85,13 +85,13 @@ public class ToDoListAppService implements AppService {
     public LoginResponse login(LoginRequest login){
         userService.login(login);
         User user = userService.getUser(login);
-        List<Notifications> notifications = user.getNotifications();
-        for(Notifications notes: notifications){
-            if(notes.isSeen())
-                user.getNotifications().remove(notes);
+        for(Notifications notification: user.getNotifications()){
+            if(notification.isSeen()) {
+                user.getNotifications().remove(notification);
+                user.setNotifications(user.getNotifications());
+            }
         }
         user.getNotifications().forEach(note->{note.setSeen(true);});
-        user.setNotifications(notifications);
         userService.save(user);
         return Mapper.mapUserToLogInResponse(user);
     }
