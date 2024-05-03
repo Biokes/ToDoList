@@ -9,4 +9,5 @@ public class Notifications {
     private String notification;
     private String taskTitle;
     private LocalDateTime timeCreated;
+    private boolean isSeen;
 }

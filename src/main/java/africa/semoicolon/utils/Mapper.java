@@ -187,6 +187,10 @@ public class Mapper{
     }
     public static LoginResponse mapUserToLogInResponse(User user){
         LoginResponse response = new LoginResponse();
+        for(Notifications notes: user.getNotifications()){
+            if(notes.isSeen())
+                user.getNotifications().remove(notes);
+        }
         response.setNotification(user.getNotifications());
         return response;
     }
