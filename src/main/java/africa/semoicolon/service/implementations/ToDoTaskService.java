@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static africa.semoicolon.data.model.TaskStatus.*;
 import static africa.semoicolon.exceptions.ExceptionMessages.*;
+import static africa.semoicolon.utils.Mapper.mapToAssignTask;
 import static africa.semoicolon.utils.Validator.*;
 
 @Service
@@ -70,7 +71,7 @@ public class ToDoTaskService implements TaskService {
     }
     public AssignTaskResponse assignTask(AssignTaskRequest assign){
         validateAssignTaskRequest(assign);
-        Task task = repository.save(Mapper.mapToAssignTask(assign));
+        Task task = repository.save(mapToAssignTask(assign));
         return Mapper.mapToAssignTaskResponse(task);
     }
     public long countTaskByUsername(String username){
@@ -94,6 +95,13 @@ public class ToDoTaskService implements TaskService {
     public List<AssignedTasksResponse> getallAssignedTasks(String boss) {
         List<Task> allTasks= findAllAssignedTasks(boss);
         return Mapper.mapAllToAssignedTasksResponse(allTasks);
+    }
+    public void checkTaskExistence(AssignTaskRequest request) {
+        if(repository.findAllByUsernameIgnoreCaseAndAssignerUsername(request.getAssigneeUsername(),
+                request.getAssignerUsername()).isPresent())
+            throw new ToDoListException("you already assigned "+
+                                        request.getAssigneeUsername()+" "
+                                        + request.getTaskTitle());
     }
     private List<Task> findAllAssignedTasks(String boss) {
         List<Task> allTasks= repository.findAll();

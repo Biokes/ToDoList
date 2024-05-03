@@ -23,6 +23,9 @@ import static africa.semoicolon.exceptions.ExceptionMessages.*;
 public class ToDoUserService implements UserService {
     @Autowired
     private UserRepository repository;
+    public void save(User user){
+        repository.save(user);
+    }
     public void register(RegisterRequest request) {
         Validator.validateRegister(request);
         validateUserExistence(request.getUsername());

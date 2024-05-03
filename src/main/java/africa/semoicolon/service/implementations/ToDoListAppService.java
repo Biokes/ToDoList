@@ -63,6 +63,7 @@ public class ToDoListAppService implements AppService {
     public AssignTaskResponse assignTask(AssignTaskRequest assignTaskRequest){
         Validator.validateAssignTaskRequest(assignTaskRequest);
         validateUserInfo(assignTaskRequest.getAssignerUsername(), assignTaskRequest.getPassword());
+        taskService.checkTaskExistence(assignTaskRequest);
         userService.isValidUsername(assignTaskRequest.getAssigneeUsername());
         notifyUserForNotification(assignTaskRequest);
         return taskService.assignTask(assignTaskRequest);
@@ -71,21 +72,25 @@ public class ToDoListAppService implements AppService {
        User user =  userService.getUser(assignTaskRequest.getAssigneeUsername());
        extracted(assignTaskRequest, user);
     }
-    private static void extracted(AssignTaskRequest assignTaskRequest, User user) {
+    private void extracted(AssignTaskRequest assignTaskRequest, User user){
         Notifications notification = Mapper.mapAssignTaskToNotification(assignTaskRequest);
         List<Notifications> notifications = user.getNotifications();
-        if(Optional.ofNullable(notifications).isPresent()){
-            notifications.add(notification);
-             user.setNotifications(notifications);
-             return;
+        if(notifications.isEmpty()){
+            extracted(user, notifications, notification);
+            return;
         }
         user.setNotifications(new ArrayList<>());
+        userService.save(user);
     }
-
     public LoginResponse login(LoginRequest login){
         userService.login(login);
         User user = userService.getUser(login);
         return Mapper.mapUserToLogInResponse(user);
+    }
+    private void extracted(User user, List<Notifications> notifications, Notifications notification) {
+        notifications.add(notification);
+        user.setNotifications(notifications);
+        userService.save(user);
     }
     private void validateUserInfo(String username, String password){
         LoginRequest loginRequest = new LoginRequest();

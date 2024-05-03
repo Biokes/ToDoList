@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
+    void save(User user);
     void register(RegisterRequest request);
     long countAllUsers();
     void deleteUser(DeleteUserRequest delete);

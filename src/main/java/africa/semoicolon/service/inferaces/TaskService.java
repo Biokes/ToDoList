@@ -21,5 +21,5 @@ public interface TaskService{
     List<StartTaskResponse> getAllTasksInProgress(String username);
     List<CompleteTaskResponse> getAllCompleteTasks(String username);
     List<AssignedTasksResponse> getallAssignedTasks(String boss);
-
+    void checkTaskExistence(AssignTaskRequest request);
 }

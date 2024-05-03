@@ -53,7 +53,6 @@ public class ToDoListServicesTest {
         assertEquals("username",createRequest.getUsername());
         assertEquals("task1", createResponse.getTitle());
         assertEquals(PENDING,createResponse.getStatus());
-        System.out.println(createResponse);
     }
     @Test
     public void deleteAccount_testAccountAndTaskAreDeleted(){
@@ -192,7 +191,7 @@ public class ToDoListServicesTest {
         assertEquals(IN_PROGRESS, startTaskResponse.getStatus());
     }
     @Test
-    public void assignTask_TestTaskIsAssignend(){
+    public void assignTask_TestTaskIsAssigned(){
         RegisterRequest register = new RegisterRequest();
         register.setUsername("username");
         register.setPassword("password");
@@ -209,6 +208,7 @@ public class ToDoListServicesTest {
         register.setPassword("password");
         appService.register(register);
         appService.assignTask(assignTaskRequest);
+        assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
         assertEquals(0,appService.countAllUserTask("username"));
         assertEquals(1,appService.countAllUserTask("user101"));
         LoginRequest login = new LoginRequest();
@@ -223,6 +223,9 @@ public class ToDoListServicesTest {
         assertEquals(0, appService.login(login1).getNotification().size());
         assertEquals(1,loginResponse.getNotification().size());
     }
+    @Test
+    public void AssignedTaskCanBeMonitoredTaskAssigned(){}
+
 }
 //find all created tasks
 // find all pending tasks
