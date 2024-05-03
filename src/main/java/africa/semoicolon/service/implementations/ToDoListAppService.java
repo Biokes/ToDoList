@@ -58,24 +58,26 @@ public class ToDoListAppService implements AppService {
     }
     public StartTaskResponse startTask(StartTaskRequest startTaskRequest){
         validateUserInfo(startTaskRequest.getUsername(), startTaskRequest.getPassword());
-        Task task = taskService.findTask(startTaskRequest.getUsername(), startTaskRequest.getTaskName());
+        StartTaskResponse response = taskService.startTaskWith(startTaskRequest);
+        Task task = taskService.findTask(response.getUsername(), response.getTaskTitle());
         notifyUserForNotification(task);
-        return taskService.startTaskWith(startTaskRequest);
+        return response;
     }
-    public CompleteTaskResponse completeTask(CompleteTaskRequest completeTaskRequest) {
+    public CompleteTaskResponse completeTask(CompleteTaskRequest completeTaskRequest){
         validateUserInfo(completeTaskRequest.getUsername(),completeTaskRequest.getPassword());
         CompleteTaskResponse response = taskService.completeTask(completeTaskRequest);
-        Task task = taskService.findTask(completeTaskRequest.getUsername(), completeTaskRequest.getTaskName());
+        Task task = taskService.findTask(response.getUsername(), response.getTaskName());
         notifyUserForNotification(task);
         return response;
     }
     public AssignTaskResponse assignTask(AssignTaskRequest assignTaskRequest){
         Validator.validateAssignTaskRequest(assignTaskRequest);
         validateUserInfo(assignTaskRequest.getAssignerUsername(), assignTaskRequest.getPassword());
+        AssignTaskResponse response = taskService.assignTask(assignTaskRequest);
         taskService.checkTaskExistence(assignTaskRequest);
         userService.isValidUsername(assignTaskRequest.getAssigneeUsername());
         notifyUserForNotification(assignTaskRequest);
-        return taskService.assignTask(assignTaskRequest);
+        return response;
     }
     private void notifyUserForNotification(AssignTaskRequest assignTaskRequest){
        User user =  userService.getUser(assignTaskRequest.getAssigneeUsername());
@@ -83,7 +85,7 @@ public class ToDoListAppService implements AppService {
     }
     private void notifyUserForNotification(Task task){
         if(Optional.ofNullable(task.getAssignerUsername()).isPresent()&&
-           Optional.of(task.getAssignerUsername()).get().equalsIgnoreCase("self")) {
+           !Optional.of(task.getAssignerUsername()).get().equalsIgnoreCase("self")) {
             User user = userService.getUser(task.getAssignerUsername());
             Notifications notification = new Notifications();
             notification.setNotification(task.getTaskTitle()+" assigned To "+ task.getUsername()+  "is " + task.getStatus());

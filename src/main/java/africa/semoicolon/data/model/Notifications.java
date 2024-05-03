@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 public class Notifications {
     private String notification;
     private String taskTitle;
-    private LocalDateTime timeCreated;
+    private LocalDateTime timeCreated= LocalDateTime.now();
     private boolean isSeen;
 }

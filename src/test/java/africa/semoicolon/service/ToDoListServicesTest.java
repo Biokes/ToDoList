@@ -277,8 +277,8 @@ public class ToDoListServicesTest {
         appService.completeTask(complete);
         assertEquals(0,appService.login(login1).getNotification().size());
         List<Notifier> notes = appService.login(login).getNotification();
-        System.out.println(notes);
-        assertEquals(1,notes.size());
+        notes.forEach(System.out::println);
+        assertEquals(2,notes.size());
     }
     @Test
     public void testFindAllTask(){
