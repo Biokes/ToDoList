@@ -266,7 +266,7 @@ public class ToDoListServicesTest {
         logout.setPassword("password");
         assertThrows(ToDoListException.class,()->appService.logOut(logout));
         logout.setPassword("pass");
-        assertEquals(1, appService.login(login1).getNotification().size());
+        assertEquals(0, appService.login(login1).getNotification().size());
         CompleteTaskRequest complete = new CompleteTaskRequest();
         complete.setUsername("user2");
         complete.setTaskName("task12");

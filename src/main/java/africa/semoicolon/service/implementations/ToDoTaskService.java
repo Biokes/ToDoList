@@ -164,7 +164,7 @@ public class ToDoTaskService implements TaskService {
         }
         return false;
     }
-    private Task findTask(String username, String taskTitle){
+    public Task findTask(String username, String taskTitle){
         return repository.findTaskByTaskTitleAndUsername(taskTitle,username).get();
     }
 }

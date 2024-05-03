@@ -1,5 +1,6 @@
 package africa.semoicolon.service.inferaces;
 
+import africa.semoicolon.data.model.Task;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import org.springframework.stereotype.Service;
@@ -22,4 +23,5 @@ public interface TaskService{
     List<CompleteTaskResponse> getAllCompleteTasks(String username);
     List<AssignedTasksResponse> getallAssignedTasks(String boss);
     void checkTaskExistence(AssignTaskRequest request);
+    Task findTask(String username, String taskName);
 }

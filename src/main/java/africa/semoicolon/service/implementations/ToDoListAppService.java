@@ -1,6 +1,7 @@
 package africa.semoicolon.service.implementations;
 
 import africa.semoicolon.data.model.Notifications;
+import africa.semoicolon.data.model.Task;
 import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
@@ -48,16 +49,23 @@ public class ToDoListAppService implements AppService {
         validateUserInfo(deleteTaskRequest.getUsername(),deleteTaskRequest.getPassword());
         taskService.deleteTaskWith(deleteTaskRequest);
     }
-    public UpdateTaskResponse updateTask(UpdateTaskRequest updateTask) {
+    public UpdateTaskResponse updateTask(UpdateTaskRequest updateTask){
         validateUserInfo(updateTask.getUsername(), updateTask.getPassword());
-        return taskService.updateTask(updateTask);
+        UpdateTaskResponse response = taskService.updateTask(updateTask);
+        Task task = taskService.findTask(updateTask.getUsername(),response.getTaskTitle());
+        notifyUserForNotification(task);
+        return response;
     }
     public StartTaskResponse startTask(StartTaskRequest startTaskRequest) {
         validateUserInfo(startTaskRequest.getUsername(), startTaskRequest.getPassword());
+        Task task = taskService.findTask(startTaskRequest.getUsername(), startTaskRequest.getTaskName());
+        notifyUserForNotification(task);
         return taskService.startTaskWith(startTaskRequest);
     }
     public CompleteTaskResponse completeTask(CompleteTaskRequest completeTaskRequest) {
         validateUserInfo(completeTaskRequest.getUsername(),completeTaskRequest.getPassword());
+        Task task = taskService.findTask(completeTaskRequest.getUsername(), completeTaskRequest.getTaskName());
+        notifyUserForNotification(task);
         return taskService.completeTask(completeTaskRequest);
     }
     public AssignTaskResponse assignTask(AssignTaskRequest assignTaskRequest){
@@ -72,6 +80,17 @@ public class ToDoListAppService implements AppService {
        User user =  userService.getUser(assignTaskRequest.getAssigneeUsername());
        extracted(assignTaskRequest, user);
     }
+    private void notifyUserForNotification(Task task){
+        if(!task.getAssignerUsername().equals("self")) {
+            User user = userService.getUser(task.getAssignerUsername());
+            Notifications notification = new Notifications();
+            notification.setNotification(task.getTaskTitle()+" assigned To "+ task.getUsername()+  "is " + task.getStatus());
+            List<Notifications> notifications= user.getNotifications();
+            notifications.add(notification);
+            user.setNotifications(notifications);
+            userService.save(user);
+        }
+    }
     private void extracted(AssignTaskRequest assignTaskRequest, User user){
         Notifications notification = Mapper.mapAssignTaskToNotification(assignTaskRequest);
         List<Notifications> notifications = user.getNotifications();
@@ -85,13 +104,10 @@ public class ToDoListAppService implements AppService {
     public LoginResponse login(LoginRequest login){
         userService.login(login);
         User user = userService.getUser(login);
-        for(Notifications notification: user.getNotifications()){
-            if(notification.isSeen()) {
-                user.getNotifications().remove(notification);
-                user.setNotifications(user.getNotifications());
-            }
-        }
+        List<Notifications> box = user.getNotifications();
+        box.removeIf(Notifications::isSeen);
         user.getNotifications().forEach(note->{note.setSeen(true);});
+        user.setNotifications(box);
         userService.save(user);
         return Mapper.mapUserToLogInResponse(user);
     }
