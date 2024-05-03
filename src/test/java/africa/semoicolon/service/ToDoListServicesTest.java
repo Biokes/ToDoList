@@ -280,7 +280,10 @@ public class ToDoListServicesTest {
         System.out.println(notes);
         assertEquals(1,notes.size());
     }
+    @Test
+    public void testFindAllTask(){
 
+    }
 }
 //find all created tasks
 // find all pending tasks

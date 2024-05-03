@@ -37,7 +37,7 @@ public class ToDoTaskService implements TaskService {
     public StartTaskResponse startTaskWith(StartTaskRequest startRequest){
         validateStartTaskRequest(startRequest);
         checkTaskStatus(startRequest);
-        Optional<Task> taskFound = repository.findTaskByTaskTitleAndUsername(startRequest.getTaskName(),
+        Optional<Task> taskFound = repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(startRequest.getTaskName(),
                                                                              startRequest.getUsername());
         validateTask(taskFound);
         taskFound.get().setStatus(IN_PROGRESS);
@@ -131,7 +131,7 @@ public class ToDoTaskService implements TaskService {
             throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
     private void checkTaskStatus(StartTaskRequest startRequest) {
-        Optional<Task> task =repository.findTaskByTaskTitleAndUsername(startRequest.getTaskName(),
+        Optional<Task> task =repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(startRequest.getTaskName(),
                 startRequest.getUsername());
         if(task.isPresent() && (task.get().getStatus()== IN_PROGRESS || task.get().getStatus()== COMPLETED))
             throw new TaskStartedException(TASK_STARTED.getMessage());
@@ -148,12 +148,12 @@ public class ToDoTaskService implements TaskService {
             throw new TaskStartedException(TASK_STARTED.getMessage());
     }
     private Task complete(CompleteTaskRequest complete){
-        Optional<Task> task = repository.findTaskByTaskTitleAndUsername(complete.getTaskName( ), complete.getUsername( ));
+        Optional<Task> task = repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(complete.getTaskName( ), complete.getUsername( ));
         task.get().setStatus(COMPLETED);
         return repository.save(task.get());
     }
     private boolean isStartedTask(String taskName, String username){
-        Optional<Task> task=repository.findTaskByTaskTitleAndUsername(taskName, username);
+        Optional<Task> task=repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(taskName, username);
         return task.get().getStatus()==IN_PROGRESS;
     }
     private boolean isExistingTask(String title,String username){
@@ -165,6 +165,6 @@ public class ToDoTaskService implements TaskService {
         return false;
     }
     public Task findTask(String username, String taskTitle){
-        return repository.findTaskByTaskTitleAndUsername(taskTitle,username).get();
+        return repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(taskTitle,username).get();
     }
 }
