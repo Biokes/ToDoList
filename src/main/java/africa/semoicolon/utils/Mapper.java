@@ -187,7 +187,19 @@ public class Mapper{
     }
     public static LoginResponse mapUserToLogInResponse(User user){
         LoginResponse response = new LoginResponse();
-        response.setNotification(user.getNotifications());
+        response.setNotification(mapNotificationsToNotifier(user.getNotifications()));
         return response;
+    }
+
+    private static List<Notifier> mapNotificationsToNotifier(List<Notifications> notification) {
+        List<Notifier> output = new ArrayList<>();
+        Notifier notifier = new Notifier();
+        notification.forEach(note->{
+            notifier.setDescription(note.getNotification());
+            notifier.setTaskTitle(note.getTaskTitle());
+            notifier.setTimeNotified(note.getTimeCreated().
+                    format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
+            output.add(notifier);
+        });
     }
 }

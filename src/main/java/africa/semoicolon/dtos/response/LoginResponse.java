@@ -7,5 +7,5 @@ import java.util.List;
 
 @Data
 public class LoginResponse {
-    private List<Notifications> notification;
+    private List<Notifier> notification;
 }
