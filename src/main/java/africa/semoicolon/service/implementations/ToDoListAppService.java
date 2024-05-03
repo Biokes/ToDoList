@@ -90,6 +90,7 @@ public class ToDoListAppService implements AppService {
             if(notes.isSeen())
                 user.getNotifications().remove(notes);
         }
+        user.getNotifications().forEach(note->{note.setSeen(true);});
         user.setNotifications(notifications);
         userService.save(user);
         return Mapper.mapUserToLogInResponse(user);

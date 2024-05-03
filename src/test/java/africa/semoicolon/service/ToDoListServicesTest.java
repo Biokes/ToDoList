@@ -285,7 +285,7 @@ public class ToDoListServicesTest {
 // find all pending tasks
 //find all completed
 // find all assigned task
-
+// view notifications
 
 
 //register user
