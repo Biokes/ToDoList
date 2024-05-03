@@ -4,7 +4,6 @@ import africa.semoicolon.data.model.Notifications;
 import africa.semoicolon.data.model.Task;
 import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.AssignTaskRequest;
-import africa.semoicolon.dtos.request.CompleteTaskRequest;
 import africa.semoicolon.dtos.request.CreateTaskRequest;
 import africa.semoicolon.dtos.request.RegisterRequest;
 import africa.semoicolon.dtos.response.*;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 

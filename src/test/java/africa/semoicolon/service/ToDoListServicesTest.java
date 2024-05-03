@@ -3,9 +3,9 @@ package africa.semoicolon.service;
 
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
-import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,11 @@ public class ToDoListServicesTest {
     void wipe(){
         appService.deleteAll();
     }
+    @AfterEach
+    void clean(){
+        appService.deleteAll();
+    }
+
     @Test
     public void testUserRegisteration(){
         RegisterRequest register = new RegisterRequest();
@@ -196,25 +201,35 @@ public class ToDoListServicesTest {
         register.setUsername("username");
         register.setPassword("password");
         appService.register(register);
+
         assertThrows(ToDoListException.class,()->appService.register(register));
+
         AssignTaskRequest assignTaskRequest = new AssignTaskRequest();
         assignTaskRequest.setTaskTitle("task1");
         assignTaskRequest.setAssignerUsername("username");
-        assignTaskRequest.setAssigneeUsername("user101");
+        assignTaskRequest.setAssigneeUsername("user10");
         assignTaskRequest.setDueDate("2024-06-10");
         assignTaskRequest.setDescription("description for creating task");
         assignTaskRequest.setPassword("password");
         assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
-        register.setUsername("user101");
+
+        register.setUsername("user10");
+        assertEquals(1,appService.countAllUsers());
         register.setPassword("password");
         appService.register(register);
+
+        assertEquals(2,appService.countAllUsers());
+
+        assertEquals(0,appService.countAllUserTask("user10"));
+
+        assertEquals(0,appService.countAllUserTask("username"));
         appService.assignTask(assignTaskRequest);
         assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
         assertEquals(0,appService.countAllUserTask("username"));
-        assertEquals(1,appService.countAllUserTask("user101"));
+        assertEquals(1,appService.countAllUserTask("user10"));
         LoginRequest login = new LoginRequest();
         LoginRequest login1 = new LoginRequest();
-        login.setUsername("user101");
+        login.setUsername("user10");
         login1.setUsername("username");
         login1.setPassword("password");
         login.setPassword("password1");
@@ -283,6 +298,10 @@ public class ToDoListServicesTest {
     }
     @Test
     public void testFindAllTask(){
+        RegisterRequest register= new RegisterRequest();
+        register.setUsername("user");
+        register.setPassword("pass");
+        appService.register(register);
 
     }
 }

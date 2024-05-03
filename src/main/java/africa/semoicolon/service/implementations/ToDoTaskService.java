@@ -108,10 +108,11 @@ public class ToDoTaskService implements TaskService {
     public void checkTaskExistence(AssignTaskRequest request){
         List<Task> tasks = repository.findAll();
         for(Task task : tasks){
-        if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())&&request.getAssignerUsername().equalsIgnoreCase(task.getAssignerUsername()))
+        if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())&&
+                task.getAssignerUsername().equalsIgnoreCase(request.getAssignerUsername()))
            throw new ToDoListException
-           ("you already assigned "+request.getAssigneeUsername()+" "+ request.getTaskTitle());
-        };
+           ("you already assigned "+ request.getTaskTitle() + " to " +request.getAssigneeUsername());
+        }
     }
     private List<Task> findAllAssignedTasks(String boss){
         List<Task> allTasks= repository.findAll();

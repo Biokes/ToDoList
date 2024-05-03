@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static africa.semoicolon.utils.Validator.validateAssignTaskRequest;
+
 @Service
 public class ToDoListAppService implements AppService {
     @Autowired
@@ -71,11 +73,11 @@ public class ToDoListAppService implements AppService {
         return response;
     }
     public AssignTaskResponse assignTask(AssignTaskRequest assignTaskRequest){
-        Validator.validateAssignTaskRequest(assignTaskRequest);
+        validateAssignTaskRequest(assignTaskRequest);
         validateUserInfo(assignTaskRequest.getAssignerUsername(), assignTaskRequest.getPassword());
         taskService.checkTaskExistence(assignTaskRequest);
-        AssignTaskResponse response = taskService.assignTask(assignTaskRequest);
         userService.isValidUsername(assignTaskRequest.getAssigneeUsername());
+        AssignTaskResponse response = taskService.assignTask(assignTaskRequest);
         notifyUserForNotification(assignTaskRequest);
         return response;
     }
