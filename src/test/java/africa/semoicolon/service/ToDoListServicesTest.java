@@ -196,6 +196,7 @@ public class ToDoListServicesTest {
         register.setUsername("username");
         register.setPassword("password");
         appService.register(register);
+        assertThrows(ToDoListException.class,()->appService.register(register));
         AssignTaskRequest assignTaskRequest = new AssignTaskRequest();
         assignTaskRequest.setTaskTitle("task1");
         assignTaskRequest.setAssignerUsername("username");

@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface TaskRepository extends MongoRepository<Task, String>{
     Optional<Task> findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(String title, String username);
-    Optional<Task> findAllByUsernameIgnoreCaseAndAssignerUsername(String username, String assignerUsername);
     void deleteTaskByUsernameAndTaskTitle(String username, String taskName);
 }

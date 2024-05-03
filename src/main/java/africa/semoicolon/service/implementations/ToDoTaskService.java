@@ -1,5 +1,6 @@
 package africa.semoicolon.service.implementations;
 
+import africa.semoicolon.data.model.User;
 import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.*;
@@ -96,14 +97,15 @@ public class ToDoTaskService implements TaskService {
         List<Task> allTasks= findAllAssignedTasks(boss);
         return Mapper.mapAllToAssignedTasksResponse(allTasks);
     }
-    public void checkTaskExistence(AssignTaskRequest request) {
-        if(repository.findAllByUsernameIgnoreCaseAndAssignerUsername(request.getAssigneeUsername(),
-                request.getAssignerUsername()).isPresent())
-            throw new ToDoListException("you already assigned "+
-                                        request.getAssigneeUsername()+" "
-                                        + request.getTaskTitle());
+    public void checkTaskExistence(AssignTaskRequest request){
+        List<Task> tasks = repository.findAll();
+        tasks.forEach(task->{if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())
+                    &&request.getAssignerUsername().equalsIgnoreCase(task.getAssignerUsername()))
+                    throw new ToDoListException
+                    ("you already assigned "+request.getAssigneeUsername()+" "+ request.getTaskTitle());});
+        throw new TaskNotFoundException(TASK_NOT_FOUND.getMessage());
     }
-    private List<Task> findAllAssignedTasks(String boss) {
+    private List<Task> findAllAssignedTasks(String boss){
         List<Task> allTasks= repository.findAll();
         List<Task> assignedTasks = new ArrayList<>();
         allTasks.forEach(task -> {if(task.getAssignerUsername().
