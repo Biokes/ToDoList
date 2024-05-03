@@ -96,13 +96,22 @@ public class ToDoTaskService implements TaskService {
         List<Task> allTasks= findAllAssignedTasks(boss);
         return Mapper.mapAllToAssignedTasksResponse(allTasks);
     }
+    public Task findTask(String username, String taskTitle){
+        return repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(taskTitle,username).get();
+    }
+    public List<Task> findAll(String username){
+        List<Task> tasks = repository.findAll();
+        List<Task> userTask = new ArrayList<>();
+        tasks.forEach(task -> {if(task.getUsername().equalsIgnoreCase(username))userTask.add(task);});
+        return userTask;
+    }
     public void checkTaskExistence(AssignTaskRequest request){
         List<Task> tasks = repository.findAll();
-        tasks.forEach(task->{
-        if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())
-           && request.getAssignerUsername().equalsIgnoreCase(task.getAssignerUsername()))
+        for(Task task : tasks){
+        if(task.getUsername().equalsIgnoreCase(request.getAssigneeUsername())&&request.getAssignerUsername().equalsIgnoreCase(task.getAssignerUsername()))
            throw new ToDoListException
-           ("you already assigned "+request.getAssigneeUsername()+" "+ request.getTaskTitle());});
+           ("you already assigned "+request.getAssigneeUsername()+" "+ request.getTaskTitle());
+        };
     }
     private List<Task> findAllAssignedTasks(String boss){
         List<Task> allTasks= repository.findAll();
@@ -110,12 +119,6 @@ public class ToDoTaskService implements TaskService {
         allTasks.forEach(task -> {if(task.getAssignerUsername().
                                           equalsIgnoreCase(boss))assignedTasks.add(task);});
        return assignedTasks;
-    }
-    public List<Task> findAll(String username){
-        List<Task> tasks = repository.findAll();
-        List<Task> userTask = new ArrayList<>();
-        tasks.forEach(task -> {if(task.getUsername().equalsIgnoreCase(username))userTask.add(task);});
-        return userTask;
     }
     private List<CompleteTaskResponse> getAllCompletedTasks(List<Task> allTasks) {
         List<Task> completedTasks = new ArrayList<>();
@@ -164,8 +167,5 @@ public class ToDoTaskService implements TaskService {
                return true;
         }
         return false;
-    }
-    public Task findTask(String username, String taskTitle){
-        return repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(taskTitle,username).get();
     }
 }

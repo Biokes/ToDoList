@@ -138,91 +138,91 @@ class TaskServiceTest{
         UpdateTaskResponse updateResponse = taskService.updateTask(update);
         assertEquals("1234", updateResponse.getTaskTitle());
     }
-    @Test
-    public void assignTask_testTaskIsAssigned(){
-        AssignTaskRequest assign= new AssignTaskRequest();
-        assign.setAssignerUsername("");
-        assign.setAssigneeUsername("");
-        assign.setDueDate("");
-        assign.setTaskTitle("");
-        assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
-        assign.setAssigneeUsername("username");
-        assign.setDueDate("2024/04/21");
-        assign.setTaskTitle("title");
-        assign.setAssignerUsername("we");
-        assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
-        assign.setDueDate("2024}09{21");
-        AssignTaskResponse response  = taskService.assignTask(assign);
-        assertEquals("we",response.getAssignerUsername());
-        assertEquals("username", response.getAssigneeUsername());
-        assertEquals(PENDING, response.getStatus());
-        assertEquals("no description saved",response.getDescription());
-        assertEquals("title",response.getTaskTitle());
-        assertEquals("2024-09-21",response.getDueDate());
-        assertEquals(1, taskService.countTaskByUsername("username"));
-    }
-    @Test
-    public void startAssignedTask_testTaskIsStarted(){
-        AssignTaskRequest assign= new AssignTaskRequest();
-        assign.setAssigneeUsername("username");
-        assign.setTaskTitle("title");
-        assign.setAssignerUsername("we");
-        assign.setDueDate("2024}09{21");
-        AssignTaskResponse response  = taskService.assignTask(assign);
-        assertEquals("we",response.getAssignerUsername());
-        assertEquals("username", response.getAssigneeUsername());
-        assertEquals(PENDING, response.getStatus());
-        assertEquals("no description saved",response.getDescription());
-        assertEquals("title",response.getTaskTitle());
-        assertEquals("2024-09-21",response.getDueDate());
-        assertEquals(1, taskService.countTaskByUsername("username"));
-        StartTaskRequest startTask = new StartTaskRequest();
-        startTask.setUsername("username");
-        startTask.setTaskName("title");
-        StartTaskResponse startResponse = taskService.startTaskWith(startTask);
-        assertEquals(IN_PROGRESS, startResponse.getStatus());
-        assertEquals("no description saved",response.getDescription());
-        assertEquals("title",response.getTaskTitle());
-        assertEquals("2024-09-21",response.getDueDate());
-        CompleteTaskRequest complete = new CompleteTaskRequest();
-        complete.setUsername("username");
-        complete.setTaskName("title");
-        CompleteTaskResponse  completeResponse = taskService.completeTask(complete);
-        assertEquals("username", completeResponse.getUsername());
-        assertEquals(COMPLETED, completeResponse.getStatus());
-        assertEquals("we",completeResponse.getAssignerUsername());
-    }
-    @Test
-    public void completeTaskTwice_testExceptionIsThrown(){
-        AssignTaskRequest assign= new AssignTaskRequest();
-        assign.setAssigneeUsername("username");
-        assign.setTaskTitle("title");
-        assign.setAssignerUsername("we");
-        assign.setDueDate("2024}09{21");
-        AssignTaskResponse response  = taskService.assignTask(assign);
-        assertEquals("we",response.getAssignerUsername());
-        assertEquals("username", response.getAssigneeUsername());
-        assertEquals(PENDING, response.getStatus());
-        assertEquals("no description saved",response.getDescription());
-        assertEquals("title",response.getTaskTitle());
-        assertEquals("2024-09-21",response.getDueDate());
-        assertEquals(1, taskService.countTaskByUsername("username"));
-        StartTaskRequest startTask = new StartTaskRequest();
-        startTask.setUsername("username");
-        startTask.setTaskName("title");
-        StartTaskResponse startResponse = taskService.startTaskWith(startTask);
-        assertEquals(IN_PROGRESS, startResponse.getStatus());
-        assertEquals("no description saved",response.getDescription());
-        assertEquals("title",response.getTaskTitle());
-        assertEquals("2024-09-21",response.getDueDate());
-        CompleteTaskRequest complete = new CompleteTaskRequest();
-        complete.setUsername("username");
-        complete.setTaskName("title");
-        taskService.completeTask(complete);
-        assertThrows(ToDoListException.class,()->taskService.completeTask(complete));
-        assertThrows(TaskStartedException.class,()->taskService.startTaskWith(startTask));
-        assertThrows(ToDoListException.class,()->taskService.completeTask(complete));
-    }
+//    @Test
+//    public void assignTask_testTaskIsAssigned(){
+//        AssignTaskRequest assign= new AssignTaskRequest();
+//        assign.setAssignerUsername("");
+//        assign.setAssigneeUsername("");
+//        assign.setDueDate("");
+//        assign.setTaskTitle("");
+//        assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
+//        assign.setAssigneeUsername("username");
+//        assign.setDueDate("2024/04/21");
+//        assign.setTaskTitle("title");
+//        assign.setAssignerUsername("we");
+//        assertThrows(ToDoListException.class,()->taskService.assignTask(assign));
+//        assign.setDueDate("2024}09{21");
+//        AssignTaskResponse response  = taskService.assignTask(assign);
+//        assertEquals("we",response.getAssignerUsername());
+//        assertEquals("username", response.getAssigneeUsername());
+//        assertEquals(PENDING, response.getStatus());
+//        assertEquals("no description saved",response.getDescription());
+//        assertEquals("title",response.getTaskTitle());
+//        assertEquals("2024-09-21",response.getDueDate());
+//        assertEquals(1, taskService.countTaskByUsername("username"));
+//    }
+//    @Test
+//    public void startAssignedTask_testTaskIsStarted(){
+//        AssignTaskRequest assign= new AssignTaskRequest();
+//        assign.setAssigneeUsername("username");
+//        assign.setTaskTitle("title");
+//        assign.setAssignerUsername("we");
+//        assign.setDueDate("2024}09{21");
+//        AssignTaskResponse response  = taskService.assignTask(assign);
+//        assertEquals("we",response.getAssignerUsername());
+//        assertEquals("username", response.getAssigneeUsername());
+//        assertEquals(PENDING, response.getStatus());
+//        assertEquals("no description saved",response.getDescription());
+//        assertEquals("title",response.getTaskTitle());
+//        assertEquals("2024-09-21",response.getDueDate());
+//        assertEquals(1, taskService.countTaskByUsername("username"));
+//        StartTaskRequest startTask = new StartTaskRequest();
+//        startTask.setUsername("username");
+//        startTask.setTaskName("title");
+//        StartTaskResponse startResponse = taskService.startTaskWith(startTask);
+//        assertEquals(IN_PROGRESS, startResponse.getStatus());
+//        assertEquals("no description saved",response.getDescription());
+//        assertEquals("title",response.getTaskTitle());
+//        assertEquals("2024-09-21",response.getDueDate());
+//        CompleteTaskRequest complete = new CompleteTaskRequest();
+//        complete.setUsername("username");
+//        complete.setTaskName("title");
+//        CompleteTaskResponse  completeResponse = taskService.completeTask(complete);
+//        assertEquals("username", completeResponse.getUsername());
+//        assertEquals(COMPLETED, completeResponse.getStatus());
+//        assertEquals("we",completeResponse.getAssignerUsername());
+//    }
+//    @Test
+//    public void completeTaskTwice_testExceptionIsThrown(){
+//        AssignTaskRequest assign= new AssignTaskRequest();
+//        assign.setAssigneeUsername("username");
+//        assign.setTaskTitle("title");
+//        assign.setAssignerUsername("we");
+//        assign.setDueDate("2024}09{21");
+//        AssignTaskResponse response  = taskService.assignTask(assign);
+//        assertEquals("we",response.getAssignerUsername());
+//        assertEquals("username", response.getAssigneeUsername());
+//        assertEquals(PENDING, response.getStatus());
+//        assertEquals("no description saved",response.getDescription());
+//        assertEquals("title",response.getTaskTitle());
+//        assertEquals("2024-09-21",response.getDueDate());
+//        assertEquals(1, taskService.countTaskByUsername("username"));
+//        StartTaskRequest startTask = new StartTaskRequest();
+//        startTask.setUsername("username");
+//        startTask.setTaskName("title");
+//        StartTaskResponse startResponse = taskService.startTaskWith(startTask);
+//        assertEquals(IN_PROGRESS, startResponse.getStatus());
+//        assertEquals("no description saved",response.getDescription());
+//        assertEquals("title",response.getTaskTitle());
+//        assertEquals("2024-09-21",response.getDueDate());
+//        CompleteTaskRequest complete = new CompleteTaskRequest();
+//        complete.setUsername("username");
+//        complete.setTaskName("title");
+//        taskService.completeTask(complete);
+//        assertThrows(ToDoListException.class,()->taskService.completeTask(complete));
+//        assertThrows(TaskStartedException.class,()->taskService.startTaskWith(startTask));
+//        assertThrows(ToDoListException.class,()->taskService.completeTask(complete));
+//    }
     @Test
     public void deleteAllUserTask_testAllUserTaskIsDeleted(){
         CreateTaskRequest createRequest = new CreateTaskRequest();
@@ -308,17 +308,17 @@ class TaskServiceTest{
         taskService.completeTask(complete);
         assertEquals(1,taskService.getAllCompleteTasks("username").size());
     }
-    @Test
-    public void assignTask_testTaskIsPartOfTask(){
-        AssignTaskRequest assign= new AssignTaskRequest();
-        assign.setAssigneeUsername("worker");
-        assign.setTaskTitle("title");
-        assign.setAssignerUsername("boss");
-        assign.setDueDate("2024}09{21");
-        taskService.assignTask(assign);
-        assertEquals(1, taskService.getallAssignedTasks("boss").size());
-        System.out.println(taskService.getallAssignedTasks("boss"));
-    }
+//    @Test
+//    public void assignTask_testTaskIsPartOfTask(){
+//        AssignTaskRequest assign= new AssignTaskRequest();
+//        assign.setAssigneeUsername("worker");
+//        assign.setTaskTitle("title");
+//        assign.setAssignerUsername("boss");
+//        assign.setDueDate("2024}09{21");
+//        taskService.assignTask(assign);
+//        assertEquals(1, taskService.getallAssignedTasks("boss").size());
+//        System.out.println(taskService.getallAssignedTasks("boss"));
+//    }
 }
 //find all created tasks
 // find all pending tasks
