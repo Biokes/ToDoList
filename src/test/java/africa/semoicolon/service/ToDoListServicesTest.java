@@ -302,7 +302,10 @@ public class ToDoListServicesTest {
         register.setUsername("user");
         register.setPassword("pass");
         appService.register(register);
-
+        LoginRequest login = new LoginRequest();
+        login.setUsername("user");
+        login.setPassword("pass");
+        List<ViewTaskResponse> response = appService.findAllTask(login);
     }
 }
 //find all created tasks
