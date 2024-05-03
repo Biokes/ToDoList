@@ -331,6 +331,7 @@ public class ToDoListServicesTest {
         assertEquals(1,appService.getAllCompleteTask(login).size());
         assertEquals(1,appService.getAllWorkingTask(login).size());
         assertEquals(1, appService.getAllCreatedTask(login).size());
+        assertEquals(0,appService.getAllAssignedTask(login).size());
     }
 }
     //find all created tasks

@@ -137,6 +137,13 @@ public class ToDoListAppService implements AppService {
         validateUserInfo(login.getUsername(), login.getPassword());
         return null;
     }
+
+    @Override
+    public List<ViewTaskResponse> getAllAssignedTask(LoginRequest login) {
+        validateUserInfo(login.getUsername(), login.getPassword());
+        return null;
+    }
+
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {
         notifications.add(notification);
         user.setNotifications(notifications);
