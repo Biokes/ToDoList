@@ -83,4 +83,8 @@ public class Validator{
         login.setPassword(validate(login.getPassword()));
     }
 
+    public static void validateLogOut(LogOut logout) {
+        logout.setUsername(validate(logout.getUsername()));
+        logout.setPassword(validate(logout.getPassword()));
+    }
 }

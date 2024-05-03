@@ -87,6 +87,10 @@ public class ToDoListAppService implements AppService {
         User user = userService.getUser(login);
         return Mapper.mapUserToLogInResponse(user);
     }
+    public void logOut(LogOut logout) {
+        userService.logOut(logout);
+    }
+
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {
         notifications.add(notification);
         user.setNotifications(notifications);

@@ -6,6 +6,7 @@ import africa.semoicolon.dtos.response.CreateTaskResponse;
 import africa.semoicolon.dtos.response.LoginResponse;
 import africa.semoicolon.dtos.response.StartTaskResponse;
 import africa.semoicolon.dtos.response.UpdateTaskResponse;
+import africa.semoicolon.exceptions.InvalidDetails;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
 import org.junit.jupiter.api.BeforeEach;
@@ -224,7 +225,46 @@ public class ToDoListServicesTest {
         assertEquals(1,loginResponse.getNotification().size());
     }
     @Test
-    public void AssignedTaskCanBeMonitoredTaskAssigned(){}
+    public void AssignedTaskCanBeMonitoredTaskAssigned(){
+        RegisterRequest register = new RegisterRequest();
+        register.setUsername("user1");
+        register.setPassword("pass");
+        appService.register(register);
+        register.setUsername("user2");
+        appService.register(register);
+        AssignTaskRequest assignTaskRequest = new AssignTaskRequest();
+        assignTaskRequest.setTaskTitle("task1");
+        assignTaskRequest.setAssignerUsername("user1");
+        assignTaskRequest.setAssigneeUsername("user2");
+        assignTaskRequest.setDueDate("2024-06-10");
+        assignTaskRequest.setDescription("description for creating task");
+        assignTaskRequest.setPassword("password");
+        assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
+        assignTaskRequest.setPassword("pass");
+        assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
+        LoginRequest login = new LoginRequest();
+        LoginRequest login1 = new LoginRequest();
+        login.setUsername("user1");
+        login1.setUsername("user2");
+        login1.setPassword("pass");
+        login.setPassword("pass");
+        LoginResponse loginResponse = appService.login(login);
+        assertEquals(0, appService.login(login1).getNotification().size());
+        assertEquals(1,loginResponse.getNotification().size());
+        StartTaskRequest start = new StartTaskRequest();
+        start.setUsername("user1");
+        start.setPassword("pas1s");
+        start.setTaskName("task1");
+        assertThrows(ToDoListException.class,()->appService.startTask(start));
+        start.setUsername("user2");
+        assertThrows(InvalidDetails.class,()->appService.startTask(start));
+        start.setPassword("pass");
+        appService.startTask(start);
+        LogOut logout= new LogOut();
+        logout.setUsername("user");
+        logout.setPassword("password");
+        assertThrows(InvalidDetails.class,()->appService.logOut(logout));
+    }
 
 }
 //find all created tasks

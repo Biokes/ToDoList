@@ -18,4 +18,6 @@ public interface AppService {
     CompleteTaskResponse completeTask(CompleteTaskRequest completeTaskRequest);
     AssignTaskResponse assignTask(AssignTaskRequest assignTaskRequest);
     LoginResponse login(LoginRequest login);
+    void logOut(LogOut logout);
+
 }
