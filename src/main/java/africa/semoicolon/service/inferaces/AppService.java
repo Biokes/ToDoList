@@ -23,7 +23,7 @@ public interface AppService {
     LoginResponse login(LoginRequest login);
     void logOut(LogOut logout);
     List<ViewTaskResponse> findAllTask(LoginRequest login);
-    List<ViewTaskResponse> getAllCompleteTask(LoginRequest login);
+    List<CompleteTaskResponse> getAllCompleteTask(LoginRequest login);
     List<ViewTaskResponse> getAllCreatedTask(LoginRequest login);
     List<ViewTaskResponse> getAllWorkingTask(LoginRequest login);
     List<ViewTaskResponse> getAllAssignedTask(LoginRequest login);
