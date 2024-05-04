@@ -5,7 +5,6 @@ import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.ApiResponse;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -129,8 +128,14 @@ public class ToDoListController{
             return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
         }
     }
+    @GetMapping("/get-all-assigned-tasks")
+    public ResponseEntity<?> getAllAssignedTasks(@RequestBody LoginRequest login){
+        try{
+            return new ResponseEntity<>(new ApiResponse(true,appService.getAllAssignedTask(login)),OK);
+        }
+        catch(ToDoListException error){
+            return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
+        }
+    }
 }
-//find all completed
-// find all assigned task
 // get notifications from due tasks not completed
-// view notifications
