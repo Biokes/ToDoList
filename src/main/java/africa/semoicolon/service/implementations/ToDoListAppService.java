@@ -152,6 +152,11 @@ public class ToDoListAppService implements AppService {
         responses.forEach(task->{if(!task.getAssignerUsername().equalsIgnoreCase("self")) output.add(task);});
         return output;
     }
+    public List<Notifier> viewNotifications(LoginRequest login) {
+        validateLogin(login);
+        userService.validateUserLogin(login);
+        return null;
+    }
 
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {
         notifications.add(notification);

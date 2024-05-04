@@ -26,4 +26,5 @@ public interface AppService {
     List<ViewTaskResponse> getAllTaskNotCompleted(LoginRequest login);
     List<CreateTaskResponse> getAllPendingTask(LoginRequest login);
     List<ViewTaskResponse> getAllAssignedTask(LoginRequest login);
+    List<Notifier> viewNotifications(LoginRequest login);
 }

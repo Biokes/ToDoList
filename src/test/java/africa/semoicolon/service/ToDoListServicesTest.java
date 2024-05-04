@@ -327,6 +327,22 @@ public class ToDoListServicesTest {
         assertEquals(2, appService.getAllTaskNotCompleted(login).size());
         assertEquals(0,appService.getAllAssignedTask(login).size());
     }
+    @Test
+    public void testNotificationsFromOverDueDueTasksAreGotten(){
+        RegisterRequest register= new RegisterRequest();
+        register.setUsername("user");
+        register.setPassword("pass");
+        appService.register(register);
+        LoginRequest login = new LoginRequest();
+        login.setUsername("user");
+        login.setPassword("pass");
+        CreateTaskRequest create = new CreateTaskRequest();
+        create.setUsername("user");
+        create.setTaskTitle("task1");
+        create.setDueDate("2024-05-04");
+        appService.createTask(create);
+        List<Notifier> notifications=appService.viewNotifications(login);
+    }
 }
 
 // get notifications from due tasks not completed
