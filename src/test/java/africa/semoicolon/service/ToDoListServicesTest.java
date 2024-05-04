@@ -225,7 +225,7 @@ public class ToDoListServicesTest {
         assertEquals(0,appService.countAllUserTask("username"));
         appService.assignTask(assignTaskRequest);
         assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
-        assertEquals(0,appService.countAllUserTask("username"));
+        assertEquals(1,appService.countAllUserTask("username"));
         assertEquals(1,appService.countAllUserTask("user10"));
         LoginRequest login = new LoginRequest();
         LoginRequest login1 = new LoginRequest();

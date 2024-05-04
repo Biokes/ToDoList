@@ -124,8 +124,7 @@ public class ToDoListAppService implements AppService {
     public List<ViewTaskResponse> findAllTask(LoginRequest login){
         validateLogin(login);
         userService.validateUserLogin(login);
-        taskService.findAllTask(login.getUsername());
-        return null;
+        return taskService.findAllTask(login.getUsername());
     }
     public List<ViewTaskResponse> getAllCompleteTask(LoginRequest login){
         validateLogin(login);
