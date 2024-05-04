@@ -6,6 +6,7 @@ import africa.semoicolon.dtos.response.ApiResponse;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,10 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/toDoList")
+@RequestMapping("/api/v1/toDoList")
 public class ToDoListController{
-    private final AppService appService;
+    @Autowired
+    private AppService appService;
     @PostMapping("/Register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request){
         try{
