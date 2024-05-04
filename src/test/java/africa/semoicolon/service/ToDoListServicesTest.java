@@ -311,7 +311,7 @@ public class ToDoListServicesTest {
         appService.createTask(create);
         create.setTaskTitle("title1");
         appService.createTask(create);
-        assertEquals(2,appService.findAllTask(login).size());
+        assertEquals(3,appService.findAllTask(login).size());
         StartTaskRequest start = new StartTaskRequest();
         start.setUsername("user");
         start.setTaskName("title");
@@ -319,7 +319,7 @@ public class ToDoListServicesTest {
         appService.startTask(start);
         CompleteTaskRequest  complete = new CompleteTaskRequest();
         complete.setTaskName("title");
-        complete.setPassword("password");
+        complete.setPassword("pass");
         complete.setUsername("user");
         appService.completeTask(complete);
         start.setTaskName("title1");

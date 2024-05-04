@@ -65,7 +65,7 @@ public class Mapper{
         response.setTaskTitle(task.getTaskTitle());
         response.setStatus(task.getStatus());
         task.setDateStarted(task.getStatus().getDate());
-        if(task.getDescription().isBlank())
+        if(Optional.ofNullable(task.getDescription()).isEmpty() || task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");
         else response.setDescription(task.getDescription());
         response.setUsername(task.getUsername());
