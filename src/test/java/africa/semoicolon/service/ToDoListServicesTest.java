@@ -5,7 +5,6 @@ import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -324,8 +323,8 @@ public class ToDoListServicesTest {
         appService.completeTask(complete);
         start.setTaskName("title1");
         assertEquals(1,appService.getAllCompleteTask(login).size());
-        assertEquals(1,appService.getAllWorkingTask(login).size());
-        assertEquals(1, appService.getAllCreatedTask(login).size());
+        assertEquals(1,appService.getAllPendingTask(login).size());
+        assertEquals(1, appService.getAllTaskNotCompleted(login).size());
         assertEquals(0,appService.getAllAssignedTask(login).size());
     }
 }

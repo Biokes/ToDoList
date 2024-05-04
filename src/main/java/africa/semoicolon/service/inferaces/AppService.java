@@ -4,7 +4,6 @@ import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -24,7 +23,7 @@ public interface AppService {
     void logOut(LogOut logout);
     List<ViewTaskResponse> findAllTask(LoginRequest login);
     List<CompleteTaskResponse> getAllCompleteTask(LoginRequest login);
-    List<ViewTaskResponse> getAllCreatedTask(LoginRequest login);
-    List<CreateTaskResponse> getAllWorkingTask(LoginRequest login);
+    List<ViewTaskResponse> getAllTaskNotCompleted(LoginRequest login);
+    List<CreateTaskResponse> getAllPendingTask(LoginRequest login);
     List<ViewTaskResponse> getAllAssignedTask(LoginRequest login);
 }
