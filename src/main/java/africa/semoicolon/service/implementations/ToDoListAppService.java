@@ -157,7 +157,11 @@ public class ToDoListAppService implements AppService {
         User user = userService.getUser(login);
         List<Task> tasks= taskService.findAllDueTasks(login.getUsername());
         List<Notifications> notifications = Mapper.mapToNotifications(tasks);
-        return null;
+        List<Notifications> notes = user.getNotifications();
+        notes.addAll(notifications);
+        user.setNotifications(notes);
+        userService.save(user);
+        return Mapper.mapToUserNotification(user.getNotifications());
     }
 
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {

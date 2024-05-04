@@ -217,7 +217,6 @@ public class Mapper{
         response.setDateStarted(task.getDateStarted().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
         return response;
     }
-
     public static List<Notifications> mapToNotifications(List<Task> tasks) {
         List<Notifications> output = new ArrayList<>();
         Notifications notifier = new Notifications();
@@ -228,5 +227,9 @@ public class Mapper{
             output.add(notifier);
         });
         return output;
+    }
+
+    public static List<Notifier> mapToUserNotification(List<Notifications> notifications) {
+        return mapNotificationsToNotifier(notifications);
     }
 }
