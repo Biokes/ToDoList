@@ -346,19 +346,4 @@ public class ToDoListServicesTest {
     }
 }
 
-// get notifications from due tasks not completed
-// view notifications
 
-//register user
-// delete user
-//create task
-//delete task
-//update task
-// complete task
-// assign task
-//notify user after loggin in
-// view notifications
-//find all created tasks
-// find all pending tasks
-//find all completed
-// find all assigned task
