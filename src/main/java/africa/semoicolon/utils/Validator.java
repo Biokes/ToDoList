@@ -23,13 +23,18 @@ public class Validator{
         request.setDueDate(cleanDate(request.getDueDate()).toString());
     }
     private static LocalDate cleanDate(String date){
+        int output =0;
         try{
             date = date.replace("\\s+","");
             date =date.replaceAll("[^0-9]", "-");
-            if(LocalDate.now().isAfter(LocalDate.parse(date)))
+            if(LocalDate.now().isAfter(LocalDate.parse(date))) {
+                output = 1;
                 throw new ToDoListException(ELAPSED_DATE.getMessage());
+            }
             return LocalDate.parse(date);
         }catch(Exception error){
+            if(output == 1)
+                throw new ToDoListException(ELAPSED_DATE.getMessage());
             throw new ToDoListException(INVALID_DATE.getMessage());
         }
     }

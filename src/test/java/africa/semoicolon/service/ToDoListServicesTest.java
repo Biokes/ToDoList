@@ -26,11 +26,6 @@ public class ToDoListServicesTest {
     void wipe(){
         appService.deleteAll();
     }
-    @AfterEach
-    void clean(){
-        appService.deleteAll();
-    }
-
     @Test
     public void testUserRegisteration(){
         RegisterRequest register = new RegisterRequest();
@@ -310,7 +305,7 @@ public class ToDoListServicesTest {
         CreateTaskRequest create = new CreateTaskRequest();
         create.setUsername("user");
         create.setTaskTitle("task1");
-        create.setDueDate("2024-05-03");
+        create.setDueDate("2024-05-04");
         appService.createTask(create);
         create.setTaskTitle("title");
         appService.createTask(create);
