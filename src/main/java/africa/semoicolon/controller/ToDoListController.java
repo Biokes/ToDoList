@@ -5,6 +5,7 @@ import africa.semoicolon.dtos.request.*;
 import africa.semoicolon.dtos.response.ApiResponse;
 import africa.semoicolon.exceptions.ToDoListException;
 import africa.semoicolon.service.inferaces.AppService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class ToDoListController{
     @PutMapping("/Create-task")
     public ResponseEntity<?> createTask(@RequestBody CreateTaskRequest create){
         try{
-            return new ResponseEntity<>(new ApiResponse(true,appService.createTask(create)), OK);
+            return new ResponseEntity<>(new ApiResponse(true,appService.createTask(create)), CREATED);
         }
         catch(ToDoListException exception){
             return new ResponseEntity<>(new ApiResponse(false, exception.getMessage()),BAD_REQUEST);
@@ -77,7 +78,7 @@ public class ToDoListController{
     @PostMapping("/assign-Task")
     public ResponseEntity<?> assignTask(@RequestBody AssignTaskRequest assign){
         try{
-            return new ResponseEntity<>(new ApiResponse(true,appService.assignTask(assign)),OK);
+            return new ResponseEntity<>(new ApiResponse(true,appService.assignTask(assign)),CREATED);
         }
         catch(ToDoListException error){
             return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
@@ -101,8 +102,16 @@ public class ToDoListController{
             return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
         }
     }
+    @GetMapping("/created-task-list")
+    public ResponseEntity<?> checkAllTaskCreated(@RequestBody LoginRequest login){
+        try{
+            return new ResponseEntity<>(new ApiResponse(true,appService.findAllTask(login)),OK);
+        }
+        catch(ToDoListException error){
+            return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
+        }
+    }
 }
-// view notifications
 //find all created tasks
 // find all pending tasks
 //find all completed
