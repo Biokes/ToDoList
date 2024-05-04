@@ -136,10 +136,10 @@ public class ToDoListAppService implements AppService {
         userService.validateUserLogin(login);
         return null;
     }
-    public List<ViewTaskResponse> getAllWorkingTask(LoginRequest login){
+    public List<CreateTaskResponse> getAllWorkingTask(LoginRequest login){
         validateLogin(login);
         userService.validateUserLogin(login);
-        return null;
+        return taskService.getAllPendingTasks(login.getUsername());
     }
     @Override
     public List<ViewTaskResponse> getAllAssignedTask(LoginRequest login) {

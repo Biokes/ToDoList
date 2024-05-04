@@ -25,6 +25,6 @@ public interface AppService {
     List<ViewTaskResponse> findAllTask(LoginRequest login);
     List<CompleteTaskResponse> getAllCompleteTask(LoginRequest login);
     List<ViewTaskResponse> getAllCreatedTask(LoginRequest login);
-    List<ViewTaskResponse> getAllWorkingTask(LoginRequest login);
+    List<CreateTaskResponse> getAllWorkingTask(LoginRequest login);
     List<ViewTaskResponse> getAllAssignedTask(LoginRequest login);
 }
