@@ -155,6 +155,7 @@ public class ToDoListAppService implements AppService {
     public List<Notifier> viewNotifications(LoginRequest login) {
         validateLogin(login);
         userService.validateUserLogin(login);
+        List<Task> tasks= taskService.findAllDueTasks(login.getUsername());
         return null;
     }
 

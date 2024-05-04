@@ -25,4 +25,5 @@ public interface TaskService{
     void checkTaskExistence(AssignTaskRequest request);
     Task findTask(String username, String taskName);
     List<ViewTaskResponse> findAllTask(String username);
+    List<Task> findAllDueTasks(String username);
 }

@@ -10,6 +10,7 @@ import africa.semoicolon.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -106,6 +107,13 @@ public class ToDoTaskService implements TaskService {
         tasks.forEach(task->{output.add(Mapper.mapToViewTask(task));});
         return output;
     }
+    public List<Task> findAllDueTasks(String username) {
+        List<Task> tasks = findAll(username);
+        List<Task> output = new ArrayList<>();
+        tasks.forEach(task->{if(task.getDueDate().isEqual(LocalDate.now())|| task.getDueDate().isBefore(LocalDate.now())) output.add(task);});
+        return null;
+    }
+
     public List<Task>  findAll(String username){
         List<Task> tasks = repository.findAll();
         List<Task> userTask = new ArrayList<>();

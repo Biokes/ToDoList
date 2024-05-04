@@ -341,7 +341,8 @@ public class ToDoListServicesTest {
         create.setTaskTitle("task1");
         create.setDueDate("2024-05-04");
         appService.createTask(create);
-        List<Notifier> notifications=appService.viewNotifications(login);
+        List<Notifier> notifications =appService.viewNotifications(login);
+        assertEquals(1, notifications.size());
     }
 }
 
