@@ -106,7 +106,8 @@ public class ToDoListAppService implements AppService {
             extracted(user, notifications, notification);
             return;
         }
-        user.setNotifications(new ArrayList<>());
+        notifications.add(notification);
+        user.setNotifications(notifications);
         userService.save(user);
     }
     public LoginResponse login(LoginRequest login){
