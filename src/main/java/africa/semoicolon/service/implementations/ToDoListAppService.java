@@ -155,6 +155,9 @@ public class ToDoListAppService implements AppService {
     public List<Notifier> viewNotifications(LoginRequest login) {
         validateLogin(login);
         User user = userService.getUser(login);
+        return getNotifiers(login, user);
+    }
+    private List<Notifier> getNotifiers(LoginRequest login, User user){
         List<Task> tasks= taskService.findAllDueTasks(login.getUsername());
         List<Notifications> notifications = Mapper.mapToNotifications(tasks);
         List<Notifications> notes = user.getNotifications();
@@ -163,7 +166,6 @@ public class ToDoListAppService implements AppService {
         userService.save(user);
         return Mapper.mapToUserNotification(user.getNotifications());
     }
-
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {
         notifications.add(notification);
         user.setNotifications(notifications);
