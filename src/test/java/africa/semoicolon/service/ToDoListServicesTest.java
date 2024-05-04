@@ -32,6 +32,7 @@ public class ToDoListServicesTest {
         register.setPassword("password");
         appService.register(register);
         assertEquals(1,appService.countAllUsers());
+        assertThrows(ToDoListException.class,()->appService.register(register));
     }
     @Test
     public void registerAndCreateTaskTest(){
@@ -339,10 +340,37 @@ public class ToDoListServicesTest {
         CreateTaskRequest create = new CreateTaskRequest();
         create.setUsername("user");
         create.setTaskTitle("task1");
-        create.setDueDate("2024-05-04");
+        create.setDueDate("2024-05-06");
         appService.createTask(create);
-        List<Notifier> notifications =appService.viewNotifications(login);
-        assertEquals(1, notifications.size());
+        List<Notifier> notifications = appService.viewNotifications(login);
+        notifications.forEach(System.out::println);
+        assertEquals(0, notifications.size());
+        register.setUsername("user2");
+        register.setPassword("pass");
+        appService.register(register);
+        AssignTaskRequest assignTaskRequest = new AssignTaskRequest();
+        assignTaskRequest.setTaskTitle("task1");
+        assignTaskRequest.setAssignerUsername("user");
+        assignTaskRequest.setAssigneeUsername("user2");
+        assignTaskRequest.setDueDate("2024-06-10");
+        assignTaskRequest.setDescription("description for creating task");
+        assignTaskRequest.setPassword("password");
+        assertThrows(ToDoListException.class,()->appService.assignTask(assignTaskRequest));
+        assignTaskRequest.setPassword("pass");
+        appService.assignTask(assignTaskRequest);
+        StartTaskRequest start = new StartTaskRequest();
+        start.setTaskName("task1");
+        start.setUsername("user2");
+        start.setPassword("pass");
+        appService.startTask(start);
+        CompleteTaskRequest complete = new CompleteTaskRequest();
+        complete.setUsername("user");
+        complete.setTaskName("task1");
+        complete.setPassword("pass");
+        appService.completeTask(complete);
+        notifications = appService.viewNotifications(login);
+        notifications.forEach(System.out::println);
+        assertEquals(2, notifications.size());
     }
 }
 

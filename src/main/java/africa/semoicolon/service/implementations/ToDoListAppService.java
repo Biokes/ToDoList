@@ -62,14 +62,14 @@ public class ToDoListAppService implements AppService {
     public StartTaskResponse startTask(StartTaskRequest startTaskRequest){
         validateUserInfo(startTaskRequest.getUsername(), startTaskRequest.getPassword());
         StartTaskResponse response = taskService.startTaskWith(startTaskRequest);
-        Task task = taskService.findTask(response.getUsername(), response.getTaskTitle());
+        Task task = taskService.findTask(startTaskRequest.getUsername(), response.getTaskTitle());
         notifyUserForNotification(task);
         return response;
     }
     public CompleteTaskResponse completeTask(CompleteTaskRequest completeTaskRequest){
         validateUserInfo(completeTaskRequest.getUsername(),completeTaskRequest.getPassword());
         CompleteTaskResponse response = taskService.completeTask(completeTaskRequest);
-        Task task = taskService.findTask(response.getUsername(), response.getTaskName());
+        Task task = taskService.findTask(completeTaskRequest.getUsername(), completeTaskRequest.getTaskName());
         notifyUserForNotification(task);
         return response;
     }
@@ -91,7 +91,7 @@ public class ToDoListAppService implements AppService {
            !Optional.of(task.getAssignerUsername()).get().equalsIgnoreCase("self")) {
             User user = userService.getUser(task.getAssignerUsername());
             Notifications notification = new Notifications();
-            notification.setNotification(task.getTaskTitle()+" assigned To "+ task.getUsername()+  "is " + task.getStatus());
+            notification.setNotification(task.getTaskTitle()+" assigned To "+ task.getUsername()+  " is " + task.getStatus());
             List<Notifications> notifications= user.getNotifications();
             notifications.add(notification);
             user.setNotifications(notifications);
