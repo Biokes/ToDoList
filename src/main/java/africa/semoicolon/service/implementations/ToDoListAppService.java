@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static africa.semoicolon.data.model.TaskStatus.COMPLETED;
 import static africa.semoicolon.utils.Validator.validateAssignTaskRequest;
 import static africa.semoicolon.utils.Validator.validateLogin;
 
@@ -133,14 +134,16 @@ public class ToDoListAppService implements AppService {
     public List<ViewTaskResponse> getAllTaskNotCompleted(LoginRequest login){
         validateLogin(login);
         userService.validateUserLogin(login);
-        return null;
+        List<ViewTaskResponse> responses = taskService.findAllTask(login.getUsername());
+        List<ViewTaskResponse> output = new ArrayList<>();
+        responses.forEach(task->{if(task.getStatus()!= COMPLETED) output.add(task);});
+        return output;
     }
     public List<CreateTaskResponse> getAllPendingTask(LoginRequest login){
         validateLogin(login);
         userService.validateUserLogin(login);
         return taskService.getAllPendingTasks(login.getUsername());
     }
-    @Override
     public List<ViewTaskResponse> getAllAssignedTask(LoginRequest login) {
         validateLogin(login);
         userService.validateUserLogin(login);
