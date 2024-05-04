@@ -62,7 +62,7 @@ public class ToDoListAppService implements AppService {
     public StartTaskResponse startTask(StartTaskRequest startTaskRequest){
         validateUserInfo(startTaskRequest.getUsername(), startTaskRequest.getPassword());
         StartTaskResponse response = taskService.startTaskWith(startTaskRequest);
-        Task task = taskService.findTask(startTaskRequest.getUsername(), response.getTaskTitle());
+        Task task = taskService.findTask(startTaskRequest.getUsername(), startTaskRequest.getTaskName());
         notifyUserForNotification(task);
         return response;
     }
