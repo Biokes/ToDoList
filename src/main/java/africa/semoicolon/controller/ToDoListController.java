@@ -111,9 +111,25 @@ public class ToDoListController{
             return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
         }
     }
+    @GetMapping("/checkPendingTask")
+    public ResponseEntity<?> checkPendingTasks(@RequestBody LoginRequest login){
+        try{
+            return new ResponseEntity<>(new ApiResponse(true,appService.getAllPendingTask(login)),OK);
+        }
+        catch(ToDoListException error){
+            return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
+        }
+    }
+    @GetMapping("/check-completed-tasks")
+    public ResponseEntity<?> checkCompletedTasks(@RequestBody LoginRequest login){
+        try{
+            return new ResponseEntity<>(new ApiResponse(true, appService.getAllCompleteTask(login)),OK);
+        }
+        catch(ToDoListException error){
+            return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
+        }
+    }
 }
-//find all created tasks
-// find all pending tasks
 //find all completed
 // find all assigned task
 // get notifications from due tasks not completed
