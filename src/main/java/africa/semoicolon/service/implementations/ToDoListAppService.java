@@ -147,7 +147,10 @@ public class ToDoListAppService implements AppService {
     public List<ViewTaskResponse> getAllAssignedTask(LoginRequest login) {
         validateLogin(login);
         userService.validateUserLogin(login);
-        return null;
+        List<ViewTaskResponse> responses = taskService.findAllTask(login.getUsername());
+        List<ViewTaskResponse> output = new ArrayList<>();
+        responses.forEach(task->{if(!task.getAssignerUsername().equalsIgnoreCase("self")) output.add(task);});
+        return output;
     }
 
     private void extracted(User user, List<Notifications> notifications, Notifications notification) {

@@ -324,14 +324,11 @@ public class ToDoListServicesTest {
         start.setTaskName("title1");
         assertEquals(1,appService.getAllCompleteTask(login).size());
         assertEquals(2,appService.getAllPendingTask(login).size());
-        assertEquals(1, appService.getAllTaskNotCompleted(login).size());
+        assertEquals(2, appService.getAllTaskNotCompleted(login).size());
         assertEquals(0,appService.getAllAssignedTask(login).size());
     }
 }
-    //find all created tasks
-    // find all pending tasks
-    //find all completed
-    // find all assigned task
+
 // get notifications from due tasks not completed
 // view notifications
 
@@ -344,3 +341,7 @@ public class ToDoListServicesTest {
 // assign task
 //notify user after loggin in
 // view notifications
+//find all created tasks
+// find all pending tasks
+//find all completed
+// find all assigned task

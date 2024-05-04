@@ -29,6 +29,7 @@ public class Mapper{
     task.setTaskTitle(request.getTaskTitle());
     task.setDescription(request.getDescription());
     task.setStatus(PENDING);
+    task.setAssignerUsername("self");
     task.setDueDate(Validator.validateDate(convertToDate(request.getDueDate())));
     task.setDateCreated(task.getStatus().getDate().toString());
     return task;
