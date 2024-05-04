@@ -9,7 +9,6 @@ import africa.semoicolon.service.inferaces.TaskService;
 import africa.semoicolon.service.inferaces.AppService;
 import africa.semoicolon.service.inferaces.UserService;
 import africa.semoicolon.utils.Mapper;
-import africa.semoicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
