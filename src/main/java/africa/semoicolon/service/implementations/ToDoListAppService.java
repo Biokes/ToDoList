@@ -92,6 +92,7 @@ public class ToDoListAppService implements AppService {
             User user = userService.getUser(task.getAssignerUsername());
             Notifications notification = new Notifications();
             notification.setNotification(task.getTaskTitle()+" assigned To "+ task.getUsername()+  " is " + task.getStatus());
+            notification.setTaskTitle(task.getTaskTitle());
             List<Notifications> notifications= user.getNotifications();
             notifications.add(notification);
             user.setNotifications(notifications);

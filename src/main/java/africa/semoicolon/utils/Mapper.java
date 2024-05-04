@@ -64,12 +64,12 @@ public class Mapper{
     public static StartTaskResponse mapTaskToStartTaskResponse(Task task){
         StartTaskResponse response = new StartTaskResponse();
         response.setTaskTitle(task.getTaskTitle());
+        response.setUsername(task.getUsername());
         response.setStatus(task.getStatus());
         task.setDateStarted(task.getStatus().getDate());
         if(Optional.ofNullable(task.getDescription()).isEmpty() || task.getDescription().isBlank())
             response.setDescription("\"nothing saved as description\"");
         else response.setDescription(task.getDescription());
-        response.setUsername(task.getUsername());
         return response;
     }
     public static CompleteTaskResponse mapToCompleteTaskResponse(Task complete){

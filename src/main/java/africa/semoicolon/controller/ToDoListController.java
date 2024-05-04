@@ -93,12 +93,12 @@ public class ToDoListController{
         }
     }
     @GetMapping("/notifications")
-    public ResponseEntity<?> notifications(@RequestBody LoginRequest request){
+    public ResponseEntity<?> notifications(@RequestBody LoginRequest login){
         try{
-            return new ResponseEntity<>(new ApiResponse(true,appService.viewNotifications(request)),OK);
+            return new ResponseEntity<>(new ApiResponse(true,appService.login(login)),OK);
         }
         catch(ToDoListException error){
-            return new ResponseEntity<>(new ApiResponse(false,error.getMessage()),BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse(false, error.getMessage()),BAD_REQUEST);
         }
     }
     @GetMapping("/created-task-list")

@@ -343,7 +343,6 @@ public class ToDoListServicesTest {
         create.setDueDate("2024-05-06");
         appService.createTask(create);
         List<Notifier> notifications = appService.viewNotifications(login);
-        notifications.forEach(System.out::println);
         assertEquals(0, notifications.size());
         register.setUsername("user2");
         register.setPassword("pass");
@@ -364,13 +363,13 @@ public class ToDoListServicesTest {
         start.setPassword("pass");
         appService.startTask(start);
         CompleteTaskRequest complete = new CompleteTaskRequest();
-        complete.setUsername("user");
+        complete.setUsername("user2");
         complete.setTaskName("task1");
         complete.setPassword("pass");
         appService.completeTask(complete);
-        notifications = appService.viewNotifications(login);
-        notifications.forEach(System.out::println);
-        assertEquals(2, notifications.size());
+        LoginResponse response = appService.login(login);
+        response.getNotification().forEach(System.out::println);
+        assertEquals(2, response.getNotification().size());
     }
 }
 
