@@ -154,8 +154,9 @@ public class ToDoListAppService implements AppService {
     }
     public List<Notifier> viewNotifications(LoginRequest login) {
         validateLogin(login);
-        userService.validateUserLogin(login);
+        User user = userService.getUser(login);
         List<Task> tasks= taskService.findAllDueTasks(login.getUsername());
+        List<Notifications> notifications = Mapper.mapToNotifications(tasks);
         return null;
     }
 

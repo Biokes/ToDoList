@@ -217,4 +217,16 @@ public class Mapper{
         response.setDateStarted(task.getDateStarted().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
         return response;
     }
+
+    public static List<Notifications> mapToNotifications(List<Task> tasks) {
+        List<Notifications> output = new ArrayList<>();
+        Notifications notifier = new Notifications();
+        tasks.forEach(task -> {
+            notifier.setNotification(task.getTaskTitle() + " Due date : " + task.getDueDate());
+            notifier.setTaskTitle(task.getTaskTitle());
+            notifier.setTimeCreated(LocalDateTime.now());
+            output.add(notifier);
+        });
+        return output;
+    }
 }

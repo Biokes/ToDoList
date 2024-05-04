@@ -111,7 +111,7 @@ public class ToDoTaskService implements TaskService {
         List<Task> tasks = findAll(username);
         List<Task> output = new ArrayList<>();
         tasks.forEach(task->{if(task.getDueDate().isEqual(LocalDate.now())|| task.getDueDate().isBefore(LocalDate.now())) output.add(task);});
-        return null;
+        return output;
     }
 
     public List<Task>  findAll(String username){
