@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static africa.semoicolon.utils.Validator.validateAssignTaskRequest;
+import static africa.semoicolon.utils.Validator.validateLogin;
 
 @Service
 public class ToDoListAppService implements AppService {
@@ -121,26 +122,26 @@ public class ToDoListAppService implements AppService {
         userService.logOut(logout);
     }
     public List<ViewTaskResponse> findAllTask(LoginRequest login){
-        validateUserInfo(login.getUsername(), login.getPassword());
-
+        validateLogin(login);
+        userService.validateUserLogin(login);
+        taskService.findAllTask(login.getUsername());
         return null;
     }
     public List<ViewTaskResponse> getAllCompleteTask(LoginRequest login){
-        validateUserInfo(login.getUsername(), login.getPassword());
+        validateLogin(login);
         return null;
     }
     public List<ViewTaskResponse> getAllCreatedTask(LoginRequest login){
-        validateUserInfo(login.getUsername(), login.getPassword());
+        validateLogin(login);
         return null;
     }
     public List<ViewTaskResponse> getAllWorkingTask(LoginRequest login){
-        validateUserInfo(login.getUsername(), login.getPassword());
+        validateLogin(login);
         return null;
     }
-
     @Override
     public List<ViewTaskResponse> getAllAssignedTask(LoginRequest login) {
-        validateUserInfo(login.getUsername(), login.getPassword());
+        validateLogin(login);
         return null;
     }
 

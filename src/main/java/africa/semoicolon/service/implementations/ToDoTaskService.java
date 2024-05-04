@@ -99,10 +99,18 @@ public class ToDoTaskService implements TaskService {
     public Task findTask(String username, String taskTitle){
         return repository.findTaskByTaskTitleIgnoreCaseAndUsernameIgnoreCase(taskTitle,username).get();
     }
-    public List<Task> findAll(String username){
+    public List<ViewTaskResponse> findAllTask(String username) {
+        validate(username);
+        List<Task> tasks = findAll(username);
+        List<ViewTaskResponse> output = new ArrayList<>();
+        tasks.forEach(task->{output.add(Mapper.mapToViewTask(task));});
+        return output;
+    }
+    public List<Task>  findAll(String username){
         List<Task> tasks = repository.findAll();
         List<Task> userTask = new ArrayList<>();
-        tasks.forEach(task -> {if(task.getUsername().equalsIgnoreCase(username))userTask.add(task);});
+        tasks.forEach(task -> {if(task.getUsername().equalsIgnoreCase(username)
+                || task.getAssignerUsername().equalsIgnoreCase(username))userTask.add(task);});
         return userTask;
     }
     public void checkTaskExistence(AssignTaskRequest request){

@@ -84,6 +84,10 @@ public class ToDoUserService implements UserService {
         validateUserExistence(logout.getUsername());
         logUserOut(logout);
     }
+    public void validateUserLogin(LoginRequest login) {
+        getUser(login);
+    }
+
     private void logUserOut(LogOut logout){
         User user = getUser(logout.getUsername());
         if(!user.getPassword().equalsIgnoreCase(logout.getPassword()))

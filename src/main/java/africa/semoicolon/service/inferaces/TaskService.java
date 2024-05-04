@@ -24,4 +24,5 @@ public interface TaskService{
     List<AssignedTasksResponse> getallAssignedTasks(String boss);
     void checkTaskExistence(AssignTaskRequest request);
     Task findTask(String username, String taskName);
+    List<ViewTaskResponse> findAllTask(String username);
 }

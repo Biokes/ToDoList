@@ -200,4 +200,20 @@ public class Mapper{
         });
         return output;
     }
+    public static ViewTaskResponse mapToViewTask(Task task) {
+        ViewTaskResponse response = new ViewTaskResponse();
+        response.setDescription(task.getDescription());
+        response.setTaskTitle(task.getTaskTitle());
+        response.setDateStarted(task.getDateCreated());
+        response.setDueDate(task.getDueDate());
+        response.setStatus(task.getStatus());
+        response.setUsername(task.getUsername());
+        response.setAssignerUsername(task.getAssignerUsername());
+        if(Optional.ofNullable(task.getDateStarted()).isEmpty()) {
+            response.setDateStarted("not started yet");
+            return response;
+        }
+        response.setDateStarted(task.getDateStarted().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a")));
+        return response;
+    }
 }

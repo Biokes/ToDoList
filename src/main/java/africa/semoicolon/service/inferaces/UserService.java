@@ -19,4 +19,5 @@ public interface UserService {
     User getUser(LoginRequest login);
     User getUser(String username);
     void logOut(LogOut logout);
+    void validateUserLogin(LoginRequest login);
 }
