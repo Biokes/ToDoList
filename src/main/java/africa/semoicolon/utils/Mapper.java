@@ -175,6 +175,7 @@ public class Mapper{
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setNotifications(new ArrayList<>());
+        user.setLoggedIn(true);
         return user;
     }
     public static Notifications mapAssignTaskToNotification(AssignTaskRequest assignTaskRequest){

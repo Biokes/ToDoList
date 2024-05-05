@@ -101,7 +101,7 @@ class TaskServiceTest {
         delete.setTaskName("");
         delete.setUsername("");
         assertThrows(ToDoListException.class, () -> taskService.deleteTaskWith(delete));
-        delete.setTaskName(" task  ");
+        delete.setTaskName("task  ");
         assertThrows(ToDoListException.class, () -> taskService.deleteTaskWith(delete));
         delete.setUsername("username");
         assertThrows(ToDoListException.class, () -> taskService.deleteTaskWith(delete));

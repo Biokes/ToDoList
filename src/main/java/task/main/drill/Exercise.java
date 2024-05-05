@@ -1,3 +1,5 @@
+package task.main.drill;
+
 public class Exercise {
     public static String reverseSentence(String given){
         String[] output = given.split(" ");
