@@ -5,3 +5,9 @@
 .Register{
     color: #0e0641;
 }
+.register-top{
+    display: flex;
+    font-weight: bold;
+    color: #0e0641;
+    margin : 120px 0 12px 0;
+}
