@@ -39,14 +39,21 @@
                 <i class="fa fa-bars" style="margin-top: 10px; margin-left: 10px"></i>
                 <i class="fa fa-tasks" style="margin-top: 10px;margin-left: 10px"></i>
             </div>
-            <div style="margin: 45% 0 0 0">
-                <nav>username</nav>
-                <input type="text" id="username" placeholder="username" class="input">
+            <div class="fields">
+                <div style="margin: 45% 0 0 0">
+                    <nav>username</nav>
+                    <label for="username">
+                        <input type="text" id="username" placeholder="username" class="input">
+                    </label>
+                </div>
+                <div>
+                    <nav>password</nav>
+                    <label>
+                        <input type="password" id="password" placeholder="password" class="input">
+                    </label>
+                </div>
             </div>
-            <div>
-                <nav>password</nav>
-                <input type="password" id="password" placeholder="password" class="input">
-            </div>
+
             <div style="text-align: center;margin-top: 2%">
                 <button class="button" onclick="login()">
                     login</button>
