@@ -11,3 +11,13 @@
     color: #0e0641;
     margin : 120px 0 12px 0;
 }
+.main{
+    background-color: rgba(147, 148, 148, 0.5);
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.picture{
+    width: 60%;
+    height:10px;
+    object-fit: contain;
+}
