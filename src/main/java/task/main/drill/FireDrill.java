@@ -1,8 +1,6 @@
 package task.main.drill;
 
-import africa.semoicolon.exceptions.TaskNotFoundException;
-
-import java.util.ArrayList;
+import semicolon.exceptions.TaskNotFoundException;
 
 public class FireDrill{
 
