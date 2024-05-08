@@ -1,4 +1,4 @@
-package africa.semicolon.service.implementations;
+package africa.semicolon.service;
 
 import africa.semicolon.data.model.Notifications;
 import africa.semicolon.data.model.Task;
