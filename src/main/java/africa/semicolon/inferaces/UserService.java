@@ -1,10 +1,10 @@
-package semicolon.inferaces;
+package africa.semicolon.inferaces;
 
-import semicolon.data.model.User;
-import semicolon.dto.request.DeleteUserRequest;
-import semicolon.dto.request.LogOut;
-import semicolon.dto.request.LoginRequest;
-import semicolon.dto.request.RegisterRequest;
+import africa.semicolon.data.model.User;
+import africa.semicolon.dto.request.DeleteUserRequest;
+import africa.semicolon.dto.request.LogOut;
+import africa.semicolon.dto.request.LoginRequest;
+import africa.semicolon.dto.request.RegisterRequest;
 import org.springframework.stereotype.Service;
 
 @Service

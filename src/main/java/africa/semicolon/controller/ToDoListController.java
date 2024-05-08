@@ -1,11 +1,12 @@
-package semicolon.controller;
+package africa.semicolon.controller;
 
 
+import africa.semicolon.dto.request.*;
+import africa.semicolon.dto.response.ApiResponse;
+import africa.semicolon.exceptions.ToDoListException;
+import africa.semicolon.inferaces.AppService;
 import semicolon.dto.request.*;
-import semicolon.dto.response.ApiResponse;
 import org.springframework.http.HttpStatus;
-import semicolon.exceptions.ToDoListException;
-import semicolon.inferaces.AppService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

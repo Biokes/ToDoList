@@ -1,18 +1,20 @@
-package semicolon.service.implementations;
+package africa.semicolon.service.implementations;
 
-import semicolon.data.model.Notifications;
-import semicolon.data.model.Task;
-import semicolon.data.model.TaskStatus;
-import semicolon.data.model.User;
+import africa.semicolon.data.model.Notifications;
+import africa.semicolon.data.model.Task;
+import africa.semicolon.data.model.TaskStatus;
+import africa.semicolon.data.model.User;
+import africa.semicolon.dto.request.*;
+import africa.semicolon.dto.response.*;
+import africa.semicolon.inferaces.AppService;
 import semicolon.dto.request.*;
 import semicolon.dto.response.*;
-import semicolon.inferaces.TaskService;
-import semicolon.inferaces.AppService;
-import semicolon.inferaces.UserService;
-import semicolon.utils.Mapper;
+import africa.semicolon.inferaces.TaskService;
+import africa.semicolon.inferaces.UserService;
+import africa.semicolon.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import semicolon.utils.Validator;
+import africa.semicolon.utils.Validator;
 
 import java.util.ArrayList;
 import java.util.List;

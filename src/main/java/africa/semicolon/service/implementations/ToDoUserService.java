@@ -1,17 +1,17 @@
-package semicolon.service.implementations;
+package africa.semicolon.service.implementations;
 
-import semicolon.data.model.User;
-import semicolon.data.repo.UserRepository;
-import semicolon.dto.request.DeleteUserRequest;
-import semicolon.dto.request.LogOut;
-import semicolon.dto.request.LoginRequest;
-import semicolon.dto.request.RegisterRequest;
-import semicolon.exceptions.ExceptionMessages;
-import semicolon.exceptions.InvalidDetails;
-import semicolon.exceptions.ToDoListException;
-import semicolon.inferaces.UserService;
-import semicolon.utils.Mapper;
-import semicolon.utils.Validator;
+import africa.semicolon.data.model.User;
+import africa.semicolon.data.repo.UserRepository;
+import africa.semicolon.dto.request.DeleteUserRequest;
+import africa.semicolon.dto.request.LogOut;
+import africa.semicolon.dto.request.LoginRequest;
+import africa.semicolon.dto.request.RegisterRequest;
+import africa.semicolon.exceptions.ToDoListException;
+import africa.semicolon.inferaces.UserService;
+import africa.semicolon.exceptions.ExceptionMessages;
+import africa.semicolon.exceptions.InvalidDetails;
+import africa.semicolon.utils.Mapper;
+import africa.semicolon.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,13 +1,14 @@
-package semicolon.utils;
+package africa.semicolon.utils;
 
+import africa.semicolon.dto.request.*;
+import africa.semicolon.exceptions.ToDoListException;
 import semicolon.dto.request.*;
-import semicolon.exceptions.InvalidDetails;
-import semicolon.exceptions.ToDoListException;
+import africa.semicolon.exceptions.InvalidDetails;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static semicolon.exceptions.ExceptionMessages.*;
+import static africa.semicolon.exceptions.ExceptionMessages.*;
 
 public class Validator{
     public static String validate(String data){

@@ -1,16 +1,19 @@
-package semicolon.service.implementations;
+package africa.semicolon.service.implementations;
 
-import semicolon.data.model.Task;
-import semicolon.data.model.TaskStatus;
-import semicolon.data.repo.TaskRepository;
+import africa.semicolon.data.model.Task;
+import africa.semicolon.data.model.TaskStatus;
+import africa.semicolon.data.repo.TaskRepository;
+import africa.semicolon.dto.request.*;
+import africa.semicolon.dto.response.*;
+import africa.semicolon.exceptions.*;
 import semicolon.dto.request.*;
 import semicolon.dto.response.*;
-import semicolon.inferaces.TaskService;
-import semicolon.utils.Mapper;
+import africa.semicolon.inferaces.TaskService;
+import africa.semicolon.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import semicolon.exceptions.*;
-import semicolon.utils.Validator;
+import africa.semicolon.utils.Validator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

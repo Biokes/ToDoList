@@ -28,15 +28,32 @@
             <label for="password2">
                 <input class="input" type="password" id="password2" placeholder="confirm password">
             </label>
-            <button class="register">
-                Register
-            </button>
-            <button class="login">
-                login
-            </button>
-            <h6 class="forget">forgotten password</h6>
+            <div style="display:block; text-align: center">
+                <div class="buttons">
+                    <button class="register">
+                        Register
+                    </button>
+                    <button class="login">
+                        login
+                    </button>
+                </div>
+                <div><h6 class="forget">forgotten password</h6></div>
+            </div>
         </div>
     </div>
+    <script>
+        function register(username,password, password2){
+            username= document.getElementById("username")
+            password= document.getElementById("password")
+            password2= document.getElementById("password2")
 
+            const register = document.getElementsByClassName("Register")
+            register.addEventListener('click',(e)=>{
+                if(!password === password2){
+                    window.alert("password does not match")
+                } else{window.alert("loading...")}
+            })
+        }
+    </script>
 </body>
 </html>

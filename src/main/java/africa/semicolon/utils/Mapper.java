@@ -1,14 +1,15 @@
-package semicolon.utils;
+package africa.semicolon.utils;
 
-import semicolon.data.model.Notifications;
-import semicolon.data.model.Task;
-import semicolon.data.model.User;
-import semicolon.dto.request.AssignTaskRequest;
-import semicolon.dto.request.CreateTaskRequest;
-import semicolon.dto.request.RegisterRequest;
+import africa.semicolon.data.model.Notifications;
+import africa.semicolon.data.model.Task;
+import africa.semicolon.data.model.TaskStatus;
+import africa.semicolon.data.model.User;
+import africa.semicolon.dto.request.AssignTaskRequest;
+import africa.semicolon.dto.request.CreateTaskRequest;
+import africa.semicolon.dto.request.RegisterRequest;
+import africa.semicolon.dto.response.*;
 import semicolon.dto.response.*;
-import semicolon.exceptions.InvalidDetails;
-import semicolon.data.model.TaskStatus;
+import africa.semicolon.exceptions.InvalidDetails;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static semicolon.exceptions.ExceptionMessages.INVALID_DATE;
+import static africa.semicolon.exceptions.ExceptionMessages.INVALID_DATE;
 
 public class Mapper{
     public static Task mapCreateTaskRequestToTask(CreateTaskRequest request){

@@ -1,6 +1,6 @@
-package semicolon.dto.response;
+package africa.semicolon.dto.response;
 
-import semicolon.data.model.TaskStatus;
+import africa.semicolon.data.model.TaskStatus;
 import lombok.Data;
 
 @Data
