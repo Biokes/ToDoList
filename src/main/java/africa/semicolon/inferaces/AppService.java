@@ -4,8 +4,6 @@ package africa.semicolon.inferaces;
 import africa.semicolon.dto.request.*;
 import africa.semicolon.dto.response.*;
 import org.springframework.stereotype.Service;
-import semicolon.dto.request.*;
-import semicolon.dto.response.*;
 
 import java.util.List;
 

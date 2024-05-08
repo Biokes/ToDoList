@@ -2,7 +2,6 @@ package africa.semicolon.utils;
 
 import africa.semicolon.dto.request.*;
 import africa.semicolon.exceptions.ToDoListException;
-import semicolon.dto.request.*;
 import africa.semicolon.exceptions.InvalidDetails;
 
 import java.time.LocalDate;
