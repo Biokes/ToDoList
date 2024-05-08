@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="body">
-    <div style="display: flex">
-            <div style="object-fit: contain; justify-content: space-around;margin-top: 10px">
+    <div style="display: flex;padding-left: 4%">
+            <div style="object-fit: contain; justify-content: space-around;margin-top: 10px; gap: 0 20px">
                 <img src="download.jpeg" alt="pics">
             </div>
 
-        <div style="display: block;justify-content: space-evenly;padding-top: 0;">
+        <div style="display: block;justify-content: space-evenly;padding-top: 0;padding-left: 3%">
             <div class="top-text">
                 ToDo-List
                 <i class="fa fa-bars" style="margin-top: 10px; margin-left: 10px"></i>
@@ -49,6 +49,13 @@
     <script>function login(){
         let username = document.getElementById("username").value;
         let password= document.getElementById("password").value;
+
+        let details ={
+            "username": username,
+            "password": password
+        }
+
+        fetch()
     }
     </script>
 </body>
