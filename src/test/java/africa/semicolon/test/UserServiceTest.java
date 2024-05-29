@@ -1,11 +1,11 @@
-package java.africa.semoicolon.service;
+package africa.semicolon.test;
 
-import africa.semoicolon.dtos.request.DeleteUserRequest;
-import africa.semoicolon.dtos.request.LoginRequest;
-import africa.semoicolon.dtos.request.RegisterRequest;
-import africa.semoicolon.exceptions.InvalidDetails;
-import africa.semoicolon.exceptions.ToDoListException;
-import africa.semoicolon.service.inferaces.UserService;
+
+import africa.semicolon.ToDoList;
+import africa.semicolon.dto.request.*;
+import africa.semicolon.exceptions.InvalidDetails;
+import africa.semicolon.exceptions.ToDoListException;
+import africa.semicolon.inferaces.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class UserServiceTest {
     void wipe(){
         userService.deleteAll();
     }
-    @Test
-    public void register_testUserIsregistered(){
+@Test
+public void register_testUserIsregistered(){
         RegisterRequest request = new RegisterRequest();
         request.setUsername("");
         request.setPassword("");
@@ -56,8 +56,8 @@ public class UserServiceTest {
         userService.deleteUser(delete);
         assertEquals(0, userService.countAllUsers());
     }
-    @Test
-    public void testUserCanLogIn(){
+@Test
+public void test_userCanLogin(){
         LoginRequest login = new LoginRequest();
         login.setUsername("");
         login.setPassword("");

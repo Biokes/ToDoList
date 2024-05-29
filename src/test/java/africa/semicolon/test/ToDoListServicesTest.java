@@ -1,19 +1,23 @@
-package java.africa.semoicolon.service;
+package africa.semicolon.test;
 
 
-import africa.semoicolon.exceptions.ToDoListException;
-import africa.semoicolon.service.inferaces.AppService;
+import africa.semicolon.ToDoList;
+import africa.semicolon.data.model.TaskStatus;
+import africa.semicolon.dto.request.*;
+import africa.semicolon.dto.response.*;
+import africa.semicolon.exceptions.ToDoListException;
+import africa.semicolon.inferaces.AppService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.List;
 
-import static africa.semoicolon.data.model.TaskStatus.IN_PROGRESS;
-import static africa.semoicolon.data.model.TaskStatus.PENDING;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 @SpringBootTest
 public class ToDoListServicesTest {

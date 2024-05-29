@@ -10,6 +10,7 @@ public enum ExceptionMessages{
     USER_DOES_NOT_EXIST("details provided seem to be incorrect\nPls check and verify"),
     INVALID_DATE("Invalid date provided.Pls provide date in yyyy-mm-dd format"),
     USER_ALREADY_EXIST("username already taken pls select anothr username"),
+    STORE_EXCEPTION("Someething occured"),
     INVALID_DETAILS("Invalid details provided");
     ExceptionMessages(String message){
         this.message = message;

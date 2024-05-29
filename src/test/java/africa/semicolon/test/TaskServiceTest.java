@@ -1,16 +1,25 @@
-package java.africa.semoicolon.service;
+package africa.semicolon.test;
 
-import africa.semoicolon.service.inferaces.TaskService;
+import africa.semicolon.ToDoList;
+import africa.semicolon.data.model.TaskStatus;
+import africa.semicolon.dto.request.*;
+import africa.semicolon.dto.response.CompleteTaskResponse;
+import africa.semicolon.dto.response.CreateTaskResponse;
+import africa.semicolon.dto.response.StartTaskResponse;
+import africa.semicolon.dto.response.UpdateTaskResponse;
+import africa.semicolon.exceptions.*;
+import africa.semicolon.service.ToDoTaskService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest
+
+@SpringBootTest(classes = ToDoList.class)
 class TaskServiceTest {
     @Autowired
-    private TaskService taskService;
+    private ToDoTaskService taskService;
     @BeforeEach
     public void wipe(){
         taskService.deleteAll();

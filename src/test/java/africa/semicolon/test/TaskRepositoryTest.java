@@ -1,7 +1,8 @@
-package java.africa.semoicolon.repo;
+package africa.semicolon.test;
 
-import africa.semoicolon.data.model.Task;
-import africa.semoicolon.data.repo.TaskRepository;
+
+import africa.semicolon.data.model.Task;
+import africa.semicolon.data.repo.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-class TaskRepositoryTest{
+public class TaskRepositoryTest{
     @Autowired
     private TaskRepository repo;
     @BeforeEach
     public void deleteAll(){
-    repo.deleteAll();
+        repo.deleteAll();
     }
     @Test
     public void createTask_testTaskIsCreated(){

@@ -3,6 +3,8 @@ package africa.semicolon.controller;
 
 import africa.semicolon.dto.request.*;
 import africa.semicolon.dto.response.ApiResponse;
+import africa.semicolon.dto.storeRequest.RegisterCustomer;
+import africa.semicolon.exceptions.EstoreException;
 import africa.semicolon.exceptions.ToDoListException;
 import africa.semicolon.inferaces.AppService;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static africa.semicolon.exceptions.ExceptionMessages.STORE_EXCEPTION;
+
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins="*")//
 @RequestMapping("/api/v1/toDoList")
 public class ToDoListController{
     @Autowired
@@ -136,6 +141,16 @@ public class ToDoListController{
         }
         catch(ToDoListException error){
             return new ResponseEntity<>(new ApiResponse(false,error.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/register/customer")
+    public ResponseEntity<?> registerAsCustomer(@RequestBody RegisterCustomer customer){
+        try{
+            return new ResponseEntity<>(new ApiResponse(true,"Registeration successful"), HttpStatus.CREATED);
+        }
+        catch(EstoreException error){
+            return new ResponseEntity<>(new ApiResponse(false,STORE_EXCEPTION.getMessage()),
+                    HttpStatus.BAD_REQUEST);
         }
     }
 }
